@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>swish — 농구를 가장 가볍게, 가장 빠르게</title>
+<meta name="description" content="내 주변 농구 코트 1,200곳 지도, 코트에서 바로 켜는 전광판·전술판, 픽업게임 게스트 모집까지. 농구 앱 swish(스위시).">
+<meta property="og:title" content="swish — 농구를 가장 가볍게, 가장 빠르게">
+<meta property="og:description" content="내 주변 농구 코트 1,200곳 지도 · 전광판 · 픽업게임 게스트 모집. 농구 앱 swish.">
+<meta property="og:image" content="https://tommytaeh.github.io/swish-web/assets/og.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0B0F">
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --court:#0A0B0F; --surface:#14161C; --line:#20242E; --line-soft:#181B22;
+    --ink:#F2F4F8; --dim:#8A90A2; --faint:#5A6072;
+    --scarlet:#FF3D2E;
+    --grad:linear-gradient(100deg,#FF7A3D 0%,#FF5CAD 36%,#8B5CF6 68%,#3B5BFF 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--court); color:var(--ink);
+    font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    font-size:16px; line-height:1.7; word-break:keep-all;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--scarlet);outline-offset:3px;border-radius:4px}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+
+  /* ── nav ── */
+  nav{position:sticky;top:0;z-index:10;background:rgba(10,11,15,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .wordmark{font-weight:900;font-size:24px;letter-spacing:-.05em;color:var(--scarlet);font-style:italic}
+  .nav-cta{font-size:13.5px;font-weight:700;color:var(--ink);border:1px solid var(--line);padding:8px 16px;border-radius:99px;transition:border-color .15s}
+  .nav-cta:hover{border-color:var(--scarlet)}
+
+  /* ── hero ── */
+  .hero{position:relative;overflow:hidden;padding:84px 0 64px;border-bottom:1px solid var(--line-soft)}
+  .hero-court{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .hero-in{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-bottom:18px}
+  h1{font-size:clamp(34px,5.6vw,58px);font-weight:900;line-height:1.14;letter-spacing:-.035em;margin-bottom:18px;text-wrap:balance}
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-sub{font-size:clamp(15.5px,2vw,18px);color:var(--dim);max-width:32em;margin-bottom:30px}
+  .hero-sub b{color:var(--ink);font-weight:600}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:15.5px;padding:14px 24px;border-radius:14px;transition:transform .12s,opacity .12s}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--scarlet);color:#fff}
+  .btn-primary:hover{opacity:.9}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--dim)}
+  .cta-note{width:100%;font-size:12.5px;color:var(--faint);margin-top:2px}
+  .hero-shot{position:relative;justify-self:end;width:min(320px,100%)}
+  .hero-shot img{border-radius:22px;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+
+  /* ── stat strip ── */
+  .strip{border-bottom:1px solid var(--line-soft)}
+  .strip-in{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft)}
+  .stat{background:var(--court);padding:26px 10px;text-align:center}
+  .stat .n{font-size:clamp(22px,3.4vw,32px);font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .stat .n em{font-style:normal;color:var(--scarlet)}
+  .stat .l{font-size:12.5px;color:var(--dim);margin-top:4px}
+
+  /* ── feature sections ── */
+  section.feat{padding:88px 0;border-bottom:1px solid var(--line-soft)}
+  .feat-in{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .feat-in.rev .feat-txt{order:2}
+  .feat-in.rev .feat-img{order:1}
+  .kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--scarlet);text-transform:uppercase;margin-bottom:14px}
+  h2{font-size:clamp(24px,3.6vw,34px);font-weight:900;letter-spacing:-.03em;line-height:1.25;margin-bottom:16px;text-wrap:balance}
+  .feat-txt p{color:var(--dim);font-size:15.5px;max-width:30em}
+  .feat-txt ul{list-style:none;margin-top:20px;display:grid;gap:11px}
+  .feat-txt li{position:relative;padding-left:24px;font-size:15px;color:var(--ink)}
+  .feat-txt li::before{content:"";position:absolute;left:0;top:.52em;width:12px;height:2px;background:var(--scarlet)}
+  .feat-txt li small{display:block;color:var(--faint);font-size:13px;margin-top:1px}
+  .feat-img{justify-self:center;width:min(300px,100%)}
+  .feat-img img{border-radius:20px;box-shadow:0 24px 70px -28px rgba(0,0,0,.75)}
+  .feat-img.wide{width:min(520px,100%)}
+  .feat-img.wide img{border-radius:14px;border:1px solid var(--line)}
+
+  /* ── crew band ── */
+  .band{padding:88px 0;border-bottom:1px solid var(--line-soft);background:var(--surface)}
+  .band-in{max-width:720px;margin:0 auto;text-align:center;padding:0 22px}
+  .band .free{font-size:clamp(40px,7vw,64px);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin:14px 0 6px}
+  .band .free em{font-style:normal;color:var(--scarlet)}
+  .band p{color:var(--dim);font-size:15.5px}
+  .band .fine{font-size:12.5px;color:var(--faint);margin-top:10px}
+  .band .cta-row{justify-content:center;margin-top:26px}
+
+  /* ── tester band ── */
+  .tester{padding:72px 0;border-bottom:1px solid var(--line-soft)}
+  .tester-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
+  .tester h2{margin-bottom:8px}
+  .tester p{color:var(--dim);font-size:14.5px;max-width:34em}
+
+  /* ── footer ── */
+  footer{padding:52px 0 64px;color:var(--faint);font-size:12.5px;line-height:1.9}
+  .foot-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;margin-bottom:28px}
+  footer h3{font-size:13px;font-weight:700;color:var(--dim);margin-bottom:8px}
+  .legal a{text-decoration:underline;text-underline-offset:3px}
+  .legal a + a{margin-left:14px}
+  .biz span{display:inline-block;margin-right:16px}
+  .foot-mark{font-weight:900;font-style:italic;color:var(--scarlet);font-size:18px;letter-spacing:-.05em;margin-bottom:10px}
+
+  @media (max-width:840px){
+    .hero{padding:56px 0 48px}
+    .hero-in{grid-template-columns:1fr;gap:40px}
+    .hero-shot{justify-self:center}
+    .feat-in{grid-template-columns:1fr;gap:36px}
+    .feat-in.rev .feat-txt{order:1}
+    .feat-in.rev .feat-img{order:2}
+    section.feat{padding:64px 0}
+    .foot-grid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .arc-path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.6s .3s cubic-bezier(.4,0,.2,1) forwards}
+    .arc-ball{opacity:0;animation:pop .3s 1.75s ease forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+    @keyframes pop{to{opacity:1}}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a href="#" class="wordmark" aria-label="swish 홈">swish</a>
+    <a class="nav-cta" href="https://apps.apple.com/kr/app/id6767571900">앱 다운로드</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <!-- 하프코트 라인 + 슛 궤적 — 브랜드 시그니처 (로고의 궤적선을 페이지 스케일로) -->
+  <svg class="hero-court" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g stroke="#1B1E27" stroke-width="2" fill="none">
+      <circle cx="600" cy="560" r="150"/>
+      <circle cx="600" cy="560" r="500"/>
+      <rect x="440" y="380" width="320" height="180"/>
+    </g>
+    <path class="arc-path" d="M -40 470 Q 420 60 918 332" stroke="#FF3D2E" stroke-width="2.5" fill="none" stroke-dasharray="2 9" stroke-linecap="round" opacity=".8"/>
+    <g class="arc-ball">
+      <circle cx="918" cy="332" r="9" fill="#FF3D2E"/>
+      <path d="M 909 332 a 9 9 0 0 0 18 0 M 918 323 v 18 M 911.5 325.5 q 6.5 6.5 13 0 M 911.5 338.5 q 6.5 -6.5 13 0" stroke="#0A0B0F" stroke-width="1.1" fill="none"/>
+    </g>
+  </svg>
+  <div class="wrap hero-in">
+    <div>
+      <p class="eyebrow">농구 라이프 앱 · swish</p>
+      <h1>농구를 가장 가볍게,<br><span class="g">가장 빠르게.</span></h1>
+      <p class="hero-sub">내 주변 농구 코트 <b>1,200곳</b>을 지도에서 찾고, 폰 하나로 <b>전광판</b>을 켜고, 게스트 모집은 앱이 <b>자동으로</b> 굴립니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">
+          App Store에서 받기
+        </a>
+        <a class="btn btn-ghost" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">
+          Android 먼저 써보기
+        </a>
+        <p class="cta-note">Android는 사전 테스트 중 — 구글 계정 이메일을 보내주시면 초대해 드려요.</p>
+      </div>
+    </div>
+    <div class="hero-shot">
+      <img src="assets/04_courts.jpg" width="320" alt="swish 코트맵 화면 — 내 주변 야외 농구 코트가 지도에 표시된 모습" fetchpriority="high">
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap strip-in">
+    <div class="stat"><div class="n"><em>1,209</em></div><div class="l">지도에 담긴 전국 농구 코트</div></div>
+    <div class="stat"><div class="n">30초</div><div class="l">게임 등록에 걸리는 시간</div></div>
+    <div class="stat"><div class="n">0원</div><div class="l">참가자·수강생 추가 수수료</div></div>
+  </div>
+</div>
+
+<section class="feat" id="courts">
+  <div class="wrap feat-in">
+    <div class="feat-txt">
+      <span class="kicker">코트맵</span>
+      <h2>"여기 농구장 어디지?"<br>30초 안에 끝나는 질문</h2>
+      <p>전국 실외 농구장과 실내 코트 1,200곳 이상을 지도에 담았습니다. 처음 가는 동네에서도 뛸 곳부터 찾으세요.</p>
+      <ul>
+        <li>실내·실외, 무료 여부 필터<small>야외 조명, 바닥 상태, 골대 수까지</small></li>
+        <li>다녀온 사람들의 코트 리뷰</li>
+        <li>카카오맵으로 바로 길찾기</li>
+      </ul>
+    </div>
+    <div class="feat-img"><img src="assets/04_courts.jpg" width="300" loading="lazy" alt="코트맵 — 지도 위 농구 코트 핀"></div>
+  </div>
+</section>
+
+<section class="feat" id="tools">
+  <div class="wrap feat-in rev">
+    <div class="feat-txt">
+      <span class="kicker">코트 도구</span>
+      <h2>혼자여도, 오늘 당장<br>쓸 수 있는 도구</h2>
+      <p>계정 없이도 됩니다. 3대3, 동호회 연습경기, 친선전 — 코트에서 바로 꺼내 쓰세요.</p>
+      <ul>
+        <li>전광판<small>점수 · 쿼터 · 타이머 · 버저를 폰 하나로</small></li>
+        <li>전술판<small>작전을 한 컷에 그려 팀원에게 공유</small></li>
+        <li>컨디션 기록<small>경기 후 피로도·부상 부위 메모</small></li>
+      </ul>
+    </div>
+    <div class="feat-img wide"><img src="assets/05_scoreboard.jpg" width="520" loading="lazy" alt="전광판 — 점수와 타이머가 큰 글씨로 표시된 가로 화면"></div>
+  </div>
+</section>
+
+<section class="feat" id="games">
+  <div class="wrap feat-in">
+    <div class="feat-txt">
+      <span class="kicker">게스트 모집</span>
+      <h2>단톡방 스크롤 노동은<br>이제 앱이 대신합니다</h2>
+      <p>신청 순번 세기, 입금자명 대조, 대기자 승격 — 매 경기 반복하던 일이 한 화면에서 자동으로 돌아갑니다.</p>
+      <ul>
+        <li>지역·날짜·실력대·참가비로 거른 게임 목록</li>
+        <li>정원 차면 대기열, 빠지면 자동 승격</li>
+        <li>매너 리뷰와 노쇼 신고<small>처음 만나도 상대를 알고 시작</small></li>
+        <li>참가 확정자 전용 채팅방</li>
+      </ul>
+    </div>
+    <div class="feat-img"><img src="assets/01_games_list.jpg" width="300" loading="lazy" alt="게임 목록 — 오늘 모집 중인 픽업게임"></div>
+  </div>
+</section>
+
+<section class="band" id="crew">
+  <div class="band-in">
+    <span class="kicker">정기 픽업 크루 · 오픈 이벤트</span>
+    <p class="free">플랫폼 수수료 <em>0원</em></p>
+    <p>매주 픽업을 여는 크루라면 — 정원·대기열·참가비 확인을 swish가 대신 굴리고, 오픈 기간에는 수수료를 받지 않습니다. 크루 이전 세팅도 저희가 직접 도와드려요.</p>
+    <p class="fine">정가 8% (호스트 92% 보장) · 오픈 기간 면제 · 결제 수수료는 swish 부담</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%ED%81%AC%EB%A3%A8%20%EB%93%B1%EB%A1%9D%20%EB%AC%B8%EC%9D%98">크루 등록 문의하기</a>
+    </div>
+  </div>
+</section>
+
+<section class="feat" id="lessons">
+  <div class="wrap feat-in rev">
+    <div class="feat-txt">
+      <span class="kicker">농구 레슨</span>
+      <h2>레슨은 검증된 코치와,<br>기록이 남게</h2>
+      <p>1:1, 소그룹, 팀 코칭, 입문반. 코치 경력과 실수강 리뷰를 확인하고 앱 안에서 문의부터 신청까지 이어집니다.</p>
+      <ul>
+        <li>실수강생만 쓰는 검증 리뷰</li>
+        <li>인앱 문의 채팅<small>연락처 노출 없이 일정 조율</small></li>
+        <li>같은 코치와 오래할수록 코치 수수료 인하<small>코치에게도 좋은 구조</small></li>
+      </ul>
+    </div>
+    <div class="feat-img"><img src="assets/02_game_detail.jpg" width="300" loading="lazy" alt="상세 화면 — 일정·장소·정원 정보"></div>
+  </div>
+</section>
+
+<section class="tester" id="tester">
+  <div class="wrap tester-in">
+    <div>
+      <span class="kicker">Android 사전 테스트</span>
+      <h2>안드로이드는 지금, 먼저</h2>
+      <p>정식 출시 전 테스터를 모집하고 있어요. 구글 계정 이메일 하나면 초대해 드립니다 — 설치하고 2주만 함께해 주세요.</p>
+    </div>
+    <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">테스터 신청하기</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="foot-mark">swish</p>
+        <p>농구를 가장 가볍게, 가장 빠르게 연결하는 농구 라이프 앱.</p>
+        <p class="legal" style="margin-top:10px">
+          <a href="https://www.notion.so/SWISH-36970c5866eb812297abc686d0bed893">이용약관</a>
+          <a href="https://www.notion.so/SWISH-36970c5866eb8121876cfbeaad08c6f4">개인정보처리방침</a>
+          <a href="https://www.notion.so/SWISH-36970c5866eb819c9863d427811420fb">위치기반서비스 약관</a>
+          <a href="https://www.notion.so/SWISH-36970c5866eb81038dbcf0c47e58927c">환불 정책</a>
+        </p>
+      </div>
+      <div class="biz">
+        <h3>사업자 정보</h3>
+        <!-- TODO(사업자정보): 아래 6개 값 확정 후 교체 — 토스페이먼츠 가맹 심사 요건
+             (LESSON_PAYMENTS.md §4-A-3). 값 채우기 전까지는 이 블록이 placeholder 임. -->
+        <p>
+          <span>상호: (기재 예정)</span>
+          <span>대표: (기재 예정)</span>
+          <span>사업자등록번호: (기재 예정)</span><br>
+          <span>주소: (기재 예정)</span><br>
+          <span>유선번호: (기재 예정)</span>
+          <span>통신판매업 신고번호: (기재 예정)</span><br>
+          <span>문의: <a href="mailto:tommytae9697@gmail.com" style="text-decoration:underline;text-underline-offset:3px">tommytae9697@gmail.com</a></span>
+        </p>
+      </div>
+    </div>
+    <p>© 2026 swish. swish는 통신판매중개자이며, 게임·레슨 거래의 당사자가 아닙니다. 다만 결제·환불 처리는 swish가 직접 담당합니다.</p>
+  </div>
+</footer>
+
+</body>
+</html>
