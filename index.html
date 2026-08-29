@@ -15,115 +15,197 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root{
-    --court:#0A0B0F; --surface:#14161C; --line:#20242E; --line-soft:#181B22;
+    --court:#0A0B0F; --panel:#05070C; --surface:#14161C; --surface-2:#1B1E27;
+    --line:#232734; --line-soft:#171A21;
     --ink:#F2F4F8; --dim:#8A90A2; --faint:#5A6072;
-    --scarlet:#FF3D2E;
+    --scarlet:#FF3D2E; --lime:#A8FF35; --gold:#FFB23D; --cobalt:#5B7CFF;
     --grad:linear-gradient(100deg,#FF7A3D 0%,#FF5CAD 36%,#8B5CF6 68%,#3B5BFF 100%);
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
     background:var(--court); color:var(--ink);
     font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    font-size:16px; line-height:1.7; word-break:keep-all;
-    -webkit-font-smoothing:antialiased;
+    font-size:16px; line-height:1.7; word-break:keep-all; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--scarlet);outline-offset:3px;border-radius:4px}
-  img{max-width:100%;display:block}
-  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+  a:focus-visible{outline:2px solid var(--scarlet);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
 
   /* ── nav ── */
-  nav{position:sticky;top:0;z-index:10;background:rgba(10,11,15,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
-  .wordmark{font-weight:900;font-size:24px;letter-spacing:-.05em;color:var(--scarlet);font-style:italic}
-  .nav-cta{font-size:13.5px;font-weight:700;color:var(--ink);border:1px solid var(--line);padding:8px 16px;border-radius:99px;transition:border-color .15s}
-  .nav-cta:hover{border-color:var(--scarlet)}
+  nav{position:sticky;top:0;z-index:40;background:rgba(10,11,15,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .wordmark{font-weight:900;font-size:25px;letter-spacing:-.055em;color:var(--scarlet);font-style:italic}
+  .nav-cta{font-size:13.5px;font-weight:700;background:var(--scarlet);color:#fff;padding:9px 18px;border-radius:99px;transition:opacity .15s}
+  .nav-cta:hover{opacity:.88}
 
-  /* ── hero ── */
-  .hero{position:relative;overflow:hidden;padding:84px 0 64px;border-bottom:1px solid var(--line-soft)}
-  .hero-court{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-  .hero-in{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
-  .eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-bottom:18px}
-  h1{font-size:clamp(34px,5.6vw,58px);font-weight:900;line-height:1.14;letter-spacing:-.035em;margin-bottom:18px;text-wrap:balance}
-  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero-sub{font-size:clamp(15.5px,2vw,18px);color:var(--dim);max-width:32em;margin-bottom:30px}
-  .hero-sub b{color:var(--ink);font-weight:600}
-  .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:15.5px;padding:14px 24px;border-radius:14px;transition:transform .12s,opacity .12s}
+  /* ── shared type ── */
+  .kicker{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.16em;color:var(--scarlet);text-transform:uppercase;margin-bottom:16px}
+  h1{font-size:clamp(38px,7vw,72px);font-weight:900;line-height:1.08;letter-spacing:-.04em;text-wrap:balance}
+  h2{font-size:clamp(28px,4.6vw,46px);font-weight:900;letter-spacing:-.035em;line-height:1.18;margin-bottom:18px;text-wrap:balance}
+  .sub{font-size:clamp(15.5px,2vw,19px);color:var(--dim)}
+  .sub b{color:var(--ink);font-weight:600}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:16px;padding:16px 28px;border-radius:16px;transition:transform .12s,opacity .12s}
   .btn:active{transform:scale(.97)}
   .btn-primary{background:var(--scarlet);color:#fff}
   .btn-primary:hover{opacity:.9}
-  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost{border:1.5px solid var(--line);color:var(--ink)}
   .btn-ghost:hover{border-color:var(--dim)}
-  .cta-note{width:100%;font-size:12.5px;color:var(--faint);margin-top:2px}
-  .hero-shot{position:relative;justify-self:end;width:min(320px,100%)}
-  .hero-shot img{border-radius:22px;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
 
-  /* ── stat strip ── */
-  .strip{border-bottom:1px solid var(--line-soft)}
-  .strip-in{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft)}
-  .stat{background:var(--court);padding:26px 10px;text-align:center}
-  .stat .n{font-size:clamp(22px,3.4vw,32px);font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-  .stat .n em{font-style:normal;color:var(--scarlet)}
-  .stat .l{font-size:12.5px;color:var(--dim);margin-top:4px}
+  /* ── scroll reveal ── */
+  .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+  .rv.in{opacity:1;transform:none}
+  .rv-d1{transition-delay:.08s}.rv-d2{transition-delay:.16s}.rv-d3{transition-delay:.24s}
+
+  /* ── hero ── */
+  .hero{position:relative;padding:96px 0 0;min-height:88vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .hero-court{position:absolute;inset:auto 0 0 0;width:100%;height:64%;pointer-events:none}
+  .hero-in{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .sub{max-width:30em;margin:22px 0 34px}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .cta-note{width:100%;font-size:13px;color:var(--faint);margin-top:4px}
+  .hero-visual{position:relative;justify-self:center;padding:16px 0 40px}
+
+  /* ── phone mockup (CSS 재현 — 스크린샷 대신) ── */
+  .phone{width:min(302px,78vw);aspect-ratio:9/19.2;background:#000;border-radius:46px;padding:11px;border:1px solid #2A2E3A;box-shadow:0 40px 90px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.03)}
+  .screen{position:relative;height:100%;background:var(--court);border-radius:36px;overflow:hidden;display:flex;flex-direction:column;font-size:12px;line-height:1.5;text-align:left}
+  .island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:86px;height:24px;background:#000;border-radius:99px;z-index:3}
+  .app-head{display:flex;align-items:center;justify-content:space-between;padding:46px 16px 10px}
+  .app-title{font-weight:900;font-size:17px;letter-spacing:-.03em}
+  .app-title.mark{color:var(--scarlet);font-style:italic}
+  .chip-row{display:flex;gap:6px;padding:2px 16px 10px}
+  .chip{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--dim)}
+  .chip.on{background:var(--scarlet);border-color:var(--scarlet);color:#fff}
+  .tabbar{margin-top:auto;display:flex;border-top:1px solid var(--line-soft);padding:9px 6px 20px;background:rgba(10,11,15,.96)}
+  .tab{flex:1;text-align:center;font-size:9px;color:var(--faint);font-weight:600}
+  .tab i{display:block;width:16px;height:16px;margin:0 auto 3px;border:1.6px solid currentColor;border-radius:5px;opacity:.9}
+  .tab.on{color:var(--scarlet)}
+  .tab.on i{border-radius:99px}
+
+  /* 코트맵 화면 */
+  .mapview{position:relative;flex:1;background:#0E1118;overflow:hidden}
+  .mapview svg{position:absolute;inset:0;width:100%;height:100%}
+  .map-card{position:absolute;left:10px;right:10px;bottom:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
+  .map-card .t{font-weight:800;font-size:13px}
+  .map-card .s{color:var(--dim);font-size:10.5px;margin-top:2px}
+  .map-card .tags{display:flex;gap:5px;margin-top:7px}
+  .tag{font-size:9.5px;font-weight:700;padding:2.5px 7px;border-radius:6px;background:var(--surface-2);color:var(--dim)}
+  .tag.lime{color:var(--lime);background:rgba(168,255,53,.1)}
+  .tag.gold{color:var(--gold);background:rgba(255,178,61,.1)}
+
+  /* 게임 리스트 화면 */
+  .glist{flex:1;padding:4px 14px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+  .gcard{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:12px 13px}
+  .gcard .row1{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .gcard .t{font-weight:800;font-size:13px}
+  .pill{font-size:9px;font-weight:800;padding:3px 8px;border-radius:99px;white-space:nowrap}
+  .pill.lime{background:rgba(168,255,53,.12);color:var(--lime)}
+  .pill.gold{background:rgba(255,178,61,.14);color:var(--gold)}
+  .pill.scar{background:rgba(255,61,46,.16);color:var(--scarlet)}
+  .pill.cob{background:rgba(91,124,255,.15);color:var(--cobalt)}
+  .gcard .meta{color:var(--dim);font-size:10.5px;margin-top:5px}
+  .gcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:10.5px}
+  .gcard .cap{font-family:var(--mono);font-weight:700;color:var(--ink)}
+  .toast{margin:0 14px;background:#101822;border:1px solid rgba(168,255,53,.3);color:var(--lime);font-size:10.5px;font-weight:700;padding:9px 12px;border-radius:12px;display:flex;gap:7px;align-items:center}
+  .toast::before{content:"";width:7px;height:7px;border-radius:99px;background:var(--lime)}
+
+  /* 레슨 화면 */
+  .lcard{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:12px 13px;display:flex;gap:10px;align-items:center}
+  .ava{width:34px;height:34px;border-radius:99px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:var(--dim);flex:none}
+  .lcard .t{font-weight:800;font-size:12.5px}
+  .lcard .s{color:var(--dim);font-size:10.5px}
+  .lcard .price{margin-left:auto;text-align:right;white-space:nowrap}
+  .lcard .price b{font-size:12px}
+  .lcard .price small{display:block;color:var(--scarlet);font-size:9px;font-weight:800}
+
+  /* ── 전광판 섹션 (농구 시그니처) ── */
+  .board-sec{padding:96px 0;border-top:1px solid var(--line-soft)}
+  .board{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,5vw,48px);box-shadow:inset 0 0 60px rgba(0,0,0,.6)}
+  .board-top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:clamp(11px,1.6vw,14px);font-weight:700;letter-spacing:.22em;color:var(--dim);margin-bottom:6px}
+  .score{display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;text-align:center;font-family:var(--mono);font-weight:800;font-variant-numeric:tabular-nums}
+  .score .n{font-size:clamp(64px,14vw,150px);letter-spacing:-.02em;color:var(--scarlet);text-shadow:0 0 26px rgba(255,61,46,.35);line-height:1}
+  .score .c{font-size:clamp(40px,9vw,96px);color:var(--faint);padding:0 .15em}
+  .score .l{font-size:clamp(10px,1.5vw,13px);letter-spacing:.3em;color:var(--faint);margin-top:14px;font-weight:700}
+  .board-bottom{display:flex;justify-content:center;gap:26px;margin-top:20px;font-family:var(--mono);font-size:clamp(12px,1.8vw,16px);color:var(--gold);font-weight:700;letter-spacing:.14em}
+  .blink{animation:blink 1s steps(1) infinite}
+  .board-cap{text-align:center;color:var(--dim);font-size:14.5px;margin-top:22px}
+  @keyframes blink{50%{opacity:.25}}
+
+  /* ── stat strip (스코어보드 숫자) ── */
+  .strip{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);background:var(--panel)}
+  .strip-in{display:grid;grid-template-columns:repeat(3,1fr)}
+  .stat{padding:34px 12px;text-align:center;border-left:1px solid var(--line-soft)}
+  .stat:first-child{border-left:none}
+  .stat .n{font-family:var(--mono);font-size:clamp(26px,4.4vw,42px);font-weight:800;letter-spacing:-.02em;color:var(--scarlet);text-shadow:0 0 18px rgba(255,61,46,.3)}
+  .stat .l{font-size:13px;color:var(--dim);margin-top:6px}
 
   /* ── feature sections ── */
-  section.feat{padding:88px 0;border-bottom:1px solid var(--line-soft)}
-  .feat-in{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-  .feat-in.rev .feat-txt{order:2}
-  .feat-in.rev .feat-img{order:1}
-  .kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--scarlet);text-transform:uppercase;margin-bottom:14px}
-  h2{font-size:clamp(24px,3.6vw,34px);font-weight:900;letter-spacing:-.03em;line-height:1.25;margin-bottom:16px;text-wrap:balance}
-  .feat-txt p{color:var(--dim);font-size:15.5px;max-width:30em}
-  .feat-txt ul{list-style:none;margin-top:20px;display:grid;gap:11px}
-  .feat-txt li{position:relative;padding-left:24px;font-size:15px;color:var(--ink)}
-  .feat-txt li::before{content:"";position:absolute;left:0;top:.52em;width:12px;height:2px;background:var(--scarlet)}
-  .feat-txt li small{display:block;color:var(--faint);font-size:13px;margin-top:1px}
-  .feat-img{justify-self:center;width:min(300px,100%)}
-  .feat-img img{border-radius:20px;box-shadow:0 24px 70px -28px rgba(0,0,0,.75)}
-  .feat-img.wide{width:min(520px,100%)}
-  .feat-img.wide img{border-radius:14px;border:1px solid var(--line)}
+  section.feat{padding:clamp(72px,11vw,130px) 0;border-top:1px solid var(--line-soft)}
+  .feat-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,80px);align-items:center}
+  .feat-in.rev > .fig{order:-1}
+  .feat p.body{color:var(--dim);font-size:16px;max-width:29em}
+  .feat ul{list-style:none;margin-top:24px;display:grid;gap:13px}
+  .feat li{position:relative;padding-left:26px;font-size:15.5px}
+  .feat li::before{content:"";position:absolute;left:0;top:.5em;width:13px;height:2.5px;background:var(--scarlet)}
+  .feat li small{display:block;color:var(--faint);font-size:13px}
+  .fig{justify-self:center}
 
   /* ── crew band ── */
-  .band{padding:88px 0;border-bottom:1px solid var(--line-soft);background:var(--surface)}
-  .band-in{max-width:720px;margin:0 auto;text-align:center;padding:0 22px}
-  .band .free{font-size:clamp(40px,7vw,64px);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin:14px 0 6px}
+  .band{padding:clamp(80px,12vw,140px) 0;border-top:1px solid var(--line-soft);position:relative;overflow:hidden}
+  .band-court{position:absolute;inset:0;pointer-events:none;opacity:.5}
+  .band-in{position:relative;max-width:760px;margin:0 auto;text-align:center;padding:0 24px}
+  .band .free{font-size:clamp(52px,10vw,96px);font-weight:900;letter-spacing:-.045em;line-height:1;margin:12px 0 14px}
   .band .free em{font-style:normal;color:var(--scarlet)}
-  .band p{color:var(--dim);font-size:15.5px}
-  .band .fine{font-size:12.5px;color:var(--faint);margin-top:10px}
-  .band .cta-row{justify-content:center;margin-top:26px}
+  .band p{color:var(--dim);font-size:16px}
+  .band .fine{font-size:13px;color:var(--faint);margin-top:12px}
+  .band .cta-row{justify-content:center;margin-top:30px}
 
-  /* ── tester band ── */
-  .tester{padding:72px 0;border-bottom:1px solid var(--line-soft)}
-  .tester-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
-  .tester h2{margin-bottom:8px}
-  .tester p{color:var(--dim);font-size:14.5px;max-width:34em}
+  /* ── tester ── */
+  .tester{padding:clamp(64px,9vw,100px) 0;border-top:1px solid var(--line-soft)}
+  .tester-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
+  .tester p{color:var(--dim);font-size:15px;max-width:33em;margin-top:8px}
 
   /* ── footer ── */
-  footer{padding:52px 0 64px;color:var(--faint);font-size:12.5px;line-height:1.9}
-  .foot-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;margin-bottom:28px}
+  footer{padding:56px 0 70px;border-top:1px solid var(--line-soft);color:var(--faint);font-size:12.5px;line-height:1.9}
+  .foot-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;margin-bottom:30px}
   footer h3{font-size:13px;font-weight:700;color:var(--dim);margin-bottom:8px}
   .legal a{text-decoration:underline;text-underline-offset:3px}
   .legal a + a{margin-left:14px}
   .biz span{display:inline-block;margin-right:16px}
-  .foot-mark{font-weight:900;font-style:italic;color:var(--scarlet);font-size:18px;letter-spacing:-.05em;margin-bottom:10px}
+  .foot-mark{font-weight:900;font-style:italic;color:var(--scarlet);font-size:19px;letter-spacing:-.05em;margin-bottom:10px}
 
-  @media (max-width:840px){
-    .hero{padding:56px 0 48px}
-    .hero-in{grid-template-columns:1fr;gap:40px}
-    .hero-shot{justify-self:center}
-    .feat-in{grid-template-columns:1fr;gap:36px}
-    .feat-in.rev .feat-txt{order:1}
-    .feat-in.rev .feat-img{order:2}
-    section.feat{padding:64px 0}
+  /* ── responsive ── */
+  @media (max-width:920px){
+    .hero{min-height:auto;padding:72px 0 0}
+    .hero-in{grid-template-columns:1fr;gap:48px;text-align:center}
+    .hero .sub{margin-inline:auto}
+    .cta-row{justify-content:center}
+    .feat-in{grid-template-columns:1fr;text-align:center}
+    .feat-in.rev > .fig{order:0}
+    .feat p.body{margin-inline:auto}
+    .feat ul{max-width:420px;margin-inline:auto;text-align:left;margin-top:24px}
     .foot-grid{grid-template-columns:1fr}
   }
+  @media (max-width:560px){
+    .strip-in{grid-template-columns:1fr}
+    .stat{border-left:none;border-top:1px solid var(--line-soft);padding:24px 12px}
+    .stat:first-child{border-top:none}
+    .btn{width:100%;}
+    .tester-in{flex-direction:column;align-items:stretch;text-align:center}
+  }
   @media (prefers-reduced-motion:no-preference){
-    .arc-path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.6s .3s cubic-bezier(.4,0,.2,1) forwards}
-    .arc-ball{opacity:0;animation:pop .3s 1.75s ease forwards}
+    .arc-path{stroke-dasharray:1500;stroke-dashoffset:1500;animation:draw 1.7s .3s cubic-bezier(.4,0,.2,1) forwards}
+    .arc-ball{opacity:0;animation:pop .3s 1.85s ease forwards}
     @keyframes draw{to{stroke-dashoffset:0}}
     @keyframes pop{to{opacity:1}}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .rv{opacity:1;transform:none;transition:none}
+    .blink{animation:none}
   }
 </style>
 </head>
@@ -137,86 +219,181 @@
 </nav>
 
 <header class="hero">
-  <!-- 하프코트 라인 + 슛 궤적 — 브랜드 시그니처 (로고의 궤적선을 페이지 스케일로) -->
-  <svg class="hero-court" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <g stroke="#1B1E27" stroke-width="2" fill="none">
-      <circle cx="600" cy="560" r="150"/>
-      <circle cx="600" cy="560" r="500"/>
-      <rect x="440" y="380" width="320" height="180"/>
+  <svg class="hero-court" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g stroke="#181B24" stroke-width="2" fill="none">
+      <circle cx="700" cy="520" r="150"/>
+      <circle cx="700" cy="520" r="470"/>
+      <rect x="530" y="350" width="340" height="170"/>
+      <line x1="0" y1="519" x2="1400" y2="519"/>
     </g>
-    <path class="arc-path" d="M -40 470 Q 420 60 918 332" stroke="#FF3D2E" stroke-width="2.5" fill="none" stroke-dasharray="2 9" stroke-linecap="round" opacity=".8"/>
+    <path class="arc-path" d="M -60 430 Q 470 30 1080 300" stroke="#FF3D2E" stroke-width="2.5" fill="none" stroke-dasharray="2 10" stroke-linecap="round" opacity=".75"/>
     <g class="arc-ball">
-      <circle cx="918" cy="332" r="9" fill="#FF3D2E"/>
-      <path d="M 909 332 a 9 9 0 0 0 18 0 M 918 323 v 18 M 911.5 325.5 q 6.5 6.5 13 0 M 911.5 338.5 q 6.5 -6.5 13 0" stroke="#0A0B0F" stroke-width="1.1" fill="none"/>
+      <circle cx="1080" cy="300" r="10" fill="#FF3D2E"/>
+      <path d="M 1070 300 a 10 10 0 0 0 20 0 M 1080 290 v 20 M 1073 293 q 7 7 14 0 M 1073 307 q 7 -7 14 0" stroke="#0A0B0F" stroke-width="1.2" fill="none"/>
     </g>
   </svg>
+
   <div class="wrap hero-in">
     <div>
-      <p class="eyebrow">농구 라이프 앱 · swish</p>
-      <h1>농구를 가장 가볍게,<br><span class="g">가장 빠르게.</span></h1>
-      <p class="hero-sub">내 주변 농구 코트 <b>1,200곳</b>을 지도에서 찾고, 폰 하나로 <b>전광판</b>을 켜고, 게스트 모집은 앱이 <b>자동으로</b> 굴립니다.</p>
+      <p class="kicker">농구 라이프 앱</p>
+      <h1>농구를<br>가장 가볍게,<br><span class="g">가장 빠르게.</span></h1>
+      <p class="sub">내 주변 농구 코트 <b>1,200곳</b>을 지도에서 찾고, 폰 하나로 <b>전광판</b>을 켜고, 게스트 모집은 앱이 <b>자동으로</b> 굴립니다.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">
-          App Store에서 받기
-        </a>
-        <a class="btn btn-ghost" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">
-          Android 먼저 써보기
-        </a>
+        <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
+        <a class="btn btn-ghost" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">Android 먼저 써보기</a>
         <p class="cta-note">Android는 사전 테스트 중 — 구글 계정 이메일을 보내주시면 초대해 드려요.</p>
       </div>
     </div>
-    <div class="hero-shot">
-      <img src="assets/04_courts.jpg" width="320" alt="swish 코트맵 화면 — 내 주변 야외 농구 코트가 지도에 표시된 모습" fetchpriority="high">
+
+    <div class="hero-visual">
+      <div class="phone" role="img" aria-label="swish 코트맵 화면 목업 — 지도 위 농구 코트 핀과 코트 정보 카드">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="app-head"><span class="app-title mark">swish</span><span style="color:var(--faint);font-size:14px">⌕</span></div>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">실내</span><span class="chip">야외</span><span class="chip">무료</span></div>
+          <div class="mapview">
+            <svg viewBox="0 0 280 330" aria-hidden="true">
+              <g stroke="#181D28" stroke-width="7" fill="none" stroke-linecap="round">
+                <path d="M -10 70 L 300 40"/><path d="M -10 160 L 300 150"/><path d="M -10 262 L 300 280"/>
+                <path d="M 70 -10 L 90 340"/><path d="M 190 -10 L 175 340"/>
+              </g>
+              <g stroke="#12161f" stroke-width="3" fill="none">
+                <path d="M -10 110 L 300 96"/><path d="M 130 -10 L 138 340"/><path d="M 235 -10 L 228 340"/>
+              </g>
+              <g>
+                <circle cx="120" cy="120" r="17" fill="rgba(255,61,46,.16)"/>
+                <circle cx="120" cy="120" r="12.5" fill="#FF3D2E"/>
+                <text x="120" y="124.5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="Pretendard,sans-serif">12</text>
+              </g>
+              <g fill="#FF3D2E">
+                <circle cx="205" cy="76" r="7"/><circle cx="228" cy="196" r="7"/><circle cx="66" cy="228" r="7"/><circle cx="160" cy="262" r="7"/><circle cx="42" cy="88" r="7"/>
+              </g>
+              <g stroke="#0A0B0F" stroke-width="1" fill="none">
+                <path d="M 198 76 a 7 7 0 0 0 14 0 M 205 69 v 14"/><path d="M 221 196 a 7 7 0 0 0 14 0 M 228 189 v 14"/><path d="M 59 228 a 7 7 0 0 0 14 0 M 66 221 v 14"/><path d="M 153 262 a 7 7 0 0 0 14 0 M 160 255 v 14"/><path d="M 35 88 a 7 7 0 0 0 14 0 M 42 81 v 14"/>
+              </g>
+            </svg>
+            <div class="map-card">
+              <p class="t">반포한강공원 농구장</p>
+              <p class="s">야외 · 골대 4개 · 우레탄 바닥</p>
+              <div class="tags"><span class="tag lime">야간 조명</span><span class="tag">무료</span><span class="tag gold">리뷰 23</span></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <span class="tab"><i></i>홈</span><span class="tab"><i></i>레슨</span><span class="tab"><i></i>게임</span><span class="tab on"><i></i>코트맵</span><span class="tab"><i></i>마이</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
 
 <div class="strip">
   <div class="wrap strip-in">
-    <div class="stat"><div class="n"><em>1,209</em></div><div class="l">지도에 담긴 전국 농구 코트</div></div>
-    <div class="stat"><div class="n">30초</div><div class="l">게임 등록에 걸리는 시간</div></div>
-    <div class="stat"><div class="n">0원</div><div class="l">참가자·수강생 추가 수수료</div></div>
+    <div class="stat rv"><div class="n">1,209</div><div class="l">지도에 담긴 전국 농구 코트</div></div>
+    <div class="stat rv rv-d1"><div class="n">0:30</div><div class="l">게임 등록에 걸리는 시간</div></div>
+    <div class="stat rv rv-d2"><div class="n">+0</div><div class="l">참가자·수강생 추가 수수료</div></div>
   </div>
 </div>
 
 <section class="feat" id="courts">
   <div class="wrap feat-in">
-    <div class="feat-txt">
+    <div class="rv">
       <span class="kicker">코트맵</span>
-      <h2>"여기 농구장 어디지?"<br>30초 안에 끝나는 질문</h2>
-      <p>전국 실외 농구장과 실내 코트 1,200곳 이상을 지도에 담았습니다. 처음 가는 동네에서도 뛸 곳부터 찾으세요.</p>
+      <h2>"여기 농구장 어디지?"<br>30초면 끝나는 질문</h2>
+      <p class="body">전국 실외 농구장과 실내 코트 1,200곳 이상. 처음 가는 동네에서도 뛸 곳부터 찾으세요.</p>
       <ul>
-        <li>실내·실외, 무료 여부 필터<small>야외 조명, 바닥 상태, 골대 수까지</small></li>
+        <li>실내·실외, 무료 여부 필터<small>야간 조명, 바닥 상태, 골대 수까지</small></li>
         <li>다녀온 사람들의 코트 리뷰</li>
         <li>카카오맵으로 바로 길찾기</li>
       </ul>
     </div>
-    <div class="feat-img"><img src="assets/04_courts.jpg" width="300" loading="lazy" alt="코트맵 — 지도 위 농구 코트 핀"></div>
+    <div class="fig rv rv-d1">
+      <div class="phone" role="img" aria-label="코트 상세 목업">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="app-head"><span class="app-title">코트맵</span><span style="color:var(--faint);font-size:14px">⌕</span></div>
+          <div class="chip-row"><span class="chip on">내 주변</span><span class="chip">야외</span><span class="chip">조명</span></div>
+          <div class="mapview">
+            <svg viewBox="0 0 280 330" aria-hidden="true">
+              <g stroke="#181D28" stroke-width="7" fill="none" stroke-linecap="round">
+                <path d="M -10 90 L 300 60"/><path d="M -10 200 L 300 210"/><path d="M 110 -10 L 120 340"/>
+              </g>
+              <g fill="#FF3D2E">
+                <circle cx="80" cy="140" r="7"/><circle cx="196" cy="110" r="7"/><circle cx="150" cy="240" r="7"/><circle cx="236" cy="270" r="7"/>
+              </g>
+              <circle cx="150" cy="240" r="15" fill="none" stroke="#FF3D2E" stroke-width="2" opacity=".5"/>
+            </svg>
+            <div class="map-card">
+              <p class="t">잠원 체육공원 코트</p>
+              <p class="s">야외 · 골대 2개 · 아스팔트</p>
+              <div class="tags"><span class="tag lime">야간 조명</span><span class="tag gold">리뷰 9</span><span class="tag">주차</span></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <span class="tab"><i></i>홈</span><span class="tab"><i></i>레슨</span><span class="tab"><i></i>게임</span><span class="tab on"><i></i>코트맵</span><span class="tab"><i></i>마이</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="feat" id="tools">
-  <div class="wrap feat-in rev">
-    <div class="feat-txt">
+<section class="board-sec" id="tools">
+  <div class="wrap">
+    <div style="text-align:center;max-width:640px;margin:0 auto 40px" class="rv">
       <span class="kicker">코트 도구</span>
-      <h2>혼자여도, 오늘 당장<br>쓸 수 있는 도구</h2>
-      <p>계정 없이도 됩니다. 3대3, 동호회 연습경기, 친선전 — 코트에서 바로 꺼내 쓰세요.</p>
-      <ul>
-        <li>전광판<small>점수 · 쿼터 · 타이머 · 버저를 폰 하나로</small></li>
-        <li>전술판<small>작전을 한 컷에 그려 팀원에게 공유</small></li>
-        <li>컨디션 기록<small>경기 후 피로도·부상 부위 메모</small></li>
-      </ul>
+      <h2>혼자여도, 오늘 당장 쓰는 전광판</h2>
+      <p class="sub">계정 없이도 됩니다. 3대3, 동호회 연습경기, 친선전 — 폰을 눕히면 전광판, 세우면 전술판.</p>
     </div>
-    <div class="feat-img wide"><img src="assets/05_scoreboard.jpg" width="520" loading="lazy" alt="전광판 — 점수와 타이머가 큰 글씨로 표시된 가로 화면"></div>
+    <div class="board rv rv-d1" role="img" aria-label="전광판 화면 목업 — HOME 52 대 AWAY 48, 4쿼터 2분 41초">
+      <div class="board-top"><span>HOME</span><span>Q4</span><span>AWAY</span></div>
+      <div class="score">
+        <div><div class="n">52</div><div class="l">우리팀</div></div>
+        <div class="c blink">:</div>
+        <div><div class="n">48</div><div class="l">상대팀</div></div>
+      </div>
+      <div class="board-bottom"><span>02:41</span><span>·</span><span>SHOT 14</span></div>
+    </div>
+    <p class="board-cap rv rv-d2">전광판 · 전술판 · 경기 후 컨디션 기록까지 — 코트에서 바로.</p>
   </div>
 </section>
 
 <section class="feat" id="games">
-  <div class="wrap feat-in">
-    <div class="feat-txt">
+  <div class="wrap feat-in rev">
+    <div class="fig rv rv-d1">
+      <div class="phone" role="img" aria-label="게임 목록 목업 — 모집 중인 픽업게임 카드와 대기자 자동 승격 알림">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="app-head"><span class="app-title">게임</span><span class="pill scar" style="font-size:10px;padding:5px 11px">+ 게임 등록</span></div>
+          <div class="chip-row"><span class="chip on">오늘</span><span class="chip">내일</span><span class="chip">주말</span></div>
+          <div class="glist">
+            <div class="gcard">
+              <div class="row1"><span class="t">강남 평일 저녁 픽업</span><span class="pill gold">중급</span></div>
+              <p class="meta">오늘 19:00 · 강남구민체육관 · 실내</p>
+              <div class="foot"><span class="cap">8/10명</span><span class="pill scar">마감 임박</span></div>
+            </div>
+            <div class="gcard">
+              <div class="row1"><span class="t">토요 아침 3대3</span><span class="pill lime">입문 환영</span></div>
+              <p class="meta">토 08:00 · 반포한강공원 · 야외</p>
+              <div class="foot"><span class="cap">4/6명</span><span class="pill cob">무료</span></div>
+            </div>
+            <div class="toast">자리가 났어요 — 대기 1번이 자동 확정됐어요</div>
+            <div class="gcard">
+              <div class="row1"><span class="t">주말 풀코트 5대5</span><span class="pill gold">중상급</span></div>
+              <p class="meta">일 14:00 · 송파구민체육관 · 실내</p>
+              <div class="foot"><span class="cap">9/10명</span><span class="pill lime">대기 가능</span></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <span class="tab"><i></i>홈</span><span class="tab"><i></i>레슨</span><span class="tab on"><i></i>게임</span><span class="tab"><i></i>코트맵</span><span class="tab"><i></i>마이</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rv">
       <span class="kicker">게스트 모집</span>
       <h2>단톡방 스크롤 노동은<br>이제 앱이 대신합니다</h2>
-      <p>신청 순번 세기, 입금자명 대조, 대기자 승격 — 매 경기 반복하던 일이 한 화면에서 자동으로 돌아갑니다.</p>
+      <p class="body">신청 순번 세기, 입금자명 대조, 대기자 승격 — 매 경기 반복하던 일이 한 화면에서 자동으로 돌아갑니다.</p>
       <ul>
         <li>지역·날짜·실력대·참가비로 거른 게임 목록</li>
         <li>정원 차면 대기열, 빠지면 자동 승격</li>
@@ -224,12 +401,16 @@
         <li>참가 확정자 전용 채팅방</li>
       </ul>
     </div>
-    <div class="feat-img"><img src="assets/01_games_list.jpg" width="300" loading="lazy" alt="게임 목록 — 오늘 모집 중인 픽업게임"></div>
   </div>
 </section>
 
 <section class="band" id="crew">
-  <div class="band-in">
+  <svg class="band-court" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g stroke="#151821" stroke-width="2" fill="none">
+      <circle cx="700" cy="200" r="90"/><line x1="700" y1="0" x2="700" y2="400"/>
+    </g>
+  </svg>
+  <div class="band-in rv">
     <span class="kicker">정기 픽업 크루 · 오픈 이벤트</span>
     <p class="free">플랫폼 수수료 <em>0원</em></p>
     <p>매주 픽업을 여는 크루라면 — 정원·대기열·참가비 확인을 swish가 대신 굴리고, 오픈 기간에는 수수료를 받지 않습니다. 크루 이전 세팅도 저희가 직접 도와드려요.</p>
@@ -241,26 +422,54 @@
 </section>
 
 <section class="feat" id="lessons">
-  <div class="wrap feat-in rev">
-    <div class="feat-txt">
+  <div class="wrap feat-in">
+    <div class="rv">
       <span class="kicker">농구 레슨</span>
       <h2>레슨은 검증된 코치와,<br>기록이 남게</h2>
-      <p>1:1, 소그룹, 팀 코칭, 입문반. 코치 경력과 실수강 리뷰를 확인하고 앱 안에서 문의부터 신청까지 이어집니다.</p>
+      <p class="body">1:1, 소그룹, 팀 코칭, 입문반. 코치 경력과 실수강 리뷰를 확인하고 앱 안에서 문의부터 신청까지 이어집니다.</p>
       <ul>
         <li>실수강생만 쓰는 검증 리뷰</li>
         <li>인앱 문의 채팅<small>연락처 노출 없이 일정 조율</small></li>
         <li>같은 코치와 오래할수록 코치 수수료 인하<small>코치에게도 좋은 구조</small></li>
       </ul>
     </div>
-    <div class="feat-img"><img src="assets/02_game_detail.jpg" width="300" loading="lazy" alt="상세 화면 — 일정·장소·정원 정보"></div>
+    <div class="fig rv rv-d1">
+      <div class="phone" role="img" aria-label="레슨 목록 목업 — 코치 카드와 평점">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="app-head"><span class="app-title">레슨</span><span style="color:var(--faint);font-size:14px">⌕</span></div>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">입문반</span></div>
+          <div class="glist">
+            <div class="lcard">
+              <span class="ava">김</span>
+              <div><p class="t">기본기부터 잡는 1:1</p><p class="s">김코치 · ★ 4.9 (32) · 강남</p></div>
+              <div class="price"><b>회당 6만원</b><small>오픈 수수료 7.5%</small></div>
+            </div>
+            <div class="lcard">
+              <span class="ava">박</span>
+              <div><p class="t">슛폼 교정 소그룹</p><p class="s">박코치 · ★ 4.8 (17) · 분당</p></div>
+              <div class="price"><b>회당 3만원</b></div>
+            </div>
+            <div class="lcard">
+              <span class="ava">이</span>
+              <div><p class="t">성인 입문반 4주</p><p class="s">이코치 · ★ 5.0 (11) · 송파</p></div>
+              <div class="price"><b>회당 4만원</b></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <span class="tab"><i></i>홈</span><span class="tab on"><i></i>레슨</span><span class="tab"><i></i>게임</span><span class="tab"><i></i>코트맵</span><span class="tab"><i></i>마이</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="tester" id="tester">
-  <div class="wrap tester-in">
+  <div class="wrap tester-in rv">
     <div>
       <span class="kicker">Android 사전 테스트</span>
-      <h2>안드로이드는 지금, 먼저</h2>
+      <h2 style="margin-bottom:0">안드로이드는 지금, 먼저</h2>
       <p>정식 출시 전 테스터를 모집하고 있어요. 구글 계정 이메일 하나면 초대해 드립니다 — 설치하고 2주만 함께해 주세요.</p>
     </div>
     <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">테스터 신청하기</a>
@@ -298,6 +507,21 @@
     <p>© 2026 swish. swish는 통신판매중개자이며, 게임·레슨 거래의 당사자가 아닙니다. 다만 결제·환불 처리는 swish가 직접 담당합니다.</p>
   </div>
 </footer>
+
+<script>
+  (function(){
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".rv").forEach(function(el){ el.classList.add("in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>
