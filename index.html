@@ -4,12 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>swish — 농구 게스트·코트·레슨</title>
-<meta name="description" content="내 주변 농구 코트 1,200곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지. 농구 앱 swish(스위시).">
+<meta name="description" content="내 주변 농구 코트 1,220곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지. 농구 앱 swish(스위시).">
 <meta property="og:title" content="swish — 농구 게스트·코트·레슨">
-<meta property="og:description" content="내 주변 농구 코트 1,200곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지.">
+<meta property="og:description" content="내 주변 농구 코트 1,220곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지.">
 <meta property="og:image" content="https://swish.co.kr/assets/og.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0A0B0F">
+<script>
+  // 모션 게이팅: 감속 선호가 아니면 <html class="anim"> — 초기 상태(투명)를 CSS 가 잡고
+  // Motion 모듈이 애니메이션한다. 모듈이 3.5초 안에 안 오면 클래스를 떼서 그냥 보여준다.
+  (function(){
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.documentElement.classList.add("anim");
+    setTimeout(function(){ if (!window.__swishMotion) document.documentElement.classList.remove("anim"); }, 3500);
+  })();
+</script>
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/icon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -51,16 +60,37 @@
   .sub b{color:var(--ink);font-weight:600}
 
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:16px;padding:16px 28px;border-radius:16px;transition:transform .12s,opacity .12s}
-  .btn:active{transform:scale(.97)}
   .btn-primary{background:var(--scarlet);color:#fff}
   .btn-primary:hover{opacity:.9}
   .btn-ghost{border:1.5px solid var(--line);color:var(--ink)}
   .btn-ghost:hover{border-color:var(--dim)}
 
-  /* ── scroll reveal ── */
-  .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
-  .rv.in{opacity:1;transform:none}
-  .rv-d1{transition-delay:.08s}.rv-d2{transition-delay:.16s}
+  /* ── motion 게이팅 — JS 가 켜지고 reduced-motion 이 아닐 때만 초기 상태를 숨긴다.
+       <html class="anim"> 는 head 의 인라인 스크립트가 붙이고, Motion 모듈이 3.5초 안에
+       안 뜨면(CDN 차단 등) 같은 스크립트가 떼서 콘텐츠를 그대로 보여준다. ── */
+  html.anim [data-reveal]{opacity:0}
+  html.anim .hero-visual{opacity:0}
+  html.anim .pins use{opacity:0}
+  .line{display:block}
+  .progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--grad);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none}
+  .fig,.hero-visual{perspective:1200px}
+  .phone{transform-style:preserve-3d;will-change:transform}
+  .pins use{transform-box:fill-box;transform-origin:50% 100%}
+  .nav-in{transition:height .25s}
+  .nav-shrink .nav-in{height:54px}
+  .sb .pts,.sb .shot{will-change:transform}
+
+  /* ── 최근 업데이트 티커 ── */
+  .ticker{border-bottom:1px solid var(--line-soft);background:var(--panel);overflow:hidden;position:relative}
+  .ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:72px;z-index:2;pointer-events:none}
+  .ticker::before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+  .ticker::after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+  .ticker-track{display:flex;gap:44px;width:max-content;padding:13px 0;animation:tick 46s linear infinite}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  .ti{white-space:nowrap;font-size:13.5px;color:var(--dim);display:inline-flex;align-items:center;gap:9px}
+  .ti b{font-size:10.5px;font-weight:900;letter-spacing:.12em;color:var(--scarlet);border:1px solid rgba(255,61,46,.45);border-radius:99px;padding:2px 8px}
+  .ti .v{font-family:var(--mono);color:var(--faint);font-size:12px}
+  @keyframes tick{to{transform:translateX(-50%)}}
 
   /* ── hero ── */
   .hero{position:relative;padding:96px 0 0;min-height:88vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
@@ -260,7 +290,10 @@
     @keyframes pop{to{opacity:1}}
   }
   @media (prefers-reduced-motion:reduce){
-    .rv{opacity:1;transform:none;transition:none}
+    html.anim [data-reveal],html.anim .hero-visual,html.anim .pins use{opacity:1}
+    .ticker-track{animation:none;flex-wrap:wrap;width:auto;padding:12px 24px;gap:14px 28px}
+    .ticker-track .dup{display:none}
+    .ticker::before,.ticker::after{display:none}
   }
 </style>
 </head>
@@ -286,6 +319,7 @@
     <a class="nav-cta" href="https://apps.apple.com/kr/app/id6767571900">앱 다운로드</a>
   </div>
 </nav>
+<div class="progress" aria-hidden="true"></div>
 
 <header class="hero">
   <svg class="hero-court" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -304,10 +338,10 @@
 
   <div class="wrap hero-in">
     <div>
-      <p class="kicker">농구 앱 swish</p>
-      <h1>코트를 찾고,<br>사람을 모으고,<br><span class="g">오늘 바로 뛴다.</span></h1>
-      <p class="sub">전국 농구 코트 <b>1,209곳</b> 지도, <b>30초</b>면 끝나는 게임 등록, 코트에서 바로 켜는 <b>전광판</b>까지. 농구에 필요한 전부를 앱 하나에 담았습니다.</p>
-      <div class="cta-row">
+      <p class="kicker" data-reveal>농구 앱 swish</p>
+      <h1 data-reveal><span class="line">코트를 찾고,</span><span class="line">사람을 모으고,</span><span class="line g">오늘 바로 뛴다.</span></h1>
+      <p class="sub" data-reveal>전국 농구 코트 <b>1,220곳</b> 지도, <b>30초</b>면 끝나는 게임 등록, 코트에서 바로 켜는 <b>전광판</b>까지. 농구에 필요한 전부를 앱 하나에 담았습니다.</p>
+      <div class="cta-row" data-reveal>
         <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
         <a class="btn btn-ghost" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">Android 먼저 써보기</a>
         <p class="cta-note">Android는 사전 테스트 중 — 구글 계정 이메일을 보내주시면 초대해 드려요.</p>
@@ -343,7 +377,7 @@
                 <path d="M -10 110 L 300 100"/><path d="M -10 265 L 300 258"/><path d="M 130 -10 L 138 370"/><path d="M 235 -10 L 228 370"/><path d="M 30 -10 L 40 370"/>
               </g>
               <!-- 코트 핀 클러스터 (실제 화면처럼 강북/강남 분포) -->
-              <g>
+              <g class="pins">
                 <use href="#pin" x="34" y="52" width="17" height="21"/><use href="#pin" x="60" y="76" width="17" height="21"/>
                 <use href="#pin" x="95" y="58" width="17" height="21"/><use href="#pin" x="120" y="92" width="17" height="21"/>
                 <use href="#pin" x="78" y="118" width="17" height="21"/><use href="#pin" x="150" y="70" width="17" height="21"/>
@@ -380,26 +414,45 @@
 
 <div class="strip">
   <div class="wrap strip-in">
-    <div class="stat rv"><div class="n">1,209</div><div class="l">지도에 등록된 전국 농구 코트</div></div>
-    <div class="stat rv rv-d1"><div class="n">0:30</div><div class="l">게임 등록에 걸리는 시간</div></div>
-    <div class="stat rv rv-d2"><div class="n">24</div><div class="l">샷클락까지 NBA 룰 그대로인 전광판</div></div>
+    <div class="stat" data-reveal><div class="n" data-count="1220">1,220</div><div class="l">지도에 등록된 전국 농구 코트</div></div>
+    <div class="stat" data-reveal><div class="n" data-count="30" data-fmt="clock">0:30</div><div class="l">게임 등록에 걸리는 시간</div></div>
+    <div class="stat" data-reveal><div class="n" data-count="24">24</div><div class="l">샷클락까지 NBA 룰 그대로인 전광판</div></div>
+  </div>
+</div>
+
+<div class="ticker" aria-label="최근 업데이트">
+  <div class="ticker-track">
+    <span class="ti"><b>NEW</b>호스트를 팔로우하면 새 게임 알림<span class="v">0.1.14</span></span>
+    <span class="ti"><b>NEW</b>호스트 프로필에서 예정 게임·팔로워·리뷰를 한눈에</span>
+    <span class="ti"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
+    <span class="ti"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
+    <span class="ti"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
+    <span class="ti"><b>NEW</b>코치 지원 심사 현황을 레슨 관리에서 바로 확인</span>
+    <span class="ti"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
+    <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트를 팔로우하면 새 게임 알림<span class="v">0.1.14</span></span>
+    <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트 프로필에서 예정 게임·팔로워·리뷰를 한눈에</span>
+    <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
+    <span class="ti dup" aria-hidden="true"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
+    <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
+    <span class="ti dup" aria-hidden="true"><b>NEW</b>코치 지원 심사 현황을 레슨 관리에서 바로 확인</span>
+    <span class="ti dup" aria-hidden="true"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
   </div>
 </div>
 
 <section class="feat" id="courts">
   <div class="wrap feat-in">
-    <div class="rv">
-      <span class="kicker">코트맵</span>
-      <h2>"여기 농구장 어디지?"<br>30초 안에 끝납니다</h2>
-      <p class="body">전국 실외 농구장과 실내 코트 <b>1,209곳</b>. 처음 가는 동네에서도 지도 한 번이면 뛸 곳부터 찾습니다.</p>
-      <ul>
+    <div>
+      <span class="kicker" data-reveal>코트맵</span>
+      <h2 data-reveal>"여기 농구장 어디지?"<br>30초 안에 끝납니다</h2>
+      <p class="body" data-reveal>전국 실외 농구장과 실내 코트 <b>1,220곳</b>. 처음 가는 동네에서도 지도 한 번이면 뛸 곳부터 찾습니다.</p>
+      <ul data-reveal>
         <li>실내·실외, 무료 여부, 야간 조명 필터</li>
         <li>바닥 상태, 골대 개수, 주차까지 — 다녀온 사람들의 리뷰<small>카카오맵 길찾기로 바로 연결</small></li>
         <li>지도에 없는 코트는 제보 한 번으로 등록<small>코트맵은 유저와 함께 매일 자랍니다</small></li>
       </ul>
-      <p style="margin-top:18px"><a href="/courts/" style="color:var(--scarlet);font-weight:800;font-size:15px">전국 야외 농구장 1,216곳 웹에서 둘러보기 →</a></p>
+      <p style="margin-top:18px" data-reveal><a href="/courts/" style="color:var(--scarlet);font-weight:800;font-size:15px">전국 야외 농구장을 웹에서 둘러보기 →</a></p>
     </div>
-    <div class="fig rv rv-d1">
+    <div class="fig" data-reveal>
       <!-- 코트맵: 코트 선택 상태 -->
       <div class="phone" role="img" aria-label="코트맵에서 코트를 선택한 화면 — 코트 정보 카드">
         <div class="screen">
@@ -423,11 +476,13 @@
               <g stroke="var(--map-road)" stroke-width="2.5" fill="none">
                 <path d="M -10 226 L 300 220"/><path d="M 200 40 L 192 370"/><path d="M 46 40 L 54 370"/>
               </g>
-              <use href="#pin" x="70" y="196" width="17" height="21"/>
-              <use href="#pin" x="212" y="230" width="17" height="21"/>
-              <use href="#pin" x="160" y="300" width="17" height="21"/>
-              <!-- 선택된 핀 -->
-              <use href="#pin" x="128" y="200" width="24" height="30"/>
+              <g class="pins">
+                <use href="#pin" x="70" y="196" width="17" height="21"/>
+                <use href="#pin" x="212" y="230" width="17" height="21"/>
+                <use href="#pin" x="160" y="300" width="17" height="21"/>
+                <!-- 선택된 핀 -->
+                <use href="#pin" x="128" y="200" width="24" height="30"/>
+              </g>
               <circle cx="140" cy="234" r="4" fill="rgba(255,61,46,.25)"/>
             </svg>
             <div class="map-chips">
@@ -455,13 +510,13 @@
 
 <section class="board-sec" id="tools">
   <div class="wrap">
-    <div style="text-align:center;max-width:640px;margin:0 auto 40px" class="rv">
-      <span class="kicker">전광판</span>
-      <h2>폰을 눕히는 순간,<br>체육관 전광판이 됩니다</h2>
-      <p class="sub">점수, 쿼터, 타이머, 24초 샷클락, 파울, 작전타임까지 — NBA 룰 그대로. 로그인 없이, 같이 뛰는 사람이 없어도 오늘 당장 씁니다.</p>
+    <div style="text-align:center;max-width:640px;margin:0 auto 40px">
+      <span class="kicker" data-reveal>전광판</span>
+      <h2 data-reveal>폰을 눕히는 순간,<br>체육관 전광판이 됩니다</h2>
+      <p class="sub" data-reveal>점수, 쿼터, 타이머, 24초 샷클락, 파울, 작전타임까지 — NBA 룰 그대로. 로그인 없이, 같이 뛰는 사람이 없어도 오늘 당장 씁니다.</p>
     </div>
     <!-- 실제 전광판 가로 화면 재현 -->
-    <div class="sb-frame rv rv-d1" role="img" aria-label="swish 전광판 화면 — HOME 52 대 AWAY 48, 2쿼터 5분 41초, 24초 샷클락">
+    <div class="sb-frame" data-reveal data-sb role="img" aria-label="swish 전광판 화면 — HOME 52 대 AWAY 48, 2쿼터 5분 41초, 24초 샷클락">
       <div class="sb">
         <div class="side home">
           <p class="team">HOME</p>
@@ -485,13 +540,13 @@
         </div>
       </div>
     </div>
-    <p class="board-cap rv rv-d2"><b>전술판</b>에 작전을 그려 팀원에게 공유하고, 경기 후엔 <b>컨디션 기록</b>까지 — 전부 무료입니다.</p>
+    <p class="board-cap" data-reveal><b>전술판</b>에 작전을 그려 팀원에게 공유하고, 경기 후엔 <b>컨디션 기록</b>까지 — 전부 무료입니다.</p>
   </div>
 </section>
 
 <section class="feat" id="games">
   <div class="wrap feat-in rev">
-    <div class="fig rv rv-d1">
+    <div class="fig" data-reveal>
       <!-- 실제 게임 탭 화면 -->
       <div class="phone" role="img" aria-label="swish 게임 화면 — 날짜·레벨 필터와 모집 중인 게임 카드">
         <div class="screen">
@@ -510,14 +565,14 @@
           <div class="chip-row"><span class="chip on">전체</span><span class="chip">입문</span><span class="chip">초급</span><span class="chip">중급</span><span class="chip">고급</span><span class="chip">엘리트</span></div>
           <div class="list-head">전체 게임</div>
           <div class="glist">
-            <div class="gcard">
+            <div class="gcard" data-reveal>
               <div class="row1"><span class="t">오늘 저녁 가볍게, 입문 환영</span><span class="pill lav">입문</span></div>
               <div class="host"><span class="ava">민</span>민준 호스트</div>
               <p class="meta">5/24 (일) 19:00 · 90분</p>
               <p class="meta">강남구민체육관 1코트 · 1.2km</p>
               <div class="foot"><span class="cap">4/10명 <span class="pill coral">⏰ 마감 임박</span></span><span class="fee">무료</span></div>
             </div>
-            <div class="gcard">
+            <div class="gcard" data-reveal>
               <div class="row1"><span class="t">내일 오전 야외 초급반</span><span class="pill lav">초급</span></div>
               <div class="host"><span class="ava">서</span>서연 호스트</div>
               <p class="meta">5/25 (월) 10:00 · 120분</p>
@@ -535,15 +590,16 @@
         </div>
       </div>
     </div>
-    <div class="rv">
-      <span class="kicker">픽업게임</span>
-      <h2>오늘 뛸 게임,<br>한눈에 모집중</h2>
-      <p class="body">지역·날짜·레벨로 거르고 바로 신청합니다. <b>입문부터 엘리트까지</b> — 수준이 맞는 게임에서 뜁니다.</p>
-      <ul>
+    <div>
+      <span class="kicker" data-reveal>픽업게임</span>
+      <h2 data-reveal>오늘 뛸 게임,<br>한눈에 모집중</h2>
+      <p class="body" data-reveal>지역·날짜·레벨로 거르고 바로 신청합니다. <b>입문부터 엘리트까지</b> — 수준이 맞는 게임에서 뜁니다.</p>
+      <ul data-reveal>
         <li>게임 등록 30초 — 누구나 호스트가 됩니다<small>매주 반복되는 정기 픽업도 한 번에 등록</small></li>
         <li>정원이 차면 대기열, 자리가 나면 자동 승격</li>
         <li>신청 순번 세기, 입금자명 대조 — 단톡방에서 하던 일은 앱이 합니다</li>
         <li>매너 리뷰와 노쇼 신고<small>처음 보는 사람과 뛰어도, 상대를 알고 시작합니다</small></li>
+        <li>마음에 드는 호스트는 팔로우<small>새 게임을 올리면 바로 알림이 와요</small></li>
       </ul>
     </div>
   </div>
@@ -555,12 +611,12 @@
       <circle cx="700" cy="200" r="90"/><line x1="700" y1="0" x2="700" y2="400"/>
     </g>
   </svg>
-  <div class="band-in rv">
-    <span class="kicker">동호회·크루 운영자님께</span>
-    <p class="free">플랫폼 수수료 <em>0원</em></p>
-    <p>매주 게스트 몇 명 오는지, 누가 입금했는지 세고 계신가요? <b>정원·대기열·참가비 확인</b>을 swish가 대신합니다. 오픈 기간에는 플랫폼 수수료 없이, 카드사에 내는 <b>결제 수수료 3.4%만</b> 부담하시면 됩니다. 쓰던 단톡방에서 옮겨오는 세팅도 저희가 직접 돕습니다.</p>
-    <p class="fine">오픈 기간: 플랫폼 수수료 0원 + 결제 수수료 3.4% · 이후 정가 8% (결제 수수료 포함, 호스트 92% 보장)</p>
-    <div class="cta-row">
+  <div class="band-in">
+    <span class="kicker" data-reveal>동호회·크루 운영자님께</span>
+    <p class="free" data-reveal>플랫폼 수수료 <em data-pop>0원</em></p>
+    <p data-reveal>매주 게스트 몇 명 오는지, 누가 입금했는지 세고 계신가요? <b>정원·대기열·입금 확인</b>을 swish가 대신합니다. 참가비는 게스트가 <b>호스트 계좌로 직접</b> 보내고, swish는 대금을 보관하지도 수수료를 떼지도 않습니다. 쓰던 단톡방에서 옮겨오는 세팅도 저희가 직접 돕습니다.</p>
+    <p class="fine" data-reveal>현재 참가비는 호스트 계좌로 직접 송금하는 방식이며, swish가 받는 수수료는 없습니다. 앱 내 카드 결제는 준비 중이에요. 도입되면 게스트가 내는 참가비는 그대로이고, 카드 결제수수료 3.3%만 정산에서 차감됩니다.</p>
+    <div class="cta-row" data-reveal>
       <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%ED%81%AC%EB%A3%A8%20%EB%93%B1%EB%A1%9D%20%EB%AC%B8%EC%9D%98">크루 등록 문의하기</a>
     </div>
   </div>
@@ -568,18 +624,19 @@
 
 <section class="feat" id="lessons">
   <div class="wrap feat-in">
-    <div class="rv">
-      <span class="kicker">농구 레슨</span>
-      <h2>코치 찾기부터 결제까지,<br>계좌번호 DM 없이</h2>
-      <p class="body">1:1, 소그룹, 팀 코칭, 입문클래스. 코치 경력과 리뷰를 확인하고, 앱 안에서 문의하고, 안전하게 선결제합니다.</p>
-      <ul>
+    <div>
+      <span class="kicker" data-reveal>농구 레슨</span>
+      <h2 data-reveal>코치 찾기부터 결제까지,<br>계좌번호 DM 없이</h2>
+      <p class="body" data-reveal>1:1, 소그룹, 팀 코칭, 입문클래스. 코치 경력과 리뷰를 확인하고, 앱 안에서 문의하고, 안전하게 선결제합니다.</p>
+      <ul data-reveal>
         <li>경력·평점·실수강 리뷰가 있는 코치 프로필</li>
         <li>인앱 채팅으로 일정 조율<small>연락처를 먼저 주고받지 않아도 됩니다</small></li>
         <li>선결제 후 수업, 끝나면 정산<small>계좌번호를 DM으로 보내는 일은 이제 없습니다</small></li>
         <li>같은 코치와 오래할수록 코치 수수료 인하</li>
       </ul>
+      <p class="fine" data-reveal>유료 레슨의 앱 내 결제는 현재 준비 중입니다. 지금은 코치 프로필과 문의 채팅을 먼저 이용해 주세요.</p>
     </div>
-    <div class="fig rv rv-d1">
+    <div class="fig" data-reveal>
       <!-- 실제 레슨 탭 화면 -->
       <div class="phone" role="img" aria-label="swish 레슨 화면 — 레슨 유형 필터와 레슨 카드">
         <div class="screen">
@@ -594,19 +651,19 @@
           <div class="chip-row" style="padding-top:6px"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">팀 코칭</span><span class="chip">입문클래스</span></div>
           <div class="chip-row"><span class="chip">가까운 순</span></div>
           <div class="glist" style="padding-top:2px">
-            <div class="lcard">
+            <div class="lcard" data-reveal>
               <div class="row1"><span class="t">기본기부터 잡는 1:1 레슨</span><span class="pill neutral">1:1</span></div>
               <div class="host"><span class="ava">김</span>김코치</div>
               <div class="lv"><span class="pill lav">입문·초급</span>강남 · 1.2km</div>
               <div class="foot"><span class="cap">2/4명</span><span class="price">회당 60,000원</span></div>
             </div>
-            <div class="lcard">
+            <div class="lcard" data-reveal>
               <div class="row1"><span class="t">슛폼 교정 소그룹 클래스</span><span class="pill neutral">소그룹</span></div>
               <div class="host"><span class="ava">박</span>박코치</div>
               <div class="lv"><span class="pill cob">중급</span>분당 · 4.5km</div>
               <div class="foot"><span class="cap">3/6명</span><span class="price">회당 30,000원</span></div>
             </div>
-            <div class="lcard">
+            <div class="lcard" data-reveal>
               <div class="row1"><span class="t">성인 입문클래스 4주 과정</span><span class="pill neutral">입문클래스</span></div>
               <div class="host"><span class="ava">이</span>이코치</div>
               <div class="lv"><span class="pill lav">입문</span>송파 · 3.1km</div>
@@ -627,20 +684,20 @@
 </section>
 
 <section class="tester" id="tester">
-  <div class="wrap tester-in rv">
+  <div class="wrap tester-in">
     <div>
-      <span class="kicker">Android 사전 테스트</span>
-      <h2 style="margin-bottom:0">Android는 테스터로 먼저</h2>
-      <p>구글 계정 이메일 하나만 보내주시면 바로 초대해 드려요. 설치하고 2주 — 여러분의 피드백이 정식 출시 버전이 됩니다.</p>
+      <span class="kicker" data-reveal>Android 사전 테스트</span>
+      <h2 style="margin-bottom:0" data-reveal>Android는 테스터로 먼저</h2>
+      <p data-reveal>정식 출시 전 마지막 테스트가 진행 중이에요. 구글 계정 이메일 하나만 보내주시면 바로 초대해 드려요. 설치하고 2주 — 여러분의 피드백이 정식 출시 버전이 됩니다.</p>
     </div>
-    <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">테스터 신청하기</a>
+    <a class="btn btn-primary" data-reveal href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">테스터 신청하기</a>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div>
+      <div data-reveal>
         <p class="foot-mark">swish</p>
         <p>농구할 코트를 찾고, 같이 뛸 사람을 구하고, 경기까지 굴러가게 하는 농구 앱.</p>
         <p class="legal" style="margin-top:10px">
@@ -651,10 +708,11 @@
           <a href="/courts/">전국 농구장</a>
         </p>
       </div>
-      <div class="biz">
+      <div class="biz" data-reveal>
         <h3>사업자 정보</h3>
         <!-- 통신판매업 신고번호 2026-09-05 확정(2023-용인기흥-5437).
-             유선번호는 운영상 미사용 — 연락처는 이메일(문의)로 단일화(2026-09-07). -->
+             유선번호는 운영상 미사용 — 연락처는 이메일(문의)로 단일화(2026-09-07).
+             값은 src/lib/business-info.ts SSOT 와 일치시킬 것. -->
         <p>
           <span>상호: 쁘니크</span>
           <span>대표: 김태형</span>
@@ -669,19 +727,128 @@
   </div>
 </footer>
 
-<script>
-  (function(){
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll(".rv").forEach(function(el){ el.classList.add("in"); });
-      return;
+<script type="module">
+  // Motion (motion.dev) 13.3.0 — 하드웨어 가속 WAAPI + ScrollTimeline. 버전 고정.
+  import { animate, inView, scroll, stagger, hover, press }
+    from "https://cdn.jsdelivr.net/npm/motion@13.3.0/+esm";
+
+  window.__swishMotion = true;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const enter  = !reduce && document.documentElement.classList.contains("anim"); // 모듈이 제때 왔을 때만 입장 애니메이션
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const EASE = [0.2, 0.65, 0.2, 1];
+
+  const popPins = (group, startDelay) => {
+    if (!group) return;
+    animate($$("use", group), { opacity: [0, 1], scale: [0, 1] },
+      { delay: stagger(0.05, { startDelay }), type: "spring", bounce: 0.5, duration: 0.6 });
+  };
+  const countUp = (el) => {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    const to = Number(el.dataset.count), fmt = el.dataset.fmt;
+    animate(0, to, { duration: 1.5, ease: "easeOut", onUpdate: (v) => {
+      const n = Math.round(v);
+      el.textContent = fmt === "clock" ? "0:" + String(n).padStart(2, "0") : n.toLocaleString("ko-KR");
+    }});
+  };
+
+  if (!reduce) {
+    // ── 히어로: 로드 즉시 순차 등장, 코트 라인은 스크롤에 따라 깊이감 ──
+    if (enter) {
+      // 백그라운드 탭에서 열리면(visibilityState hidden) WAAPI 타임라인이 멈춰 있으므로,
+      // 탭이 보이는 순간부터 입장 애니메이션을 시작한다.
+      const startHero = () => {
+        animate($$(".hero [data-reveal]"), { opacity: [0, 1], y: [22, 0] },
+          { delay: stagger(0.09, { startDelay: 0.1 }), duration: 0.8, ease: EASE });
+        animate(".hero-visual", { opacity: [0, 1], y: [48, 0], rotate: [2.5, 0] },
+          { duration: 1, delay: 0.35, ease: EASE });
+        popPins($(".hero .pins"), 0.9);
+      };
+      if (document.visibilityState === "hidden") {
+        document.addEventListener("visibilitychange", () => startHero(), { once: true });
+      } else {
+        startHero();
+      }
     }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.18 });
-    document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
-  })();
+    scroll(animate(".hero-court", { y: [0, 110], opacity: [1, 0.35] }, { ease: "linear" }),
+      { target: $(".hero"), offset: ["start start", "end start"] });
+
+    // ── 읽기 진행 바 + 스크롤 시 내비 축소 ──
+    scroll(animate(".progress", { scaleX: [0, 1] }, { ease: "linear" }));
+    scroll((p) => document.body.classList.toggle("nav-shrink", p > 0.02));
+
+    // ── 섹션: 뷰포트 진입 시 1회, 자식 순차 등장 + 숫자 카운트업 + 핀 팝 ──
+    $$("section, .strip, footer").forEach((sec) => {
+      const els = $$("[data-reveal]", sec);
+      const stop = inView(sec, () => {
+        if (enter) {
+          animate(els, { opacity: [0, 1], y: [24, 0] }, { delay: stagger(0.08), duration: 0.7, ease: EASE });
+          popPins($(".pins", sec), 0.3);
+          const pop = $("[data-pop]", sec);
+          if (pop) animate(pop, { scale: [0.55, 1] }, { type: "spring", bounce: 0.45, duration: 0.9, delay: 0.15 });
+        }
+        $$("[data-count]", sec).forEach(countUp);
+        stop();
+      }, { amount: 0.18, margin: "0px 0px -8% 0px" });
+    });
+
+    // ── 전광판 데모: 보이는 동안만 시계·샷클락이 돌고 득점이 난다 ──
+    const sb = $("[data-sb]");
+    if (sb) {
+      const homeP = $(".side.home .pts", sb), awayP = $(".side.away .pts", sb);
+      const clock = $(".clock .n", sb), shot = $(".shot", sb);
+      const btns = { home: $$(".side.home .b", sb), away: $$(".side.away .b", sb) };
+      let h = 52, a = 48, secs = 341, sc = 24, i = 0, timer = null;
+      const script = [
+        { at: 9, t: "home", p: 2 }, { at: 3, t: "away", p: 3 }, { at: 0 },
+        { at: 12, t: "away", p: 2 }, { at: 5, t: "home", p: 3 }, { at: 0 },
+        { at: 15, t: "home", p: 2 }, { at: 7, t: "away", p: 2 },
+      ];
+      const fmt = (s) => String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+      const score = (t, p) => {
+        if (t === "home") h += p; else a += p;
+        const el = t === "home" ? homeP : awayP;
+        el.textContent = t === "home" ? h : a;
+        animate(el, { scale: [1, 1.3, 1], color: ["#fff", t === "home" ? "#FF3D2E" : "#5B7CFF", "#fff"] }, { duration: 0.65, ease: "easeOut" });
+        const b = btns[t][p - 1];
+        if (b) animate(b, { scale: [1, 0.82, 1], opacity: [1, 0.55, 1] }, { duration: 0.35 });
+      };
+      const tick = () => {
+        secs = secs > 0 ? secs - 1 : 341;
+        sc -= 1;
+        clock.textContent = fmt(secs);
+        const ev = script[i % script.length];
+        if (sc <= ev.at) {
+          if (ev.t) score(ev.t, ev.p);
+          else animate(shot, { color: ["#8A90A2", "#FF3D2E", "#8A90A2"], scale: [1, 1.15, 1] }, { duration: 0.7 });
+          sc = 24; i += 1;
+        }
+        shot.textContent = sc;
+        if (sc <= 5) animate(shot, { scale: [1, 1.1, 1] }, { duration: 0.3 });
+      };
+      inView(sb, () => { timer = setInterval(tick, 1000); return () => clearInterval(timer); }, { amount: 0.4 });
+    }
+
+    // ── "마감 임박" 배지 맥동 (보일 때만) ──
+    $$(".pill.coral").forEach((pill) =>
+      inView(pill, () => { const an = animate(pill, { opacity: [1, 0.5, 1] }, { duration: 1.4, repeat: Infinity }); return () => an.stop(); }));
+
+    // ── 제스처: 버튼 눌림·호버 리프트, 폰 목업 3D 기울임 ──
+    press(".btn, .nav-cta", (el) => {
+      animate(el, { scale: 0.96 }, { duration: 0.1 });
+      return () => animate(el, { scale: 1 }, { type: "spring", bounce: 0.4, duration: 0.5 });
+    });
+    hover(".btn-primary, .nav-cta", (el) => {
+      animate(el, { y: -2 }, { duration: 0.2 });
+      return () => animate(el, { y: 0 }, { duration: 0.25 });
+    });
+    hover(".phone", (el) => {
+      animate(el, { rotateY: -7, rotateX: 4, y: -8 }, { duration: 0.5, ease: EASE });
+      return () => animate(el, { rotateY: 0, rotateX: 0, y: 0 }, { duration: 0.6, ease: EASE });
+    });
+  }
 </script>
 
 </body>
