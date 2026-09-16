@@ -587,14 +587,14 @@
           <div class="chip-row"><span class="chip on">전체</span><span class="chip">입문</span><span class="chip">초급</span><span class="chip">중급</span><span class="chip">고급</span><span class="chip">엘리트</span></div>
           <div class="list-head">전체 게임</div>
           <div class="glist">
-            <div class="gcard" data-reveal>
+            <div class="gcard">
               <div class="row1"><span class="t">오늘 저녁 가볍게, 입문 환영</span><span class="pill lav">입문</span></div>
               <div class="host"><span class="ava">민</span>민준 호스트</div>
               <p class="meta">5/24 (일) 19:00 · 90분</p>
               <p class="meta">강남구민체육관 1코트 · 1.2km</p>
               <div class="foot"><span class="cap">4/10명 <span class="pill coral">⏰ 마감 임박</span></span><span class="fee">무료</span></div>
             </div>
-            <div class="gcard" data-reveal>
+            <div class="gcard">
               <div class="row1"><span class="t">내일 오전 야외 초급반</span><span class="pill lav">초급</span></div>
               <div class="host"><span class="ava">서</span>서연 호스트</div>
               <p class="meta">5/25 (월) 10:00 · 120분</p>
@@ -622,19 +622,19 @@
           <div class="chip-row" style="padding-top:6px"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">팀 코칭</span><span class="chip">입문클래스</span></div>
           <div class="chip-row"><span class="chip">가까운 순</span></div>
           <div class="glist" style="padding-top:2px">
-            <div class="lcard" data-reveal>
+            <div class="lcard">
               <div class="row1"><span class="t">기본기부터 잡는 1:1 레슨</span><span class="pill neutral">1:1</span></div>
               <div class="host"><span class="ava">김</span>김코치</div>
               <div class="lv"><span class="pill lav">입문·초급</span>강남 · 1.2km</div>
               <div class="foot"><span class="cap">2/4명</span><span class="price">회당 60,000원</span></div>
             </div>
-            <div class="lcard" data-reveal>
+            <div class="lcard">
               <div class="row1"><span class="t">슛폼 교정 소그룹 클래스</span><span class="pill neutral">소그룹</span></div>
               <div class="host"><span class="ava">박</span>박코치</div>
               <div class="lv"><span class="pill cob">중급</span>분당 · 4.5km</div>
               <div class="foot"><span class="cap">3/6명</span><span class="price">회당 30,000원</span></div>
             </div>
-            <div class="lcard" data-reveal>
+            <div class="lcard">
               <div class="row1"><span class="t">성인 입문클래스 4주 과정</span><span class="pill neutral">입문클래스</span></div>
               <div class="host"><span class="ava">이</span>이코치</div>
               <div class="lv"><span class="pill lav">입문</span>송파 · 3.1km</div>
@@ -1103,7 +1103,11 @@
       const screens = $$(".screen", stick);
       let pinsDone = false;
       const show = (i) => {
+        if (stick.dataset.active === String(i) && (i !== 0 || pinsDone)) return;
         stick.dataset.active = String(i); // 전환은 CSS transition 이 맡는다
+        // 활성 화면의 카드는 순차로 떠오른다 (복제본엔 data-reveal 이 없어 JS 없이도 보인다)
+        const cards = $$(".gcard, .lcard", screens[i]);
+        if (cards.length) animate(cards, { opacity: [0, 1], y: [12, 0] }, { delay: stagger(0.07, { startDelay: 0.25 }), duration: 0.5, ease: EASE });
         if (i === 0 && !pinsDone) { pinsDone = true; popPins($(".pins", screens[0]), 0.2); }
       };
       ["#courts", "#games", "#lessons"].forEach((id, i) => inView(id, () => show(i), { amount: 0.5 }));
