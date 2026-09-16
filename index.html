@@ -358,6 +358,7 @@
   @media (prefers-reduced-motion:reduce){
     html.anim [data-reveal],html.anim .hero-visual,html.anim .pins use{opacity:1}
     .ticker-track{animation:none;flex-wrap:wrap;width:auto;padding:12px 24px;gap:14px 28px}
+    .story-stick .screen{transition:none}
     .ticker-track .dup{display:none}
     .ticker::before,.ticker::after{display:none}
   }
@@ -1031,6 +1032,71 @@
     }});
   };
 
+  // ── 기능 동작(감속 선호와 무관): 스토리 화면 전환 · 점 내비 · 모바일 CTA ──
+  // 스토리: 뷰포트 중앙에 가장 가까운 섹션의 화면을 보여준다 — IntersectionObserver 임계치가
+  // 아니라 스크롤 좌표 계산이라 어느 위치·속도에서도 결정적으로 바뀐다.
+  const stick = $(".story-stick");
+  if (stick) {
+    const screens = $$(".screen", stick);
+    const secs = ["#courts", "#games", "#lessons"].map((id) => $(id));
+    let pinsDone = false, raf = 0;
+    const show = (i) => {
+      if (stick.dataset.active === String(i)) return;
+      stick.dataset.active = String(i);
+      const cards = $$(".gcard, .lcard", screens[i]);
+      if (cards.length && !reduce) animate(cards, { opacity: [0, 1], y: [12, 0] }, { delay: stagger(0.07, { startDelay: 0.2 }), duration: 0.5, ease: EASE });
+    };
+    const pick = () => {
+      raf = 0;
+      if (!matchMedia("(min-width: 920px) and (min-height: 700px)").matches) return;
+      const mid = innerHeight / 2;
+      let best = 0, bestD = Infinity;
+      secs.forEach((sec, i) => {
+        if (!sec) return;
+        const r = sec.getBoundingClientRect();
+        const d = Math.abs((r.top + r.bottom) / 2 - mid);
+        if (d < bestD) { bestD = d; best = i; }
+      });
+      show(best);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(pick); };
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    pick();
+    if (!reduce && !pinsDone) { pinsDone = true; popPins($(".pins", screens[0]), 0.6); }
+  }
+
+  // 점 내비 활성 표시 — 뷰포트 중앙이 어느 섹션에 있는지
+  const dots = $$(".dots a");
+  if (dots.length) {
+    const targets = dots.map((a) => $(a.getAttribute("href")));
+    let raf2 = 0;
+    const pickDot = () => {
+      raf2 = 0;
+      const mid = innerHeight / 2;
+      let idx = -1;
+      targets.forEach((t, i) => { if (t) { const r = t.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) idx = i; } });
+      dots.forEach((a, i) => a.classList.toggle("on", i === idx));
+    };
+    addEventListener("scroll", () => { if (!raf2) raf2 = requestAnimationFrame(pickDot); }, { passive: true });
+    pickDot();
+  }
+
+  // 모바일 스티키 CTA: 히어로를 지나면 뜨고, 골인 섹션·푸터에선 숨긴다
+  const mcta = $(".mcta");
+  if (mcta) {
+    const heroEl = $(".hero"), goalEl = $("#goal");
+    const updateCta = () => {
+      if (innerWidth >= 920) { mcta.classList.remove("show"); return; }
+      const past = scrollY > heroEl.offsetHeight - 80;
+      const atEnd = goalEl && scrollY + innerHeight > goalEl.getBoundingClientRect().top + scrollY + 40;
+      mcta.classList.toggle("show", past && !atEnd);
+    };
+    addEventListener("scroll", updateCta, { passive: true });
+    addEventListener("resize", updateCta);
+    updateCta();
+  }
+
   if (!reduce) {
     // ── 히어로: 로드 즉시 순차 등장, 코트 라인은 스크롤에 따라 깊이감 ──
     if (enter) {
@@ -1095,41 +1161,6 @@
         animate(hp, { rotateY: 0, rotateX: 0 }, { duration: 0.7, ease: EASE });
         if (glow) animate(glow, { x: 0, y: 0 }, { duration: 0.9, ease: EASE });
       });
-    }
-
-    // ── 스토리: 고정된 폰의 화면이 섹션에 맞춰 바뀐다 (데스크톱) ──
-    const stick = $(".story-stick");
-    if (stick && matchMedia("(min-width: 920px) and (min-height: 700px)").matches) {
-      const screens = $$(".screen", stick);
-      let pinsDone = false;
-      const show = (i) => {
-        if (stick.dataset.active === String(i) && (i !== 0 || pinsDone)) return;
-        stick.dataset.active = String(i); // 전환은 CSS transition 이 맡는다
-        // 활성 화면의 카드는 순차로 떠오른다 (복제본엔 data-reveal 이 없어 JS 없이도 보인다)
-        const cards = $$(".gcard, .lcard", screens[i]);
-        if (cards.length) animate(cards, { opacity: [0, 1], y: [12, 0] }, { delay: stagger(0.07, { startDelay: 0.25 }), duration: 0.5, ease: EASE });
-        if (i === 0 && !pinsDone) { pinsDone = true; popPins($(".pins", screens[0]), 0.2); }
-      };
-      ["#courts", "#games", "#lessons"].forEach((id, i) => inView(id, () => show(i), { amount: 0.5 }));
-    }
-
-    // ── 점 내비 활성 표시 ──
-    $$(".dots a").forEach((a) => {
-      const target = $(a.getAttribute("href"));
-      if (target) inView(target, () => { $$(".dots a").forEach((x) => x.classList.toggle("on", x === a)); }, { amount: 0.4 });
-    });
-
-    // ── 모바일 스티키 CTA: 히어로를 지나면 뜨고, 골인 섹션·푸터에선 숨긴다 ──
-    const mcta = $(".mcta");
-    if (mcta && innerWidth < 920) {
-      const heroEl = $(".hero"), goalEl = $("#goal");
-      const updateCta = () => {
-        const past = scrollY > heroEl.offsetHeight - 80;
-        const atEnd = goalEl && scrollY + innerHeight > goalEl.offsetTop + 40;
-        mcta.classList.toggle("show", past && !atEnd);
-      };
-      addEventListener("scroll", updateCta, { passive: true });
-      updateCta();
     }
 
     // ── 스크롤 연결 (scrub): 섹션 진입·이탈에 좌표가 묶인다 ──
