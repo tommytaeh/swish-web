@@ -4,21 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>swish — 농구 게스트·코트·레슨</title>
-<meta name="description" content="내 주변 농구 코트 1,220곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지. 농구 앱 swish(스위시).">
+<meta name="description" content="내 주변 농구 코트 1,200곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지. 농구 앱 swish(스위시).">
 <meta property="og:title" content="swish — 농구 게스트·코트·레슨">
-<meta property="og:description" content="내 주변 농구 코트 1,220곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지.">
+<meta property="og:description" content="내 주변 농구 코트 1,200곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지.">
 <meta property="og:image" content="https://swish.co.kr/assets/og.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0A0B0F">
-<script>
-  // 모션 게이팅: 감속 선호가 아니면 <html class="anim"> — 초기 상태(투명)를 CSS 가 잡고
-  // Motion 모듈이 애니메이션한다. 모듈이 3.5초 안에 안 오면 클래스를 떼서 그냥 보여준다.
-  (function(){
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    document.documentElement.classList.add("anim");
-    setTimeout(function(){ if (!window.__swishMotion) document.documentElement.classList.remove("anim"); }, 3500);
-  })();
-</script>
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/icon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -60,99 +51,16 @@
   .sub b{color:var(--ink);font-weight:600}
 
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:16px;padding:16px 28px;border-radius:16px;transition:transform .12s,opacity .12s}
+  .btn:active{transform:scale(.97)}
   .btn-primary{background:var(--scarlet);color:#fff}
   .btn-primary:hover{opacity:.9}
   .btn-ghost{border:1.5px solid var(--line);color:var(--ink)}
   .btn-ghost:hover{border-color:var(--dim)}
 
-  /* ── motion 게이팅 — JS 가 켜지고 reduced-motion 이 아닐 때만 초기 상태를 숨긴다.
-       <html class="anim"> 는 head 의 인라인 스크립트가 붙이고, Motion 모듈이 3.5초 안에
-       안 뜨면(CDN 차단 등) 같은 스크립트가 떼서 콘텐츠를 그대로 보여준다. ── */
-  html.anim [data-reveal]{opacity:0}
-  html.anim .hero-visual{opacity:0}
-  html.anim .pins use{opacity:0}
-  .line{display:block}
-  .progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--grad);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none}
-  .fig,.hero-visual{perspective:1200px}
-  .phone{transform-style:preserve-3d;will-change:transform}
-  .pins use{transform-box:fill-box;transform-origin:50% 100%}
-  .nav-in{transition:height .25s}
-  .nav-shrink .nav-in{height:54px}
-  .sb .pts,.sb .shot{will-change:transform}
-
-  /* ── 스크롤 연결 — 섹션을 넘나드는 공 + 스크럽 요소 ── */
-  .ball{position:fixed;left:0;top:0;width:34px;height:34px;z-index:35;pointer-events:none;opacity:0;will-change:transform;filter:drop-shadow(0 10px 14px rgba(0,0,0,.6))}
-  .ball svg{width:100%;height:100%;display:block}
-  .ball-anchor{position:absolute;width:1px;height:1px;pointer-events:none}
-  .stat,.feat-in,.board-sec>.wrap,.tester-in,footer>.wrap{position:relative}
-  .arc-ball.off{visibility:hidden}
-  .board-sec>.wrap{perspective:1400px}
-  .sb-frame{transform-origin:50% 100%;will-change:transform}
-  .fig,.copy,.band-in,.hero-visual .float,.ticker-drift{will-change:transform}
-  @media (max-width:719px){.ball{display:none}}
-
-  /* ── 스토리: 데스크톱은 폰 하나가 고정된 채 화면만 바뀐다 (Apple 제품 페이지 패턴) ── */
-  .story{position:relative}
-  .story-phone{display:none}
-  @media (min-width:920px){
-    .story-phone{display:block;position:absolute;top:0;right:0;width:50%;height:100%;pointer-events:none}
-    .story-stick{position:sticky;top:max(72px,calc(50vh - 340px));height:680px;display:flex;align-items:center;justify-content:center;pointer-events:auto;perspective:1200px}
-    .story-stick .phone{position:relative}
-    .story-stick .screen{position:absolute;inset:11px;opacity:0;transform:translateY(14px) scale(.97);transition:opacity .45s cubic-bezier(.2,.65,.2,1),transform .45s cubic-bezier(.2,.65,.2,1)}
-    .story-stick[data-active="0"] .screen[data-screen="0"],.story-stick[data-active="1"] .screen[data-screen="1"],.story-stick[data-active="2"] .screen[data-screen="2"]{opacity:1;transform:none}
-    .story .fig{display:none}
-    .story section.feat{min-height:100vh;display:flex;align-items:center}
-    .story section.feat>.wrap{width:100%}
-  }
-  /* ── 히어로 글로우 + 헤드라인 마스크 ── */
-  .hero-glow{position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(255,61,46,.30) 0%,rgba(139,92,246,.18) 40%,transparent 68%);filter:blur(28px);pointer-events:none;will-change:transform}
-  .hero-visual .float{position:relative}
-  html.anim .hero h1 .line{clip-path:inset(0 0 100% 0)}
-  /* ── 모바일 스티키 CTA (thumb zone) ── */
-  .mcta{display:none}
-  @media (max-width:919px){
-    .mcta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:38;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(10,11,15,.9);backdrop-filter:blur(14px);border-top:1px solid var(--line-soft);transform:translateY(110%);transition:transform .32s cubic-bezier(.2,.6,.2,1)}
-    .mcta.show{transform:none}
-    .mcta .btn{width:100%;padding:14px 20px;font-size:15.5px}
-  }
-  /* ── 점 내비 (와이드 데스크톱) ── */
-  .dots{display:none}
-  @media (min-width:1180px){
-    .dots{display:flex;flex-direction:column;gap:14px;position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:37}
-    .dots a{position:relative;width:10px;height:10px;border-radius:99px;background:var(--line);transition:background .2s,transform .2s}
-    .dots a span{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:var(--dim);white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
-    .dots a:hover span,.dots a.on span{opacity:1}
-    .dots a.on{background:var(--scarlet);transform:scale(1.35)}
-  }
-
-  /* ── 골인 섹션 ── */
-  .goal{position:relative;min-height:90vh;border-top:1px solid var(--line-soft);overflow:hidden}
-  .hoop{position:absolute;left:66%;top:50%;width:220px;height:260px;transform:translate(-50%,-50%);pointer-events:none}
-  .hoop svg{position:absolute;inset:0;width:100%;height:100%}
-  .hoop .net-front{z-index:36}
-  .hoop .strand{transform-box:fill-box;transform-origin:50% 0}
-  .goal-copy{position:absolute;left:8%;top:50%;transform:translateY(-50%);max-width:440px}
-  html.anim .goal-copy{opacity:0}
-  .swish-word{font-size:clamp(56px,9vw,112px);font-weight:900;font-style:italic;letter-spacing:-.06em;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .goal-sub{font-size:clamp(18px,2.4vw,26px);font-weight:800;letter-spacing:-.02em;line-height:1.3;margin:14px 0 22px}
-  @media (max-width:919px){
-    .goal{min-height:auto;padding:72px 0 64px;display:flex;flex-direction:column;align-items:center;gap:8px}
-    .hoop{position:relative;left:auto;top:auto;transform:none}
-    .goal-copy{position:static;transform:none;text-align:center;max-width:none;padding:0 24px}
-    .goal-copy .cta-row{justify-content:center}
-  }
-
-  /* ── 최근 업데이트 티커 ── */
-  .ticker{border-bottom:1px solid var(--line-soft);background:var(--panel);overflow:hidden;position:relative}
-  .ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:72px;z-index:2;pointer-events:none}
-  .ticker::before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
-  .ticker::after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
-  .ticker-track{display:flex;gap:44px;width:max-content;padding:13px 0;animation:tick 46s linear infinite}
-  .ticker:hover .ticker-track{animation-play-state:paused}
-  .ti{white-space:nowrap;font-size:13.5px;color:var(--dim);display:inline-flex;align-items:center;gap:9px}
-  .ti b{font-size:10.5px;font-weight:900;letter-spacing:.12em;color:var(--scarlet);border:1px solid rgba(255,61,46,.45);border-radius:99px;padding:2px 8px}
-  .ti .v{font-family:var(--mono);color:var(--faint);font-size:12px}
-  @keyframes tick{to{transform:translateX(-50%)}}
+  /* ── scroll reveal ── */
+  .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+  .rv.in{opacity:1;transform:none}
+  .rv-d1{transition-delay:.08s}.rv-d2{transition-delay:.16s}
 
   /* ── hero ── */
   .hero{position:relative;padding:96px 0 0;min-height:88vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
@@ -352,10 +260,7 @@
     @keyframes pop{to{opacity:1}}
   }
   @media (prefers-reduced-motion:reduce){
-    html.anim [data-reveal],html.anim .hero-visual,html.anim .pins use{opacity:1}
-    .ticker-track{animation:none;flex-wrap:wrap;width:auto;padding:12px 24px;gap:14px 28px}
-    .ticker-track .dup{display:none}
-    .ticker::before,.ticker::after{display:none}
+    .rv{opacity:1;transform:none;transition:none}
   }
 </style>
 </head>
@@ -381,18 +286,6 @@
     <a class="nav-cta" href="https://apps.apple.com/kr/app/id6767571900">앱 다운로드</a>
   </div>
 </nav>
-<div class="progress" aria-hidden="true"></div>
-<nav class="dots" aria-label="섹션 이동">
-  <a href="#courts" data-dot="courts"><span>코트맵</span></a>
-  <a href="#games" data-dot="games"><span>픽업게임</span></a>
-  <a href="#lessons" data-dot="lessons"><span>레슨</span></a>
-  <a href="#crew" data-dot="crew"><span>크루</span></a>
-  <a href="#tools" data-dot="tools"><span>전광판</span></a>
-  <a href="#tester" data-dot="tester"><span>Android</span></a>
-  <a href="#goal" data-dot="goal"><span>받기</span></a>
-</nav>
-<div class="mcta"><a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a></div>
-<div class="ball" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#FF3D2E"/><path d="M20 1v38M1 20h38M6.5 6.5c8 8 8 19 0 27M33.5 6.5c-8 8-8 19 0 27" stroke="#0A0B0F" stroke-width="1.6" fill="none"/></svg></div>
 
 <header class="hero">
   <svg class="hero-court" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -411,10 +304,10 @@
 
   <div class="wrap hero-in">
     <div>
-      <p class="kicker" data-reveal>농구 앱 swish</p>
-      <h1><span class="line">코트를 찾고,</span><span class="line">사람을 모으고,</span><span class="line g">오늘 바로 뛴다.</span></h1>
-      <p class="sub" data-reveal>전국 농구 코트 <b>1,220곳</b> 지도, <b>30초</b>면 끝나는 게임 등록, 코트에서 바로 켜는 <b>전광판</b>까지. 농구에 필요한 전부를 앱 하나에 담았습니다.</p>
-      <div class="cta-row" data-reveal>
+      <p class="kicker">농구 앱 swish</p>
+      <h1>코트를 찾고,<br>사람을 모으고,<br><span class="g">오늘 바로 뛴다.</span></h1>
+      <p class="sub">전국 농구 코트 <b>1,209곳</b> 지도, <b>30초</b>면 끝나는 게임 등록, 코트에서 바로 켜는 <b>전광판</b>까지. 농구에 필요한 전부를 앱 하나에 담았습니다.</p>
+      <div class="cta-row">
         <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
         <a class="btn btn-ghost" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">Android 먼저 써보기</a>
         <p class="cta-note">Android는 사전 테스트 중 — 구글 계정 이메일을 보내주시면 초대해 드려요.</p>
@@ -422,8 +315,6 @@
     </div>
 
     <div class="hero-visual">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="float">
       <!-- 실제 코트맵 탭 화면 -->
       <div class="phone" role="img" aria-label="swish 코트맵 화면 — 서울 지도 위 농구 코트 핀과 코트 제보 버튼">
         <div class="screen">
@@ -452,7 +343,7 @@
                 <path d="M -10 110 L 300 100"/><path d="M -10 265 L 300 258"/><path d="M 130 -10 L 138 370"/><path d="M 235 -10 L 228 370"/><path d="M 30 -10 L 40 370"/>
               </g>
               <!-- 코트 핀 클러스터 (실제 화면처럼 강북/강남 분포) -->
-              <g class="pins">
+              <g>
                 <use href="#pin" x="34" y="52" width="17" height="21"/><use href="#pin" x="60" y="76" width="17" height="21"/>
                 <use href="#pin" x="95" y="58" width="17" height="21"/><use href="#pin" x="120" y="92" width="17" height="21"/>
                 <use href="#pin" x="78" y="118" width="17" height="21"/><use href="#pin" x="150" y="70" width="17" height="21"/>
@@ -483,186 +374,32 @@
           </div>
         </div>
       </div>
-      </div>
     </div>
   </div>
 </header>
 
 <div class="strip">
   <div class="wrap strip-in">
-    <div class="stat" data-reveal><i class="ball-anchor" style="left:50%;top:-6px"></i><div class="n" data-count="1220">1,220</div><div class="l">지도에 등록된 전국 농구 코트</div></div>
-    <div class="stat" data-reveal><div class="n" data-count="30" data-fmt="clock">0:30</div><div class="l">게임 등록에 걸리는 시간</div></div>
-    <div class="stat" data-reveal><div class="n" data-count="24">24</div><div class="l">샷클락까지 NBA 룰 그대로인 전광판</div></div>
+    <div class="stat rv"><div class="n">1,209</div><div class="l">지도에 등록된 전국 농구 코트</div></div>
+    <div class="stat rv rv-d1"><div class="n">0:30</div><div class="l">게임 등록에 걸리는 시간</div></div>
+    <div class="stat rv rv-d2"><div class="n">24</div><div class="l">샷클락까지 NBA 룰 그대로인 전광판</div></div>
   </div>
 </div>
 
-<div class="ticker" aria-label="최근 업데이트">
-  <div class="ticker-drift"><div class="ticker-track">
-    <span class="ti"><b>NEW</b>호스트를 팔로우하면 새 게임 알림<span class="v">0.1.14</span></span>
-    <span class="ti"><b>NEW</b>호스트 프로필에서 예정 게임·팔로워·리뷰를 한눈에</span>
-    <span class="ti"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
-    <span class="ti"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
-    <span class="ti"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
-    <span class="ti"><b>NEW</b>코치 지원 심사 현황을 레슨 관리에서 바로 확인</span>
-    <span class="ti"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
-    <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트를 팔로우하면 새 게임 알림<span class="v">0.1.14</span></span>
-    <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트 프로필에서 예정 게임·팔로워·리뷰를 한눈에</span>
-    <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
-    <span class="ti dup" aria-hidden="true"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
-    <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
-    <span class="ti dup" aria-hidden="true"><b>NEW</b>코치 지원 심사 현황을 레슨 관리에서 바로 확인</span>
-    <span class="ti dup" aria-hidden="true"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
-  </div></div>
-</div>
-
-<div class="story" id="story">
-<div class="story-phone" aria-hidden="true">
-  <div class="story-stick" data-active="0">
-    <div class="phone">
-<div class="screen" data-screen="0">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <svg class="bell"><use href="#i-bell"/></svg>
-          </div>
-          <div class="screen-title"><span class="t">코트맵</span></div>
-          <div class="mapview">
-            <svg class="map" viewBox="0 0 280 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <rect width="280" height="360" fill="var(--map-bg)"/>
-              <path d="M -10 96 C 70 82 130 100 200 90 L 290 84 L 290 116 L 200 122 C 130 132 70 114 -10 128 Z" fill="var(--map-water)"/>
-              <g stroke="var(--map-casing)" stroke-width="7" fill="none" stroke-linecap="round">
-                <path d="M -10 180 L 300 168"/><path d="M -10 280 L 300 292"/><path d="M 110 40 L 122 370"/>
-              </g>
-              <g stroke="var(--map-road)" stroke-width="4.5" fill="none" stroke-linecap="round">
-                <path d="M -10 180 L 300 168"/><path d="M -10 280 L 300 292"/><path d="M 110 40 L 122 370"/>
-              </g>
-              <g stroke="var(--map-road)" stroke-width="2.5" fill="none">
-                <path d="M -10 226 L 300 220"/><path d="M 200 40 L 192 370"/><path d="M 46 40 L 54 370"/>
-              </g>
-              <g class="pins">
-                <use href="#pin" x="70" y="196" width="17" height="21"/>
-                <use href="#pin" x="212" y="230" width="17" height="21"/>
-                <use href="#pin" x="160" y="300" width="17" height="21"/>
-                <!-- 선택된 핀 -->
-                <use href="#pin" x="128" y="200" width="24" height="30"/>
-              </g>
-              <circle cx="140" cy="234" r="4" fill="rgba(255,61,46,.25)"/>
-            </svg>
-            <div class="map-chips">
-              <span class="mchip on">전체</span><span class="mchip">실내</span><span class="mchip">야외</span>
-              <span class="mchip dark">내 주변</span>
-            </div>
-            <div class="court-card">
-              <p class="t">반포한강공원 농구장</p>
-              <p class="s">야외 · 골대 4개 · 우레탄 바닥</p>
-              <div class="tags"><span class="tag lime">야간 조명</span><span class="tag">무료</span><span class="tag">주차</span><span class="tag gold">리뷰 23</span></div>
-            </div>
-          </div>
-          <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab on"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
-<div class="screen" data-screen="1">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <span class="region">서울 강남구 ▾</span>
-            <svg class="bell"><use href="#i-bell"/></svg>
-          </div>
-          <div class="screen-title"><span class="t">게임</span><span class="mini-cta">+ 게임 등록</span></div>
-          <p class="screen-sub">오늘 함께 뛸 게스트 매칭</p>
-          <p class="chip-label">날짜</p>
-          <div class="chip-row"><span class="chip">전체</span><span class="chip line">5/24 (일)</span><span class="chip">5/25 (월)</span><span class="chip">5/26 (화)</span><span class="chip">5/27</span></div>
-          <p class="chip-label">레벨</p>
-          <div class="chip-row"><span class="chip on">전체</span><span class="chip">입문</span><span class="chip">초급</span><span class="chip">중급</span><span class="chip">고급</span><span class="chip">엘리트</span></div>
-          <div class="list-head">전체 게임</div>
-          <div class="glist">
-            <div class="gcard" data-reveal>
-              <div class="row1"><span class="t">오늘 저녁 가볍게, 입문 환영</span><span class="pill lav">입문</span></div>
-              <div class="host"><span class="ava">민</span>민준 호스트</div>
-              <p class="meta">5/24 (일) 19:00 · 90분</p>
-              <p class="meta">강남구민체육관 1코트 · 1.2km</p>
-              <div class="foot"><span class="cap">4/10명 <span class="pill coral">⏰ 마감 임박</span></span><span class="fee">무료</span></div>
-            </div>
-            <div class="gcard" data-reveal>
-              <div class="row1"><span class="t">내일 오전 야외 초급반</span><span class="pill lav">초급</span></div>
-              <div class="host"><span class="ava">서</span>서연 호스트</div>
-              <p class="meta">5/25 (월) 10:00 · 120분</p>
-              <p class="meta">반포한강공원 농구장 · 2.8km</p>
-              <div class="foot"><span class="cap">2/6명</span><span class="fee">5,000원</span></div>
-            </div>
-          </div>
-          <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab on"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
-<div class="screen" data-screen="2">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <span class="region">서울 강남구 ▾</span>
-            <svg class="bell"><use href="#i-bell"/></svg>
-          </div>
-          <div class="screen-title"><span class="t">레슨</span><span class="mini-cta">코치 등록</span></div>
-          <div class="chip-row" style="padding-top:6px"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">팀 코칭</span><span class="chip">입문클래스</span></div>
-          <div class="chip-row"><span class="chip">가까운 순</span></div>
-          <div class="glist" style="padding-top:2px">
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">기본기부터 잡는 1:1 레슨</span><span class="pill neutral">1:1</span></div>
-              <div class="host"><span class="ava">김</span>김코치</div>
-              <div class="lv"><span class="pill lav">입문·초급</span>강남 · 1.2km</div>
-              <div class="foot"><span class="cap">2/4명</span><span class="price">회당 60,000원</span></div>
-            </div>
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">슛폼 교정 소그룹 클래스</span><span class="pill neutral">소그룹</span></div>
-              <div class="host"><span class="ava">박</span>박코치</div>
-              <div class="lv"><span class="pill cob">중급</span>분당 · 4.5km</div>
-              <div class="foot"><span class="cap">3/6명</span><span class="price">회당 30,000원</span></div>
-            </div>
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">성인 입문클래스 4주 과정</span><span class="pill neutral">입문클래스</span></div>
-              <div class="host"><span class="ava">이</span>이코치</div>
-              <div class="lv"><span class="pill lav">입문</span>송파 · 3.1km</div>
-              <div class="foot"><span class="cap">5/8명</span><span class="price">회당 40,000원</span></div>
-            </div>
-          </div>
-          <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab on"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
-    </div>
-  </div>
-</div>
 <section class="feat" id="courts">
   <div class="wrap feat-in">
-    <i class="ball-anchor" style="left:50%;top:50%"></i>
-    <div class="copy">
-      <span class="kicker" data-reveal>코트맵</span>
-      <h2 data-reveal>"여기 농구장 어디지?"<br>30초 안에 끝납니다</h2>
-      <p class="body" data-reveal>전국 실외 농구장과 실내 코트 <b>1,220곳</b>. 처음 가는 동네에서도 지도 한 번이면 뛸 곳부터 찾습니다.</p>
-      <ul data-reveal>
+    <div class="rv">
+      <span class="kicker">코트맵</span>
+      <h2>"여기 농구장 어디지?"<br>30초 안에 끝납니다</h2>
+      <p class="body">전국 실외 농구장과 실내 코트 <b>1,209곳</b>. 처음 가는 동네에서도 지도 한 번이면 뛸 곳부터 찾습니다.</p>
+      <ul>
         <li>실내·실외, 무료 여부, 야간 조명 필터</li>
         <li>바닥 상태, 골대 개수, 주차까지 — 다녀온 사람들의 리뷰<small>카카오맵 길찾기로 바로 연결</small></li>
         <li>지도에 없는 코트는 제보 한 번으로 등록<small>코트맵은 유저와 함께 매일 자랍니다</small></li>
       </ul>
-      <p style="margin-top:18px" data-reveal><a href="/courts/" style="color:var(--scarlet);font-weight:800;font-size:15px">전국 야외 농구장을 웹에서 둘러보기 →</a></p>
+      <p style="margin-top:18px"><a href="/courts/" style="color:var(--scarlet);font-weight:800;font-size:15px">전국 야외 농구장 1,216곳 웹에서 둘러보기 →</a></p>
     </div>
-    <div class="fig" data-reveal>
+    <div class="fig rv rv-d1">
       <!-- 코트맵: 코트 선택 상태 -->
       <div class="phone" role="img" aria-label="코트맵에서 코트를 선택한 화면 — 코트 정보 카드">
         <div class="screen">
@@ -686,13 +423,11 @@
               <g stroke="var(--map-road)" stroke-width="2.5" fill="none">
                 <path d="M -10 226 L 300 220"/><path d="M 200 40 L 192 370"/><path d="M 46 40 L 54 370"/>
               </g>
-              <g class="pins">
-                <use href="#pin" x="70" y="196" width="17" height="21"/>
-                <use href="#pin" x="212" y="230" width="17" height="21"/>
-                <use href="#pin" x="160" y="300" width="17" height="21"/>
-                <!-- 선택된 핀 -->
-                <use href="#pin" x="128" y="200" width="24" height="30"/>
-              </g>
+              <use href="#pin" x="70" y="196" width="17" height="21"/>
+              <use href="#pin" x="212" y="230" width="17" height="21"/>
+              <use href="#pin" x="160" y="300" width="17" height="21"/>
+              <!-- 선택된 핀 -->
+              <use href="#pin" x="128" y="200" width="24" height="30"/>
               <circle cx="140" cy="234" r="4" fill="rgba(255,61,46,.25)"/>
             </svg>
             <div class="map-chips">
@@ -718,159 +453,15 @@
   </div>
 </section>
 
-<section class="feat" id="games">
-  <div class="wrap feat-in rev">
-    <i class="ball-anchor" style="left:50%;top:50%"></i>
-    <div class="fig" data-reveal>
-      <!-- 실제 게임 탭 화면 -->
-      <div class="phone" role="img" aria-label="swish 게임 화면 — 날짜·레벨 필터와 모집 중인 게임 카드">
-        <div class="screen">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <span class="region">서울 강남구 ▾</span>
-            <svg class="bell"><use href="#i-bell"/></svg>
-          </div>
-          <div class="screen-title"><span class="t">게임</span><span class="mini-cta">+ 게임 등록</span></div>
-          <p class="screen-sub">오늘 함께 뛸 게스트 매칭</p>
-          <p class="chip-label">날짜</p>
-          <div class="chip-row"><span class="chip">전체</span><span class="chip line">5/24 (일)</span><span class="chip">5/25 (월)</span><span class="chip">5/26 (화)</span><span class="chip">5/27</span></div>
-          <p class="chip-label">레벨</p>
-          <div class="chip-row"><span class="chip on">전체</span><span class="chip">입문</span><span class="chip">초급</span><span class="chip">중급</span><span class="chip">고급</span><span class="chip">엘리트</span></div>
-          <div class="list-head">전체 게임</div>
-          <div class="glist">
-            <div class="gcard" data-reveal>
-              <div class="row1"><span class="t">오늘 저녁 가볍게, 입문 환영</span><span class="pill lav">입문</span></div>
-              <div class="host"><span class="ava">민</span>민준 호스트</div>
-              <p class="meta">5/24 (일) 19:00 · 90분</p>
-              <p class="meta">강남구민체육관 1코트 · 1.2km</p>
-              <div class="foot"><span class="cap">4/10명 <span class="pill coral">⏰ 마감 임박</span></span><span class="fee">무료</span></div>
-            </div>
-            <div class="gcard" data-reveal>
-              <div class="row1"><span class="t">내일 오전 야외 초급반</span><span class="pill lav">초급</span></div>
-              <div class="host"><span class="ava">서</span>서연 호스트</div>
-              <p class="meta">5/25 (월) 10:00 · 120분</p>
-              <p class="meta">반포한강공원 농구장 · 2.8km</p>
-              <div class="foot"><span class="cap">2/6명</span><span class="fee">5,000원</span></div>
-            </div>
-          </div>
-          <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab on"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="copy">
-      <span class="kicker" data-reveal>픽업게임</span>
-      <h2 data-reveal>오늘 뛸 게임,<br>한눈에 모집중</h2>
-      <p class="body" data-reveal>지역·날짜·레벨로 거르고 바로 신청합니다. <b>입문부터 엘리트까지</b> — 수준이 맞는 게임에서 뜁니다.</p>
-      <ul data-reveal>
-        <li>게임 등록 30초 — 누구나 호스트가 됩니다<small>매주 반복되는 정기 픽업도 한 번에 등록</small></li>
-        <li>정원이 차면 대기열, 자리가 나면 자동 승격</li>
-        <li>신청 순번 세기, 입금자명 대조 — 단톡방에서 하던 일은 앱이 합니다</li>
-        <li>매너 리뷰와 노쇼 신고<small>처음 보는 사람과 뛰어도, 상대를 알고 시작합니다</small></li>
-        <li>마음에 드는 호스트는 팔로우<small>새 게임을 올리면 바로 알림이 와요</small></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="feat" id="lessons">
-  <div class="wrap feat-in">
-    <i class="ball-anchor" style="left:50%;top:50%"></i>
-    <div class="copy">
-      <span class="kicker" data-reveal>농구 레슨</span>
-      <h2 data-reveal>코치 찾기부터 결제까지,<br>계좌번호 DM 없이</h2>
-      <p class="body" data-reveal>1:1, 소그룹, 팀 코칭, 입문클래스. 코치 경력과 리뷰를 확인하고, 앱 안에서 문의하고, 안전하게 선결제합니다.</p>
-      <ul data-reveal>
-        <li>경력·평점·실수강 리뷰가 있는 코치 프로필</li>
-        <li>인앱 채팅으로 일정 조율<small>연락처를 먼저 주고받지 않아도 됩니다</small></li>
-        <li>선결제 후 수업, 끝나면 정산<small>계좌번호를 DM으로 보내는 일은 이제 없습니다</small></li>
-        <li>같은 코치와 오래할수록 코치 수수료 인하</li>
-      </ul>
-      <p class="fine" data-reveal>유료 레슨의 앱 내 결제는 현재 준비 중입니다. 지금은 코치 프로필과 문의 채팅을 먼저 이용해 주세요.</p>
-    </div>
-    <div class="fig" data-reveal>
-      <!-- 실제 레슨 탭 화면 -->
-      <div class="phone" role="img" aria-label="swish 레슨 화면 — 레슨 유형 필터와 레슨 카드">
-        <div class="screen">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <span class="region">서울 강남구 ▾</span>
-            <svg class="bell"><use href="#i-bell"/></svg>
-          </div>
-          <div class="screen-title"><span class="t">레슨</span><span class="mini-cta">코치 등록</span></div>
-          <div class="chip-row" style="padding-top:6px"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">팀 코칭</span><span class="chip">입문클래스</span></div>
-          <div class="chip-row"><span class="chip">가까운 순</span></div>
-          <div class="glist" style="padding-top:2px">
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">기본기부터 잡는 1:1 레슨</span><span class="pill neutral">1:1</span></div>
-              <div class="host"><span class="ava">김</span>김코치</div>
-              <div class="lv"><span class="pill lav">입문·초급</span>강남 · 1.2km</div>
-              <div class="foot"><span class="cap">2/4명</span><span class="price">회당 60,000원</span></div>
-            </div>
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">슛폼 교정 소그룹 클래스</span><span class="pill neutral">소그룹</span></div>
-              <div class="host"><span class="ava">박</span>박코치</div>
-              <div class="lv"><span class="pill cob">중급</span>분당 · 4.5km</div>
-              <div class="foot"><span class="cap">3/6명</span><span class="price">회당 30,000원</span></div>
-            </div>
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">성인 입문클래스 4주 과정</span><span class="pill neutral">입문클래스</span></div>
-              <div class="host"><span class="ava">이</span>이코치</div>
-              <div class="lv"><span class="pill lav">입문</span>송파 · 3.1km</div>
-              <div class="foot"><span class="cap">5/8명</span><span class="price">회당 40,000원</span></div>
-            </div>
-          </div>
-          <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab on"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-</div>
-
-<section class="band" id="crew">
-  <i class="ball-anchor" style="left:50%;top:22%"></i>
-  <svg class="band-court" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <g stroke="#151821" stroke-width="2" fill="none">
-      <circle cx="700" cy="200" r="90"/><line x1="700" y1="0" x2="700" y2="400"/>
-    </g>
-  </svg>
-  <div class="band-in">
-    <span class="kicker" data-reveal>동호회·크루 운영자님께</span>
-    <p class="free" data-reveal>플랫폼 수수료 <em data-pop>0원</em></p>
-    <p data-reveal>매주 게스트 몇 명 오는지, 누가 입금했는지 세고 계신가요? <b>정원·대기열·입금 확인</b>을 swish가 대신합니다. 참가비는 게스트가 <b>호스트 계좌로 직접</b> 보내고, swish는 대금을 보관하지도 수수료를 떼지도 않습니다. 쓰던 단톡방에서 옮겨오는 세팅도 저희가 직접 돕습니다.</p>
-    <p class="fine" data-reveal>현재 참가비는 호스트 계좌로 직접 송금하는 방식이며, swish가 받는 수수료는 없습니다. 앱 내 카드 결제는 준비 중이에요. 도입되면 게스트가 내는 참가비는 그대로이고, 카드 결제수수료 3.3%만 정산에서 차감됩니다.</p>
-    <div class="cta-row" data-reveal>
-      <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%ED%81%AC%EB%A3%A8%20%EB%93%B1%EB%A1%9D%20%EB%AC%B8%EC%9D%98">크루 등록 문의하기</a>
-    </div>
-  </div>
-</section>
-
 <section class="board-sec" id="tools">
   <div class="wrap">
-    <i class="ball-anchor" style="left:4%;top:56%"></i>
-    <div style="text-align:center;max-width:640px;margin:0 auto 40px">
-      <span class="kicker" data-reveal>전광판</span>
-      <h2 data-reveal>폰을 눕히는 순간,<br>체육관 전광판이 됩니다</h2>
-      <p class="sub" data-reveal>점수, 쿼터, 타이머, 24초 샷클락, 파울, 작전타임까지 — NBA 룰 그대로. 로그인 없이, 같이 뛰는 사람이 없어도 오늘 당장 씁니다.</p>
+    <div style="text-align:center;max-width:640px;margin:0 auto 40px" class="rv">
+      <span class="kicker">전광판</span>
+      <h2>폰을 눕히는 순간,<br>체육관 전광판이 됩니다</h2>
+      <p class="sub">점수, 쿼터, 타이머, 24초 샷클락, 파울, 작전타임까지 — NBA 룰 그대로. 로그인 없이, 같이 뛰는 사람이 없어도 오늘 당장 씁니다.</p>
     </div>
     <!-- 실제 전광판 가로 화면 재현 -->
-    <div class="sb-frame" data-reveal="fade" data-sb role="img" aria-label="swish 전광판 화면 — HOME 52 대 AWAY 48, 2쿼터 5분 41초, 24초 샷클락">
+    <div class="sb-frame rv rv-d1" role="img" aria-label="swish 전광판 화면 — HOME 52 대 AWAY 48, 2쿼터 5분 41초, 24초 샷클락">
       <div class="sb">
         <div class="side home">
           <p class="team">HOME</p>
@@ -894,83 +485,163 @@
         </div>
       </div>
     </div>
-    <p class="board-cap" data-reveal><b>전술판</b>에 작전을 그려 팀원에게 공유하고, 경기 후엔 <b>컨디션 기록</b>까지 — 전부 무료입니다.</p>
+    <p class="board-cap rv rv-d2"><b>전술판</b>에 작전을 그려 팀원에게 공유하고, 경기 후엔 <b>컨디션 기록</b>까지 — 전부 무료입니다.</p>
+  </div>
+</section>
+
+<section class="feat" id="games">
+  <div class="wrap feat-in rev">
+    <div class="fig rv rv-d1">
+      <!-- 실제 게임 탭 화면 -->
+      <div class="phone" role="img" aria-label="swish 게임 화면 — 날짜·레벨 필터와 모집 중인 게임 카드">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="app-head">
+            <span class="mark">swish</span>
+            <span class="spacer"></span>
+            <span class="region">서울 강남구 ▾</span>
+            <svg class="bell"><use href="#i-bell"/></svg>
+          </div>
+          <div class="screen-title"><span class="t">게임</span><span class="mini-cta">+ 게임 등록</span></div>
+          <p class="screen-sub">오늘 함께 뛸 게스트 매칭</p>
+          <p class="chip-label">날짜</p>
+          <div class="chip-row"><span class="chip">전체</span><span class="chip line">5/24 (일)</span><span class="chip">5/25 (월)</span><span class="chip">5/26 (화)</span><span class="chip">5/27</span></div>
+          <p class="chip-label">레벨</p>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">입문</span><span class="chip">초급</span><span class="chip">중급</span><span class="chip">고급</span><span class="chip">엘리트</span></div>
+          <div class="list-head">전체 게임</div>
+          <div class="glist">
+            <div class="gcard">
+              <div class="row1"><span class="t">오늘 저녁 가볍게, 입문 환영</span><span class="pill lav">입문</span></div>
+              <div class="host"><span class="ava">민</span>민준 호스트</div>
+              <p class="meta">5/24 (일) 19:00 · 90분</p>
+              <p class="meta">강남구민체육관 1코트 · 1.2km</p>
+              <div class="foot"><span class="cap">4/10명 <span class="pill coral">⏰ 마감 임박</span></span><span class="fee">무료</span></div>
+            </div>
+            <div class="gcard">
+              <div class="row1"><span class="t">내일 오전 야외 초급반</span><span class="pill lav">초급</span></div>
+              <div class="host"><span class="ava">서</span>서연 호스트</div>
+              <p class="meta">5/25 (월) 10:00 · 120분</p>
+              <p class="meta">반포한강공원 농구장 · 2.8km</p>
+              <div class="foot"><span class="cap">2/6명</span><span class="fee">5,000원</span></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
+            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
+            <span class="tab on"><svg><use href="#i-ball"/></svg>게임</span>
+            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
+            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rv">
+      <span class="kicker">픽업게임</span>
+      <h2>오늘 뛸 게임,<br>한눈에 모집중</h2>
+      <p class="body">지역·날짜·레벨로 거르고 바로 신청합니다. <b>입문부터 엘리트까지</b> — 수준이 맞는 게임에서 뜁니다.</p>
+      <ul>
+        <li>게임 등록 30초 — 누구나 호스트가 됩니다<small>매주 반복되는 정기 픽업도 한 번에 등록</small></li>
+        <li>정원이 차면 대기열, 자리가 나면 자동 승격</li>
+        <li>신청 순번 세기, 입금자명 대조 — 단톡방에서 하던 일은 앱이 합니다</li>
+        <li>매너 리뷰와 노쇼 신고<small>처음 보는 사람과 뛰어도, 상대를 알고 시작합니다</small></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="crew">
+  <svg class="band-court" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g stroke="#151821" stroke-width="2" fill="none">
+      <circle cx="700" cy="200" r="90"/><line x1="700" y1="0" x2="700" y2="400"/>
+    </g>
+  </svg>
+  <div class="band-in rv">
+    <span class="kicker">동호회·크루 운영자님께</span>
+    <p class="free">플랫폼 수수료 <em>0원</em></p>
+    <p>매주 게스트 몇 명 오는지, 누가 입금했는지 세고 계신가요? <b>정원·대기열·입금 확인</b>을 swish가 대신합니다. 참가비는 게스트가 <b>호스트 계좌로 직접</b> 보내고, swish는 대금을 보관하지도 수수료를 떼지도 않습니다. 쓰던 단톡방에서 옮겨오는 세팅도 저희가 직접 돕습니다.</p>
+    <p class="fine">현재 참가비는 호스트 계좌로 직접 송금하는 방식이며, swish가 받는 수수료는 없습니다. 앱 내 카드 결제는 준비 중이고 도입 시점과 요율은 미리 안내드립니다.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%ED%81%AC%EB%A3%A8%20%EB%93%B1%EB%A1%9D%20%EB%AC%B8%EC%9D%98">크루 등록 문의하기</a>
+    </div>
+  </div>
+</section>
+
+<section class="feat" id="lessons">
+  <div class="wrap feat-in">
+    <div class="rv">
+      <span class="kicker">농구 레슨</span>
+      <h2>코치 찾기부터 결제까지,<br>계좌번호 DM 없이</h2>
+      <p class="body">1:1, 소그룹, 팀 코칭, 입문클래스. 코치 경력과 리뷰를 확인하고, 앱 안에서 문의하고, 안전하게 선결제합니다.</p>
+      <ul>
+        <li>경력·평점·실수강 리뷰가 있는 코치 프로필</li>
+        <li>인앱 채팅으로 일정 조율<small>연락처를 먼저 주고받지 않아도 됩니다</small></li>
+        <li>선결제 후 수업, 끝나면 정산<small>계좌번호를 DM으로 보내는 일은 이제 없습니다</small></li>
+        <li>같은 코치와 오래할수록 코치 수수료 인하</li>
+      </ul>
+      <p class="fine">유료 레슨의 앱 내 결제는 현재 준비 중입니다. 지금은 코치 프로필과 문의 채팅을 먼저 이용해 주세요.</p>
+    </div>
+    <div class="fig rv rv-d1">
+      <!-- 실제 레슨 탭 화면 -->
+      <div class="phone" role="img" aria-label="swish 레슨 화면 — 레슨 유형 필터와 레슨 카드">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="app-head">
+            <span class="mark">swish</span>
+            <span class="spacer"></span>
+            <span class="region">서울 강남구 ▾</span>
+            <svg class="bell"><use href="#i-bell"/></svg>
+          </div>
+          <div class="screen-title"><span class="t">레슨</span><span class="mini-cta">코치 등록</span></div>
+          <div class="chip-row" style="padding-top:6px"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">팀 코칭</span><span class="chip">입문클래스</span></div>
+          <div class="chip-row"><span class="chip">가까운 순</span></div>
+          <div class="glist" style="padding-top:2px">
+            <div class="lcard">
+              <div class="row1"><span class="t">기본기부터 잡는 1:1 레슨</span><span class="pill neutral">1:1</span></div>
+              <div class="host"><span class="ava">김</span>김코치</div>
+              <div class="lv"><span class="pill lav">입문·초급</span>강남 · 1.2km</div>
+              <div class="foot"><span class="cap">2/4명</span><span class="price">회당 60,000원</span></div>
+            </div>
+            <div class="lcard">
+              <div class="row1"><span class="t">슛폼 교정 소그룹 클래스</span><span class="pill neutral">소그룹</span></div>
+              <div class="host"><span class="ava">박</span>박코치</div>
+              <div class="lv"><span class="pill cob">중급</span>분당 · 4.5km</div>
+              <div class="foot"><span class="cap">3/6명</span><span class="price">회당 30,000원</span></div>
+            </div>
+            <div class="lcard">
+              <div class="row1"><span class="t">성인 입문클래스 4주 과정</span><span class="pill neutral">입문클래스</span></div>
+              <div class="host"><span class="ava">이</span>이코치</div>
+              <div class="lv"><span class="pill lav">입문</span>송파 · 3.1km</div>
+              <div class="foot"><span class="cap">5/8명</span><span class="price">회당 40,000원</span></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
+            <span class="tab on"><svg><use href="#i-school"/></svg>레슨</span>
+            <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
+            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
+            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="tester" id="tester">
-  <div class="wrap tester-in">
-    <i class="ball-anchor" style="left:50%;top:50%"></i>
-    <div class="copy">
-      <span class="kicker" data-reveal>Android 사전 테스트</span>
-      <h2 style="margin-bottom:0" data-reveal>Android는 테스터로 먼저</h2>
-      <p data-reveal>정식 출시 전 마지막 테스트가 진행 중이에요. 구글 계정 이메일 하나만 보내주시면 바로 초대해 드려요. 설치하고 2주 — 여러분의 피드백이 정식 출시 버전이 됩니다.</p>
+  <div class="wrap tester-in rv">
+    <div>
+      <span class="kicker">Android 사전 테스트</span>
+      <h2 style="margin-bottom:0">Android는 테스터로 먼저</h2>
+      <p>구글 계정 이메일 하나만 보내주시면 바로 초대해 드려요. 설치하고 2주 — 여러분의 피드백이 정식 출시 버전이 됩니다.</p>
     </div>
-    <a class="btn btn-primary" data-reveal href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">테스터 신청하기</a>
-  </div>
-</section>
-
-<section class="goal" id="goal">
-  <i class="ball-anchor" style="left:26%;top:6%"></i>
-  <div class="hoop" aria-hidden="true">
-    <svg class="net-back" viewBox="0 0 220 260">
-      <rect x="30" y="10" width="160" height="100" rx="6" fill="#101218" stroke="#3A3F4B" stroke-width="2"/>
-      <rect x="85" y="52" width="50" height="40" fill="none" stroke="#5A6072" stroke-width="2"/>
-      <rect x="100" y="100" width="20" height="14" rx="2" fill="#2A2E3A"/>
-      <g class="net">
-        <path class="strand" d="M156.0 120 C148.4 150 130.2 182 125.6 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M152.5 120 C145.5 150 128.7 182 124.4 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M142.5 120 C137.2 150 124.3 182 121.1 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M127.6 120 C124.7 150 117.7 182 116.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M110.0 120 C110.0 150 110.0 182 110.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M92.4 120 C95.3 150 102.3 182 104.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M77.5 120 C82.8 150 95.7 182 98.9 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M67.5 120 C74.5 150 91.3 182 95.6 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M64.0 120 C71.6 150 89.8 182 94.4 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M156.0 120 C140.6 150 103.6 182 94.4 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M152.5 120 C138.3 150 104.1 182 95.6 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M142.5 120 C131.6 150 105.5 182 98.9 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M127.6 120 C121.7 150 107.6 182 104.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M110.0 120 C110.0 150 110.0 182 110.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M92.4 120 C98.3 150 112.4 182 116.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M77.5 120 C88.4 150 114.5 182 121.1 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M67.5 120 C81.7 150 115.9 182 124.4 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-        <path class="strand" d="M64.0 120 C79.4 150 116.4 182 125.6 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
-      </g>
-      <ellipse class="rim" cx="110" cy="120" rx="46" ry="11" fill="none" stroke="#FF7A3D" stroke-width="5"/>
-    </svg>
-    <i class="ball-anchor" data-arc="260" data-rim style="left:110px;top:120px"></i>
-    <i class="ball-anchor" data-arc="0" style="left:110px;top:250px"></i>
-    <svg class="net-front" viewBox="0 0 220 260">
-      <g class="net">
-        <path class="strand" d="M142.5 120 C137.2 150 124.3 182 121.1 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M127.6 120 C124.7 150 117.7 182 116.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M110.0 120 C110.0 150 110.0 182 110.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M92.4 120 C95.3 150 102.3 182 104.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M77.5 120 C82.8 150 95.7 182 98.9 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M142.5 120 C131.6 150 105.5 182 98.9 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M127.6 120 C121.7 150 107.6 182 104.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M110.0 120 C110.0 150 110.0 182 110.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M92.4 120 C98.3 150 112.4 182 116.0 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-        <path class="strand" d="M77.5 120 C88.4 150 114.5 182 121.1 205" fill="none" stroke="#D6DBE6" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>
-      </g>
-      <ellipse class="rim" cx="110" cy="120" rx="46" ry="11" fill="none" stroke="#FF7A3D" stroke-width="5" stroke-dasharray="80 400" stroke-dashoffset="-105"/>
-    </svg>
-  </div>
-  <div class="goal-copy">
-    <p class="swish-word">SWISH!</p>
-    <p class="goal-sub">코트를 찾고, 사람을 모으고,<br>오늘 바로 뛴다.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
-      <a class="btn btn-ghost" href="#tester">Android 테스터 신청</a>
-    </div>
+    <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">테스터 신청하기</a>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div data-reveal>
+      <div>
         <p class="foot-mark">swish</p>
         <p>농구할 코트를 찾고, 같이 뛸 사람을 구하고, 경기까지 굴러가게 하는 농구 앱.</p>
         <p class="legal" style="margin-top:10px">
@@ -981,16 +652,17 @@
           <a href="/courts/">전국 농구장</a>
         </p>
       </div>
-      <div class="biz" data-reveal>
+      <div class="biz">
         <h3>사업자 정보</h3>
-        <!-- 통신판매업 신고번호 2026-09-05 확정(2023-용인기흥-5437).
-             유선번호는 운영상 미사용 — 연락처는 이메일(문의)로 단일화(2026-09-07).
+        <!-- TODO(사업자정보): 유선번호 확정 시 교체 — 토스페이먼츠 가맹 심사 요건
+             (LESSON_PAYMENTS.md §4-A-3). 통신판매업 신고번호는 2026-09-05 확정.
              값은 src/lib/business-info.ts SSOT 와 일치시킬 것. -->
         <p>
           <span>상호: 쁘니크</span>
           <span>대표: 김태형</span>
           <span>사업자등록번호: 464-08-02644</span><br>
           <span>주소: 경기도 용인시 기흥구 마북로154번길 23</span><br>
+          <span>유선번호: (기재 예정)</span>
           <span>통신판매업 신고번호: 2023-용인기흥-5437</span><br>
           <span>문의: <a href="mailto:tommytae9697@gmail.com" style="text-decoration:underline;text-underline-offset:3px">tommytae9697@gmail.com</a></span>
         </p>
@@ -1000,277 +672,19 @@
   </div>
 </footer>
 
-<script type="module">
-  // Motion (motion.dev) 13.3.0 — 하드웨어 가속 WAAPI + ScrollTimeline. 버전 고정.
-  import { animate, inView, scroll, stagger, hover, press }
-    from "https://cdn.jsdelivr.net/npm/motion@13.3.0/+esm";
-
-  window.__swishMotion = true;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const enter  = !reduce && document.documentElement.classList.contains("anim"); // 모듈이 제때 왔을 때만 입장 애니메이션
-  const $  = (s, r = document) => r.querySelector(s);
-  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const EASE = [0.2, 0.65, 0.2, 1];
-
-  const popPins = (group, startDelay) => {
-    if (!group) return;
-    animate($$("use", group), { opacity: [0, 1], scale: [0, 1] },
-      { delay: stagger(0.05, { startDelay }), type: "spring", bounce: 0.5, duration: 0.6 });
-  };
-  const countUp = (el) => {
-    if (el.dataset.done) return;
-    el.dataset.done = "1";
-    const to = Number(el.dataset.count), fmt = el.dataset.fmt;
-    animate(0, to, { duration: 1.5, ease: "easeOut", onUpdate: (v) => {
-      const n = Math.round(v);
-      el.textContent = fmt === "clock" ? "0:" + String(n).padStart(2, "0") : n.toLocaleString("ko-KR");
-    }});
-  };
-
-  if (!reduce) {
-    // ── 히어로: 로드 즉시 순차 등장, 코트 라인은 스크롤에 따라 깊이감 ──
-    if (enter) {
-      // 백그라운드 탭에서 열리면(visibilityState hidden) WAAPI 타임라인이 멈춰 있으므로,
-      // 탭이 보이는 순간부터 입장 애니메이션을 시작한다.
-      const startHero = () => {
-        // 헤드라인은 줄 단위 마스크 리빌(clip-path), 나머지는 순차 페이드
-        animate($$(".hero h1 .line"), { clipPath: ["inset(0 0 100% 0)", "inset(-10% 0 -20% 0)"], y: [28, 0] },
-          { delay: stagger(0.12, { startDelay: 0.15 }), duration: 0.9, ease: EASE });
-        animate($$(".hero [data-reveal]"), { opacity: [0, 1], y: [22, 0] },
-          { delay: stagger(0.09, { startDelay: 0.35 }), duration: 0.8, ease: EASE });
-        animate(".hero-visual", { opacity: [0, 1], y: [48, 0], rotate: [2.5, 0] },
-          { duration: 1, delay: 0.35, ease: EASE });
-        popPins($(".hero .pins"), 0.9);
-      };
-      if (document.visibilityState === "hidden") {
-        document.addEventListener("visibilitychange", () => startHero(), { once: true });
-      } else {
-        startHero();
-      }
+<script>
+  (function(){
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".rv").forEach(function(el){ el.classList.add("in"); });
+      return;
     }
-    scroll(animate(".hero-court", { y: [0, 110], opacity: [1, 0.35] }, { ease: "linear" }),
-      { target: $(".hero"), offset: ["start start", "end start"] });
-
-    // ── 읽기 진행 바 + 스크롤 시 내비 축소 ──
-    scroll(animate(".progress", { scaleX: [0, 1] }, { ease: "linear" }));
-    scroll((p) => document.body.classList.toggle("nav-shrink", p > 0.02));
-
-    // ── 섹션: 뷰포트 진입 시 1회, 자식 순차 등장 + 숫자 카운트업 + 핀 팝 ──
-    $$("section, .strip, footer").forEach((sec) => {
-      const els = $$("[data-reveal]", sec);
-      const stop = inView(sec, () => {
-        if (enter) {
-          // .fig 는 스크롤 패럴랙스가 transform 을 쥐고 있으므로 opacity 만 등장시킨다.
-          const figs = els.filter((e) => e.classList.contains("fig") || e.dataset.reveal === "fade"), rest = els.filter((e) => !figs.includes(e));
-          if (rest.length) animate(rest, { opacity: [0, 1], y: [24, 0] }, { delay: stagger(0.08), duration: 0.7, ease: EASE });
-          if (figs.length) animate(figs, { opacity: [0, 1] }, { duration: 0.9, ease: EASE });
-          popPins($(".pins", sec), 0.3);
-          const pop = $("[data-pop]", sec);
-          if (pop) animate(pop, { scale: [0.55, 1] }, { type: "spring", bounce: 0.45, duration: 0.9, delay: 0.15 });
-        }
-        $$("[data-count]", sec).forEach(countUp);
-        stop();
-      }, { amount: 0.18, margin: "0px 0px -8% 0px" });
-    });
-
-    // ── 히어로: 포인터를 따라 폰이 기울고 글로우가 따라온다 (데스크톱) ──
-    if (matchMedia("(pointer: fine)").matches) {
-      const hero = $(".hero"), hp = $(".hero .phone"), glow = $(".hero-glow");
-      let raf = 0;
-      hero.addEventListener("pointermove", (e) => {
-        if (raf) return;
-        raf = requestAnimationFrame(() => {
-          raf = 0;
-          const r = hero.getBoundingClientRect();
-          const dx = (e.clientX - r.left) / r.width * 2 - 1, dy = (e.clientY - r.top) / r.height * 2 - 1;
-          animate(hp, { rotateY: dx * 10, rotateX: -dy * 7 }, { duration: 0.5, ease: EASE });
-          if (glow) animate(glow, { x: dx * 60, y: dy * 40 }, { duration: 0.8, ease: EASE });
-        });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
       });
-      hero.addEventListener("pointerleave", () => {
-        animate(hp, { rotateY: 0, rotateX: 0 }, { duration: 0.7, ease: EASE });
-        if (glow) animate(glow, { x: 0, y: 0 }, { duration: 0.9, ease: EASE });
-      });
-    }
-
-    // ── 스토리: 고정된 폰의 화면이 섹션에 맞춰 바뀐다 (데스크톱) ──
-    const stick = $(".story-stick");
-    if (stick && innerWidth >= 920) {
-      const screens = $$(".screen", stick);
-      let pinsDone = false;
-      const show = (i) => {
-        stick.dataset.active = String(i); // 전환은 CSS transition 이 맡는다
-        if (i === 0 && !pinsDone) { pinsDone = true; popPins($(".pins", screens[0]), 0.2); }
-      };
-      ["#courts", "#games", "#lessons"].forEach((id, i) => inView(id, () => show(i), { amount: 0.5 }));
-    }
-
-    // ── 점 내비 활성 표시 ──
-    $$(".dots a").forEach((a) => {
-      const target = $(a.getAttribute("href"));
-      if (target) inView(target, () => { $$(".dots a").forEach((x) => x.classList.toggle("on", x === a)); }, { amount: 0.4 });
-    });
-
-    // ── 모바일 스티키 CTA: 히어로를 지나면 뜨고, 골인 섹션·푸터에선 숨긴다 ──
-    const mcta = $(".mcta");
-    if (mcta && innerWidth < 920) {
-      const heroEl = $(".hero"), goalEl = $("#goal");
-      const updateCta = () => {
-        const past = scrollY > heroEl.offsetHeight - 80;
-        const atEnd = goalEl && scrollY + innerHeight > goalEl.offsetTop + 40;
-        mcta.classList.toggle("show", past && !atEnd);
-      };
-      addEventListener("scroll", updateCta, { passive: true });
-      updateCta();
-    }
-
-    // ── 스크롤 연결 (scrub): 섹션 진입·이탈에 좌표가 묶인다 ──
-    const scrub = (el, target, keyframes, offset) => {
-      if (el && target) scroll(animate(el, keyframes, { ease: "linear" }), { target, offset });
-    };
-    const amp = innerWidth < 920 ? 26 : 64;
-    // 히어로 폰: 스크롤하면 떠오르며 작아져 다음 섹션에 자리를 내준다
-    scrub($(".hero-visual .float"), $(".hero"), { y: [0, -140], scale: [1, 0.88] }, ["start start", "end start"]);
-    // 티커: 스크롤 방향으로 같이 흐른다
-    scrub($(".ticker-drift"), $(".ticker"), { x: [60, -140] }, ["start end", "end start"]);
-    // 기능 섹션: 폰은 글보다 느리게(패럴랙스), 글 컬럼은 진입하며 자리 잡는다
-    $$("section.feat").forEach((sec) => {
-      scrub($(".fig", sec), sec, { y: [amp, -amp] }, ["start end", "end start"]);
-      scrub($(".copy", sec), sec, { x: [-36, 0] }, ["start end", "start center"]);
-    });
-    // 전광판: "폰을 눕히는 순간" — 스크롤할수록 눕는다
-    scrub($(".sb-frame"), $("#tools"), { rotateX: [38, 0], scale: [0.9, 1] }, ["start end", "center center"]);
-    // 크루 밴드: 코트 원이 돌고 본문이 커지며 들어온다
-    scrub($(".band-court"), $("#crew"), { rotate: [-14, 14] }, ["start end", "end start"]);
-    scrub($(".band-in"), $("#crew"), { scale: [0.88, 1] }, ["start end", "center center"]);
-
-    // ── 섹션을 넘나드는 공: 히어로 아크 끝에서 넘겨받아 앵커 사이를 튀어 다닌다 ──
-    const ball = $(".ball");
-    if (ball && innerWidth >= 720) {
-      const R = 17, ARC = 110;
-      let anchors = [], shown = false;
-      const measure = () => {
-        const list = [];
-        const c = $(".arc-ball circle");
-        if (c) { const r = c.getBoundingClientRect(); list.push({ x: r.left + r.width / 2 + scrollX, y: r.top + r.height / 2 + scrollY }); }
-        $$(".ball-anchor").forEach((a) => {
-          const r = a.getBoundingClientRect();
-          list.push({ x: r.left + scrollX, y: r.top + scrollY, arc: a.dataset.arc != null ? Number(a.dataset.arc) : ARC, rim: "rim" in a.dataset });
-        });
-        anchors = list.sort((p, q) => p.y - q.y);
-      };
-      const place = () => {
-        if (anchors.length < 2) return;
-        const cy = scrollY + innerHeight * 0.5;
-        let i = 0;
-        while (i < anchors.length - 2 && cy > anchors[i + 1].y) i += 1;
-        const A = anchors[i], B = anchors[i + 1];
-        const t = Math.max(0, Math.min(1, (cy - A.y) / (B.y - A.y)));
-        const x = A.x + (B.x - A.x) * t;
-        // 포물선: 정점이 앞쪽(t≈0.42)이라 내려올 때 더 가파르다 — 슛 궤적. 구간별 높이는 도착 앵커의 data-arc.
-        const y = A.y + (B.y - A.y) * t - Math.sin(Math.pow(t, 0.85) * Math.PI) * B.arc;
-        const sq = B.arc > 0 && (t > 0 && t < 0.07 ? (0.07 - t) / 0.07 : t < 1 && t > 0.93 ? (t - 0.93) / 0.07 : 0); // 착지 스쿼시(이동 중에만)
-        // 마지막 구간 = 림 → 네트 아래 직하강: 네트를 빠져나가며 사라진다.
-        const last = i === anchors.length - 2;
-        const past = cy - anchors[anchors.length - 1].y;
-        const op = past > 0 ? 0 : last && t > 0.35 ? Math.max(0, 1 - (t - 0.35) / 0.65) : 1;
-        ball.style.opacity = shown ? String(op) : "0";
-        // 골인: 림 앵커에 닿는 순간 네트 출렁임 + SWISH 카피. 다시 올라가면 되감아 재생 가능.
-        const rimIdx = anchors.findIndex((a) => a.rim);
-        if (rimIdx > 0) {
-          if (!swished && (i >= rimIdx || (i === rimIdx - 1 && t >= 0.995))) swish();
-          else if (swished && cy < anchors[rimIdx].y - 80) unswish();
-        }
-        ball.style.transform = `translate(${x - scrollX - R}px, ${y - scrollY - R}px) rotate(${scrollY * 0.35}deg) scale(${1 + 0.14 * sq}, ${1 - 0.2 * sq})`;
-      };
-      let swished = false;
-      const goalCopy = $(".goal-copy");
-      const swish = () => {
-        swished = true;
-        animate($$(".hoop .strand"), { scaleY: [1, 1.18, 0.94, 1.04, 1], skewX: [0, -4, 3, -1, 0] }, { duration: 0.9, delay: stagger(0.02), ease: "easeOut" });
-        animate($$(".hoop .rim"), { stroke: ["#FF7A3D", "#FFFFFF", "#FF7A3D"] }, { duration: 0.6 });
-        if (goalCopy && enter) animate(goalCopy, { opacity: [0, 1], y: [18, 0], scale: [0.94, 1] }, { type: "spring", bounce: 0.35, duration: 0.8, delay: 0.15 });
-      };
-      const unswish = () => {
-        swished = false;
-        if (goalCopy && enter) animate(goalCopy, { opacity: 0 }, { duration: 0.25 });
-      };
-      const handoff = () => {
-        if (shown) return;
-        measure();
-        const svgBall = $(".arc-ball");
-        if (svgBall) svgBall.classList.add("off");
-        shown = true;
-        place();
-      };
-      measure();
-      addEventListener("load", () => { measure(); place(); });
-      setTimeout(() => { measure(); place(); }, 2600);
-      addEventListener("resize", () => { measure(); place(); });
-      scroll(() => { if (scrollY > 8) handoff(); place(); });
-      setTimeout(handoff, 2400); // 아크 그리기(1.7s) + 공 팝(0.3s) 이 끝난 뒤 넘겨받는다
-    }
-
-    if (!(ball && innerWidth >= 720) && enter) {
-      const gc = $(".goal-copy");
-      if (gc) inView(gc, () => { animate(gc, { opacity: [0, 1], y: [18, 0] }, { duration: 0.7, ease: EASE }); }, { amount: 0.3 });
-    }
-
-    // ── 전광판 데모: 보이는 동안만 시계·샷클락이 돌고 득점이 난다 ──
-    const sb = $("[data-sb]");
-    if (sb) {
-      const homeP = $(".side.home .pts", sb), awayP = $(".side.away .pts", sb);
-      const clock = $(".clock .n", sb), shot = $(".shot", sb);
-      const btns = { home: $$(".side.home .b", sb), away: $$(".side.away .b", sb) };
-      let h = 52, a = 48, secs = 341, sc = 24, i = 0, timer = null;
-      const script = [
-        { at: 9, t: "home", p: 2 }, { at: 3, t: "away", p: 3 }, { at: 0 },
-        { at: 12, t: "away", p: 2 }, { at: 5, t: "home", p: 3 }, { at: 0 },
-        { at: 15, t: "home", p: 2 }, { at: 7, t: "away", p: 2 },
-      ];
-      const fmt = (s) => String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
-      const score = (t, p) => {
-        if (t === "home") h += p; else a += p;
-        const el = t === "home" ? homeP : awayP;
-        el.textContent = t === "home" ? h : a;
-        animate(el, { scale: [1, 1.3, 1], color: ["#fff", t === "home" ? "#FF3D2E" : "#5B7CFF", "#fff"] }, { duration: 0.65, ease: "easeOut" });
-        const b = btns[t][p - 1];
-        if (b) animate(b, { scale: [1, 0.82, 1], opacity: [1, 0.55, 1] }, { duration: 0.35 });
-      };
-      const tick = () => {
-        secs = secs > 0 ? secs - 1 : 341;
-        sc -= 1;
-        clock.textContent = fmt(secs);
-        const ev = script[i % script.length];
-        if (sc <= ev.at) {
-          if (ev.t) score(ev.t, ev.p);
-          else animate(shot, { color: ["#8A90A2", "#FF3D2E", "#8A90A2"], scale: [1, 1.15, 1] }, { duration: 0.7 });
-          sc = 24; i += 1;
-        }
-        shot.textContent = sc;
-        if (sc <= 5) animate(shot, { scale: [1, 1.1, 1] }, { duration: 0.3 });
-      };
-      inView(sb, () => { timer = setInterval(tick, 1000); return () => clearInterval(timer); }, { amount: 0.4 });
-    }
-
-    // ── "마감 임박" 배지 맥동 (보일 때만) ──
-    $$(".pill.coral").forEach((pill) =>
-      inView(pill, () => { const an = animate(pill, { opacity: [1, 0.5, 1] }, { duration: 1.4, repeat: Infinity }); return () => an.stop(); }));
-
-    // ── 제스처: 버튼 눌림·호버 리프트, 폰 목업 3D 기울임 ──
-    press(".btn, .nav-cta", (el) => {
-      animate(el, { scale: 0.96 }, { duration: 0.1 });
-      return () => animate(el, { scale: 1 }, { type: "spring", bounce: 0.4, duration: 0.5 });
-    });
-    hover(".btn-primary, .nav-cta", (el) => {
-      animate(el, { y: -2 }, { duration: 0.2 });
-      return () => animate(el, { y: 0 }, { duration: 0.25 });
-    });
-    hover(".fig .phone, .story-stick .phone", (el) => {
-      animate(el, { rotateY: -7, rotateX: 4, y: -8 }, { duration: 0.5, ease: EASE });
-      return () => animate(el, { rotateY: 0, rotateX: 0, y: 0 }, { duration: 0.6, ease: EASE });
-    });
-  }
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+  })();
 </script>
 
 </body>
