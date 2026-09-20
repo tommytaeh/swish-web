@@ -26,15 +26,19 @@
     // 남긴다(2026-09-20: 윈도우 "애니메이션 효과" 를 끈 방문자에게 페이지가 통째로 얼어
     // 보였다. 배터리 절약이나 성능 우선 설정으로 자동으로 꺼지는 경우가 흔하다).
     // 큰 이동·패럴랙스·튀는 공은 anim-soft 에서도 계속 끈다.
-    // 방문자가 이 브라우저에서 직접 켠 적이 있으면 그 선택이 OS 값보다 우선한다.
-    // (OS 동작 줄이기는 배터리 절약·성능 우선 설정으로 본인도 모르게 켜지는 경우가 많아,
-    //  강제로 무시하지는 않되 페이지 안에서 한 번에 켤 수 있는 길을 준다 — 아래 스위치.)
+    // 2026-09-20 대표 결정: **접속하면 누구나 전체 연출이 돌아간다.** OS 동작 줄이기는
+    // 기본값 판정에서 제외한다 — 윈도우에서 배터리 절약·성능 우선 설정으로 본인도 모르게
+    // 켜지는 경우가 많아, 그 값을 그대로 따르면 상당수 방문자가 정지된 페이지를 본다.
+    //
+    // 대신 **끄는 길**은 남긴다: 동작 줄이기가 켜진 방문자에게만 왼쪽 아래에 "애니메이션 끄기"
+    // 스위치가 보이고, 누르면 이 브라우저에 저장돼(pref="off") 완화 등급으로 내려간다.
+    // 감속이 실제로 필요한 사람(전정기관 장애 등)의 탈출구를 없애지 않기 위한 장치다.
     var pref = null;
     try { pref = localStorage.getItem("swish:motion"); } catch (e) {}
     var osReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.__swishOsReduce = osReduce;
     window.__swishMotionPref = pref;
-    var soft = !window.__swishForceAnim && (pref === "on" ? false : (pref === "off" ? true : osReduce));
+    var soft = !window.__swishForceAnim && pref === "off";
     // 최종 판정은 여기 한 곳에서만 한다. CSS 는 아래 클래스를, JS 모듈은 이 값을 본다.
     // (종전에 모듈이 OS 질의를 다시 하는 바람에, 스위치를 켜도 모듈만 감속 모드로 남아
     //  헤드라인 마스크가 닫힌 채 굳는 버그가 있었다 — 2026-09-20.)
@@ -1577,7 +1581,7 @@
 (function () {
   if (!window.__swishOsReduce) return;                       // 동작 줄이기가 꺼진 사람에겐 아예 안 보인다
   if (/[?&]diag=1/.test(location.search)) return;            // 진단 패널과 겹치지 않게
-  var on = window.__swishMotionPref === "on";
+  var on = window.__swishMotionPref !== "off";   // 기본은 켜짐. 끈 적이 있을 때만 꺼짐.
   var st = document.createElement("style");
   st.textContent =
     "#swish-motion{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:37;" +
@@ -1594,8 +1598,8 @@
   btn.innerHTML = "<i></i>" + (on ? "애니메이션 끄기" : "애니메이션 켜기");
   btn.setAttribute("aria-pressed", on ? "true" : "false");
   btn.title = on
-    ? "이 브라우저에서 애니메이션을 끕니다 (기기의 동작 줄이기 설정을 따릅니다)"
-    : "기기에 동작 줄이기가 켜져 있어 연출이 멈춰 있습니다. 이 브라우저에서만 켭니다.";
+    ? "기기에 동작 줄이기가 켜져 있습니다. 이 브라우저에서 움직임을 줄이려면 누르세요."
+    : "이 브라우저에서 애니메이션을 다시 켭니다.";
   btn.onclick = function () {
     try { localStorage.setItem("swish:motion", on ? "off" : "on"); } catch (e) {}
     location.reload();
@@ -1628,7 +1632,7 @@
     try { ball = getComputedStyle(document.querySelector(".ball")).opacity !== "0"; } catch (e) {}
 
     var why = [];
-    if (reduce) why.push("동작 줄이기 상태 → 페이드만 동작, 공·컷 연출은 정지. 화면 왼쪽 아래 \"애니메이션 켜기\" 를 누르면 이 브라우저에서 전부 켜집니다");
+    if (reduce) why.push("이 브라우저에서 애니메이션을 끈 상태 → 페이드만 동작. 화면 왼쪽 아래 \"애니메이션 켜기\" 로 되돌릴 수 있습니다");
     if (!loaded) why.push("애니메이션 라이브러리를 못 받음");
     if (loaded && !anim && !reduce) why.push("라이브러리가 너무 늦게 도착함");
     if (!fine) why.push("마우스 포인터가 감지되지 않음(터치 기기로 인식)");
@@ -1636,9 +1640,9 @@
     if (!cutH) why.push("창 세로가 560 미만 (" + h + ")");
 
     var rows = [
-      ["OS 동작 줄이기", window.__swishOsReduce ? "켜짐" : "꺼짐"],
-      ["이 브라우저 선택", window.__swishMotionPref === "on" ? "애니메이션 켬 (OS 설정보다 우선)"
-        : window.__swishMotionPref === "off" ? "애니메이션 끔" : "없음 (OS 설정을 따름)"],
+      ["OS 동작 줄이기", window.__swishOsReduce ? "켜짐 (기본 판정에서는 무시함)" : "꺼짐"],
+      ["이 브라우저 선택", window.__swishMotionPref === "off" ? "애니메이션 끔 (방문자가 직접 끔)"
+        : "없음 (기본값 = 전체 연출)"],
       ["창 크기 / 배율", w + " x " + h + "  (배율 " + dpr + ")"],
       ["마우스 포인터", fine ? "있음" : "없음"],
       ["컷 스크롤(920x560)", cut ? "켜짐" : "꺼짐"],
