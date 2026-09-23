@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>swish — 농구 게스트·코트·레슨</title>
-<meta name="description" content="내 주변 농구 코트 1,220곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지. 농구 앱 swish(스위시).">
-<meta property="og:title" content="swish — 농구 게스트·코트·레슨">
-<meta property="og:description" content="내 주변 농구 코트 1,220곳 지도, 픽업게임 게스트 모집, 코트에서 바로 쓰는 전광판까지.">
-<meta property="og:image" content="https://swish.co.kr/assets/og.png">
+<title>swish — 나만의 농구 기록, 코트와 게임</title>
+<meta name="description" content="오늘 뛴 농구를 나만의 기록으로. 글과 사진 1장으로 남기는 개인 기록 업데이트를 준비하고 있어요. 코트맵·픽업게임·전광판을 만나는 농구 앱 swish(스위시).">
+<meta property="og:title" content="swish — 나만의 농구 기록, 코트와 게임">
+<meta property="og:description" content="글과 사진 1장으로 남기는 나만의 농구 기록, 업데이트 준비 중. 코트맵부터 픽업게임·전광판까지.">
+<meta property="og:image" content="https://swish.co.kr/assets/records-og.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0A0B0F">
 <script>
@@ -60,7 +60,7 @@
     --line:#232734; --line-soft:#171A21;
     --ink:#F2F4F8; --dim:#8A90A2; --faint:#5A6072;
     --scarlet:#FF3D2E; --coral:#FF5C70; --lime:#A8FF35; --gold:#FFB23D; --cobalt:#5B7CFF; --lavender:#9F8BFF;
-    --grad:linear-gradient(100deg,#FF7A3D 0%,#FF5CAD 36%,#8B5CF6 68%,#3B5BFF 100%);
+    --grad:var(--scarlet);
     --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
     /* 실제 앱 코트맵(네이버 지도) 라이트 팔레트 */
     --map-bg:#EDEAE2; --map-road:#FBFAF6; --map-casing:#DCD7CB; --map-water:#C6DBEC;
@@ -171,7 +171,7 @@
     .hero-visual .phone{width:min(232px,78vw)}
   }
   /* ── 히어로 글로우 + 헤드라인 마스크 ── */
-  .hero-glow{position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(255,61,46,.30) 0%,rgba(139,92,246,.18) 40%,transparent 68%);filter:blur(28px);pointer-events:none;will-change:transform}
+  .hero-glow{position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(255,61,46,.30) 0%,rgba(255,61,46,.10) 40%,transparent 68%);filter:blur(28px);pointer-events:none;will-change:transform}
   .hero-visual .float{position:relative}
   html.anim .hero h1 .line{clip-path:inset(0 0 100% 0)}
   /* ── 모바일 스티키 CTA (thumb zone) ── */
@@ -254,7 +254,7 @@
   /* 섹션 헤더: 스칼렛 바 + 전체 게임 */
   .list-head{display:flex;align-items:center;gap:6px;padding:4px 14px 7px;font-weight:800;font-size:12px}
   .list-head::before{content:"";width:3px;height:12px;background:var(--scarlet);border-radius:2px}
-  /* 하단 탭바: 홈 · 레슨 · 게임 · 코트맵 · 마이 */
+  /* 하단 탭바: 홈 · 기록 · 게임 · 코트맵 · 마이 */
   .tabbar{margin-top:auto;display:flex;border-top:1px solid #23262F;padding:8px 4px 18px;background:rgba(10,11,15,.97)}
   .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8.5px;color:#7A8093;font-weight:800}
   .tab svg{width:17px;height:17px}
@@ -297,13 +297,27 @@
   .tag.lime{color:var(--lime);background:rgba(168,255,53,.12)}
   .tag.gold{color:var(--gold);background:rgba(255,178,61,.12)}
 
-  /* LessonCard — 실제 구조 (제목+유형 / 코치 / 레벨+지역 / 인원+회당 가격) */
-  .lcard{background:var(--surface);border-radius:14px;padding:11px 12px}
-  .lcard .row1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-  .lcard .t{font-weight:800;font-size:12.5px}
-  .lcard .lv{display:flex;align-items:center;gap:6px;margin-top:6px;color:var(--dim);font-size:10px}
-  .lcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:10px}
-  .lcard .price{font-weight:800;color:var(--ink);font-size:11.5px;white-space:nowrap}
+  /* 출시 예정 개인 기록 예시 */
+  .record-stats{display:flex;gap:8px;margin:8px 14px 12px;padding:12px 6px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+  .record-stats>div{flex:1;text-align:center}
+  .record-stats b{display:block;font-size:22px;line-height:1.2}
+  .record-stats span{font-size:9px;color:var(--dim)}
+  .record-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;font-size:12px}
+  .record-date{font-size:10px;color:var(--dim);margin-bottom:7px}
+  .record-photo{display:block;color:var(--dim);font-size:10px;margin-top:8px}
+  .record-note{padding-top:8px;font-size:9px}
+  #records li small{color:var(--dim)}
+  .legacy-anchor{position:absolute;top:0}
+  section[id]{scroll-margin-top:64px;position:relative}
+  .cta-note{color:var(--dim)}
+  @media (min-width:920px) and (min-height:560px) and (max-height:699px){
+    #records{padding:32px 0}
+    #records h2{font-size:34px;margin-bottom:12px}
+    #records .kicker{margin-bottom:10px}
+    #records .fine{font-size:13px}
+    #records ul{margin-top:20px}
+    #records li{margin-bottom:10px}
+  }
 
   /* ── 전광판 — 실제 가로 화면 재현 (HOME 레드 / AWAY 블루) ── */
   .board-sec{padding:clamp(72px,11vw,120px) 0;border-top:1px solid var(--line-soft)}
@@ -433,8 +447,8 @@
 <!-- 탭바 아이콘 (Ionicons 근사) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <symbol id="i-record" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.8"/></symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 L12 4 L20 11 V20 H14.5 V14.5 H9.5 V20 H4 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
-    <symbol id="i-school" viewBox="0 0 24 24"><path d="M12 5 L21 9.5 L12 14 L3 9.5 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6.5 12 V16 C6.5 17.4 9 18.6 12 18.6 C15 18.6 17.5 17.4 17.5 16 V12" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
     <symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.6 V20.4 M3.6 12 H20.4 M6 6 Q12 12 6 18 M18 6 Q12 12 18 18" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
     <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4.5 L15 6.5 L20 4.5 V18 L15 20 L9 18 L4 20 V6.5 Z M9 4.5 V18 M15 6.5 V20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8.4" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 19.5 C5.8 15.8 8.6 14.2 12 14.2 C15.4 14.2 18.2 15.8 19 19.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
@@ -447,20 +461,20 @@
 <nav>
   <div class="wrap nav-in">
     <a href="#" class="wordmark" aria-label="swish 홈">swish</a>
-    <a class="nav-cta" href="https://apps.apple.com/kr/app/id6767571900">앱 다운로드</a>
+    <a class="nav-cta" href="#release">출시 안내</a>
   </div>
 </nav>
 <div class="progress" aria-hidden="true"></div>
 <nav class="dots" aria-label="섹션 이동">
+  <a href="#records" data-dot="records"><span>농구 기록</span></a>
   <a href="#courts" data-dot="courts"><span>코트맵</span></a>
   <a href="#games" data-dot="games"><span>픽업게임</span></a>
-  <a href="#lessons" data-dot="lessons"><span>레슨</span></a>
   <a href="#crew" data-dot="crew"><span>크루</span></a>
   <a href="#tools" data-dot="tools"><span>전광판</span></a>
-  <a href="#tester" data-dot="tester"><span>Android</span></a>
+  <a href="#release" data-dot="release"><span>출시 안내</span></a>
   <a href="#goal" data-dot="goal"><span>받기</span></a>
 </nav>
-<div class="mcta"><a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a></div>
+<div class="mcta"><a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">iOS 앱 받기 · 기록 업데이트 예정</a></div>
 <div class="ball" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#FF3D2E"/><path d="M20 1v38M1 20h38M6.5 6.5c8 8 8 19 0 27M33.5 6.5c-8 8-8 19 0 27" stroke="#0A0B0F" stroke-width="1.6" fill="none"/></svg></div>
 <div class="ball-shadow" aria-hidden="true"></div>
 <svg class="trail" aria-hidden="true"><defs><mask id="trail-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%"><path class="trail-reveal" d=""/></mask></defs><path class="trail-line" d="" mask="url(#trail-mask)"/></svg>
@@ -483,76 +497,36 @@
   <div class="wrap hero-in">
     <div>
       <p class="kicker" data-reveal>농구 앱 swish</p>
-      <h1><span class="line">코트를 찾고,</span><span class="line">사람을 모으고,</span><span class="line g">오늘 바로 뛴다.</span></h1>
-      <p class="sub" data-reveal>전국 농구 코트 <b>1,220곳</b> 지도, <b>30초</b>면 끝나는 게임 등록, 코트에서 바로 켜는 <b>전광판</b>까지. 농구에 필요한 전부를 앱 하나에 담았습니다.</p>
+      <h1><span class="line">오늘 뛴 농구,</span><span class="line g">나만의 기록으로.</span></h1>
+      <p class="sub" data-reveal>슛 감각이 좋았던 날도, 가볍게 몸을 푼 날도.<br><b>글이나 사진 한 장</b>으로 돌아보는 나만의 농구 기록을 준비하고 있어요.</p>
       <div class="cta-row" data-reveal>
         <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
-        <a class="btn btn-ghost" href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">Android 먼저 써보기</a>
-        <p class="cta-note">Android는 사전 테스트 중 — 구글 계정 이메일을 보내주시면 초대해 드려요.</p>
+        <a class="btn btn-ghost" href="#records">기록 미리 보기</a>
+        <p class="cta-note">현재 iOS 공개 버전에는 기록 기능이 없으며, 다음 업데이트로 선보일 예정이에요. Android는 출시 준비 중이에요.</p>
       </div>
     </div>
 
     <div class="hero-visual">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="float">
-      <!-- 실제 코트맵 탭 화면 -->
-      <div class="phone" role="img" aria-label="swish 코트맵 화면 — 서울 지도 위 농구 코트 핀과 코트 제보 버튼">
-        <div class="screen">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <svg class="bell"><use href="#i-bell"/></svg>
+      <!-- 출시 예정 기능의 정적 예시 -->
+      <div class="phone" role="img" aria-label="업데이트 예정인 개인 농구 기록 예시: 글, 선택 코트, 기록한 날 수와 사진 유무">
+        <div class="screen"><div class="island"></div>
+          <div class="app-head"><span class="mark">swish</span><span class="spacer"></span><span class="region">업데이트 예정</span></div>
+          <div class="screen-title"><span class="t">농구 기록</span><span class="mini-cta">기록하기</span></div>
+          <p class="screen-sub">나만 볼 수 있는 농구 기록이에요</p>
+          <div class="record-stats"><div><b>3</b><span>기록</span></div><div><b>2</b><span>기록한 날</span></div><div><b>1</b><span>선택한 코트</span></div></div>
+          <p class="chip-label">코트</p>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">반포한강공원</span></div>
+          <div class="glist">
+            <div class="record-card"><p class="record-date">9월 22일 · 반포한강공원</p><p>오늘은 자유투 리듬을 찾았어요.<br>다음에도 천천히, 같은 자세로.</p><span class="record-photo">사진 1장 · 상세에서 보기</span></div>
+            <div class="record-card"><p class="record-date">9월 22일 · 코트 선택 안 함</p><p>마무리는 가벼운 드리블 연습.</p></div>
+            <div class="record-card"><p class="record-date">9월 20일 · 반포한강공원</p><p>오랜만에 뛰어서 더 즐거웠던 날.</p></div>
           </div>
-          <div class="screen-title"><span class="t">코트맵</span></div>
-          <div class="mapview">
-            <svg class="map" viewBox="0 0 280 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <rect width="280" height="360" fill="var(--map-bg)"/>
-              <!-- 한강 -->
-              <path d="M -10 208 C 60 190 110 214 160 206 C 210 198 250 210 290 200 L 290 232 C 250 242 210 230 160 238 C 110 246 60 222 -10 240 Z" fill="var(--map-water)"/>
-              <!-- 도로 -->
-              <g stroke="var(--map-casing)" stroke-width="7" fill="none" stroke-linecap="round">
-                <path d="M -10 80 L 300 60"/><path d="M -10 150 L 300 140"/><path d="M -10 300 L 300 290"/>
-                <path d="M 70 -10 L 85 370"/><path d="M 190 -10 L 178 370"/>
-              </g>
-              <g stroke="var(--map-road)" stroke-width="4.5" fill="none" stroke-linecap="round">
-                <path d="M -10 80 L 300 60"/><path d="M -10 150 L 300 140"/><path d="M -10 300 L 300 290"/>
-                <path d="M 70 -10 L 85 370"/><path d="M 190 -10 L 178 370"/>
-              </g>
-              <g stroke="var(--map-road)" stroke-width="2.5" fill="none">
-                <path d="M -10 110 L 300 100"/><path d="M -10 265 L 300 258"/><path d="M 130 -10 L 138 370"/><path d="M 235 -10 L 228 370"/><path d="M 30 -10 L 40 370"/>
-              </g>
-              <!-- 코트 핀 클러스터 (실제 화면처럼 강북/강남 분포) -->
-              <g class="pins">
-                <use href="#pin" x="34" y="52" width="17" height="21"/><use href="#pin" x="60" y="76" width="17" height="21"/>
-                <use href="#pin" x="95" y="58" width="17" height="21"/><use href="#pin" x="120" y="92" width="17" height="21"/>
-                <use href="#pin" x="78" y="118" width="17" height="21"/><use href="#pin" x="150" y="70" width="17" height="21"/>
-                <use href="#pin" x="176" y="104" width="17" height="21"/><use href="#pin" x="210" y="66" width="17" height="21"/>
-                <use href="#pin" x="230" y="112" width="17" height="21"/><use href="#pin" x="52" y="152" width="17" height="21"/>
-                <use href="#pin" x="112" y="158" width="17" height="21"/><use href="#pin" x="196" y="152" width="17" height="21"/>
-                <use href="#pin" x="86" y="252" width="19" height="24"/><use href="#pin" x="130" y="272" width="19" height="24"/>
-                <use href="#pin" x="176" y="256" width="19" height="24"/><use href="#pin" x="216" y="284" width="19" height="24"/>
-                <use href="#pin" x="52" y="292" width="19" height="24"/><use href="#pin" x="152" y="308" width="19" height="24"/>
-              </g>
-            </svg>
-            <div class="map-chips">
-              <span class="mchip on">전체</span><span class="mchip">실내</span><span class="mchip">야외</span>
-              <span class="mchip dark">내 주변</span>
-            </div>
-            <div class="report">
-              <p class="q">새 코트를 발견하셨나요?</p>
-              <p class="s">지도를 움직여 위치를 맞춰주세요</p>
-              <div class="go">이 위치에 코트 제보하기</div>
-            </div>
-          </div>
+          <p class="screen-sub record-note">[DEMO] 기록 예시 · 직접 입력한 활동일</p>
           <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab on"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
+            <span class="tab"><svg><use href="#i-home"/></svg>홈</span><span class="tab on"><svg><use href="#i-record"/></svg>기록</span><span class="tab"><svg><use href="#i-ball"/></svg>게임</span><span class="tab"><svg><use href="#i-map"/></svg>코트맵</span><span class="tab"><svg><use href="#i-person"/></svg>마이</span>
+          </div></div>
       </div>
       </div>
     </div>
@@ -574,21 +548,21 @@
     <span class="ti"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
     <span class="ti"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
     <span class="ti"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
-    <span class="ti"><b>NEW</b>코치 지원 심사 현황을 레슨 관리에서 바로 확인</span>
+    <span class="ti"><b>SOON</b>나만 보는 농구 기록 — 업데이트 준비 중</span>
     <span class="ti"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트를 팔로우하면 새 게임 알림<span class="v">0.1.14</span></span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트 프로필에서 예정 게임·팔로워·리뷰를 한눈에</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
-    <span class="ti dup" aria-hidden="true"><b>NEW</b>코치 지원 심사 현황을 레슨 관리에서 바로 확인</span>
+    <span class="ti dup" aria-hidden="true"><b>SOON</b>나만 보는 농구 기록 — 업데이트 준비 중</span>
     <span class="ti dup" aria-hidden="true"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
   </div></div>
 </div>
 
 <div class="story" id="story">
 <div class="story-phone" aria-hidden="true">
-  <div class="story-stick" data-active="0">
+  <div class="story-stick" data-active="2">
     <div class="phone">
 <div class="screen" data-screen="0">
           <div class="island"></div>
@@ -632,7 +606,7 @@
           </div>
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
+            <span class="tab"><svg><use href="#i-record"/></svg>기록</span>
             <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
             <span class="tab on"><svg><use href="#i-map"/></svg>코트맵</span>
             <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
@@ -671,54 +645,65 @@
           </div>
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
+            <span class="tab"><svg><use href="#i-record"/></svg>기록</span>
             <span class="tab on"><svg><use href="#i-ball"/></svg>게임</span>
             <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
             <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
           </div>
         </div>
-<div class="screen" data-screen="2">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <span class="region">서울 강남구 ▾</span>
-            <svg class="bell"><use href="#i-bell"/></svg>
+<div class="screen" data-screen="2"><div class="island"></div>
+          <div class="app-head"><span class="mark">swish</span><span class="spacer"></span><span class="region">업데이트 예정</span></div>
+          <div class="screen-title"><span class="t">농구 기록</span><span class="mini-cta">기록하기</span></div>
+          <p class="screen-sub">나만 볼 수 있는 농구 기록이에요</p>
+          <div class="record-stats"><div><b>3</b><span>기록</span></div><div><b>2</b><span>기록한 날</span></div><div><b>1</b><span>선택한 코트</span></div></div>
+          <p class="chip-label">코트</p>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">반포한강공원</span></div>
+          <div class="glist">
+            <div class="record-card"><p class="record-date">9월 22일 · 반포한강공원</p><p>오늘은 자유투 리듬을 찾았어요.<br>다음에도 천천히, 같은 자세로.</p><span class="record-photo">사진 1장 · 상세에서 보기</span></div>
+            <div class="record-card"><p class="record-date">9월 22일 · 코트 선택 안 함</p><p>마무리는 가벼운 드리블 연습.</p></div>
+            <div class="record-card"><p class="record-date">9월 20일 · 반포한강공원</p><p>오랜만에 뛰어서 더 즐거웠던 날.</p></div>
           </div>
-          <div class="screen-title"><span class="t">레슨</span><span class="mini-cta">코치 등록</span></div>
-          <div class="chip-row" style="padding-top:6px"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">팀 코칭</span><span class="chip">입문클래스</span></div>
-          <div class="chip-row"><span class="chip">가까운 순</span></div>
-          <div class="glist" style="padding-top:2px">
-            <div class="lcard">
-              <div class="row1"><span class="t">기본기부터 잡는 1:1 레슨</span><span class="pill neutral">1:1</span></div>
-              <div class="host"><span class="ava">김</span>김코치</div>
-              <div class="lv"><span class="pill lav">입문·초급</span>강남 · 1.2km</div>
-              <div class="foot"><span class="cap">2/4명</span><span class="price">회당 60,000원</span></div>
-            </div>
-            <div class="lcard">
-              <div class="row1"><span class="t">슛폼 교정 소그룹 클래스</span><span class="pill neutral">소그룹</span></div>
-              <div class="host"><span class="ava">박</span>박코치</div>
-              <div class="lv"><span class="pill cob">중급</span>분당 · 4.5km</div>
-              <div class="foot"><span class="cap">3/6명</span><span class="price">회당 30,000원</span></div>
-            </div>
-            <div class="lcard">
-              <div class="row1"><span class="t">성인 입문클래스 4주 과정</span><span class="pill neutral">입문클래스</span></div>
-              <div class="host"><span class="ava">이</span>이코치</div>
-              <div class="lv"><span class="pill lav">입문</span>송파 · 3.1km</div>
-              <div class="foot"><span class="cap">5/8명</span><span class="price">회당 40,000원</span></div>
-            </div>
-          </div>
+          <p class="screen-sub record-note">[DEMO] 기록 예시 · 직접 입력한 활동일</p>
           <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab on"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
+            <span class="tab"><svg><use href="#i-home"/></svg>홈</span><span class="tab on"><svg><use href="#i-record"/></svg>기록</span><span class="tab"><svg><use href="#i-ball"/></svg>게임</span><span class="tab"><svg><use href="#i-map"/></svg>코트맵</span><span class="tab"><svg><use href="#i-person"/></svg>마이</span>
+          </div></div>
     </div>
   </div>
 </div>
+<section class="feat" id="records" data-scene>
+  <span id="lessons" class="legacy-anchor" aria-hidden="true"></span>
+  <div class="wrap feat-in">
+    <i class="ball-anchor" data-floor style="left:50%;top:66%"></i>
+    <div class="copy">
+      <span class="kicker" data-reveal>농구 기록 · 업데이트 예정</span>
+      <h2 data-reveal>한 줄도, 한 장도.<br>나만 보는 농구 이야기.</h2>
+      <p class="body" data-reveal>운동을 마친 뒤 기억하고 싶은 순간을 남겨 보세요. 날짜순으로 돌아보고, 직접 선택한 코트별로 내 기록을 모아볼 수 있어요.</p>
+      <ul data-reveal>
+        <li>글 최대 1,000자, 사진 최대 1장<small>글만 쓰거나 사진만 남겨도 괜찮아요.</small></li>
+        <li>코트는 이름으로 찾아 직접 선택<small>코트를 고르지 않아도, 위치 권한 없이도 기록해요.</small></li>
+        <li>기록과 사진은 나만 볼 수 있어요<small>그날의 감각과 기억을 내 공간에 차곡차곡 남겨요.</small></li>
+        <li>기록한 날을 한눈에<small>직접 남긴 활동일을 모아 내 농구 습관을 돌아봐요.</small></li>
+      </ul>
+      <p class="fine" data-reveal>화면은 출시 예정 기능의 예시예요. 같은 날 여러 번 남겨도 기록한 날은 하루로 세어요.</p>
+    </div>
+    <div class="fig" data-reveal><div class="phone" role="img" aria-label="출시 예정 농구 기록 목록 예시, 개인 기록 3개와 기록한 날 2일"><div class="screen"><div class="island"></div>
+          <div class="app-head"><span class="mark">swish</span><span class="spacer"></span><span class="region">업데이트 예정</span></div>
+          <div class="screen-title"><span class="t">농구 기록</span><span class="mini-cta">기록하기</span></div>
+          <p class="screen-sub">나만 볼 수 있는 농구 기록이에요</p>
+          <div class="record-stats"><div><b>3</b><span>기록</span></div><div><b>2</b><span>기록한 날</span></div><div><b>1</b><span>선택한 코트</span></div></div>
+          <p class="chip-label">코트</p>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">반포한강공원</span></div>
+          <div class="glist">
+            <div class="record-card"><p class="record-date">9월 22일 · 반포한강공원</p><p>오늘은 자유투 리듬을 찾았어요.<br>다음에도 천천히, 같은 자세로.</p><span class="record-photo">사진 1장 · 상세에서 보기</span></div>
+            <div class="record-card"><p class="record-date">9월 22일 · 코트 선택 안 함</p><p>마무리는 가벼운 드리블 연습.</p></div>
+            <div class="record-card"><p class="record-date">9월 20일 · 반포한강공원</p><p>오랜만에 뛰어서 더 즐거웠던 날.</p></div>
+          </div>
+          <p class="screen-sub record-note">[DEMO] 기록 예시 · 직접 입력한 활동일</p>
+          <div class="tabbar">
+            <span class="tab"><svg><use href="#i-home"/></svg>홈</span><span class="tab on"><svg><use href="#i-record"/></svg>기록</span><span class="tab"><svg><use href="#i-ball"/></svg>게임</span><span class="tab"><svg><use href="#i-map"/></svg>코트맵</span><span class="tab"><svg><use href="#i-person"/></svg>마이</span>
+          </div></div></div></div>
+  </div>
+</section>
 <section class="feat" id="courts" data-scene>
   <div class="wrap feat-in">
     <i class="ball-anchor" data-floor style="left:50%;top:66%"></i>
@@ -778,7 +763,7 @@
           </div>
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
+            <span class="tab"><svg><use href="#i-record"/></svg>기록</span>
             <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
             <span class="tab on"><svg><use href="#i-map"/></svg>코트맵</span>
             <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
@@ -828,7 +813,7 @@
           </div>
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab"><svg><use href="#i-school"/></svg>레슨</span>
+            <span class="tab"><svg><use href="#i-record"/></svg>기록</span>
             <span class="tab on"><svg><use href="#i-ball"/></svg>게임</span>
             <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
             <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
@@ -841,9 +826,9 @@
       <h2 data-reveal>오늘 뛸 게임,<br>한눈에 모집중</h2>
       <p class="body" data-reveal>지역·날짜·레벨로 거르고 바로 신청합니다. <b>입문부터 엘리트까지</b> — 수준이 맞는 게임에서 뜁니다.</p>
       <ul data-reveal>
-        <li>게임 등록 30초 — 누구나 호스트가 됩니다<small>매주 반복되는 정기 픽업도 한 번에 등록</small></li>
+        <li>참가비 없는 게임은 사업자 승인 없이 열 수 있어요<small>유료 게임 개설은 사업자 승인 후 이용할 수 있어요.</small></li>
         <li>정원이 차면 대기열, 자리가 나면 자동 승격</li>
-        <li>신청 순번 세기, 입금자명 대조 — 단톡방에서 하던 일은 앱이 합니다</li>
+        <li>신청 현황을 한곳에서 확인하고 참가자를 관리해요</li>
         <li>매너 리뷰와 노쇼 신고<small>처음 보는 사람과 뛰어도, 상대를 알고 시작합니다</small></li>
         <li>마음에 드는 호스트는 팔로우<small>새 게임을 올리면 바로 알림이 와요</small></li>
       </ul>
@@ -851,67 +836,7 @@
   </div>
 </section>
 
-<section class="feat" id="lessons" data-scene>
-  <div class="wrap feat-in">
-    <i class="ball-anchor" data-floor style="left:50%;top:66%"></i>
-    <div class="copy">
-      <span class="kicker" data-reveal>농구 레슨</span>
-      <h2 data-reveal>코치 찾기부터 결제까지,<br>계좌번호 DM 없이</h2>
-      <p class="body" data-reveal>1:1, 소그룹, 팀 코칭, 입문클래스. 코치 경력과 리뷰를 확인하고, 앱 안에서 문의하고, 안전하게 선결제합니다.</p>
-      <ul data-reveal>
-        <li>경력·평점·실수강 리뷰가 있는 코치 프로필</li>
-        <li>인앱 채팅으로 일정 조율<small>연락처를 먼저 주고받지 않아도 됩니다</small></li>
-        <li>선결제 후 수업, 끝나면 정산<small>계좌번호를 DM으로 보내는 일은 이제 없습니다</small></li>
-        <li>같은 코치와 오래할수록 코치 수수료 인하</li>
-      </ul>
-      <p class="fine" data-reveal>유료 레슨의 앱 내 결제는 현재 준비 중입니다. 지금은 코치 프로필과 문의 채팅을 먼저 이용해 주세요.</p>
-    </div>
-    <div class="fig" data-reveal>
-      <!-- 실제 레슨 탭 화면 -->
-      <div class="phone" role="img" aria-label="swish 레슨 화면 — 레슨 유형 필터와 레슨 카드">
-        <div class="screen">
-          <div class="island"></div>
-          <div class="app-head">
-            <span class="mark">swish</span>
-            <span class="spacer"></span>
-            <span class="region">서울 강남구 ▾</span>
-            <svg class="bell"><use href="#i-bell"/></svg>
-          </div>
-          <div class="screen-title"><span class="t">레슨</span><span class="mini-cta">코치 등록</span></div>
-          <div class="chip-row" style="padding-top:6px"><span class="chip on">전체</span><span class="chip">1:1</span><span class="chip">소그룹</span><span class="chip">팀 코칭</span><span class="chip">입문클래스</span></div>
-          <div class="chip-row"><span class="chip">가까운 순</span></div>
-          <div class="glist" style="padding-top:2px">
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">기본기부터 잡는 1:1 레슨</span><span class="pill neutral">1:1</span></div>
-              <div class="host"><span class="ava">김</span>김코치</div>
-              <div class="lv"><span class="pill lav">입문·초급</span>강남 · 1.2km</div>
-              <div class="foot"><span class="cap">2/4명</span><span class="price">회당 60,000원</span></div>
-            </div>
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">슛폼 교정 소그룹 클래스</span><span class="pill neutral">소그룹</span></div>
-              <div class="host"><span class="ava">박</span>박코치</div>
-              <div class="lv"><span class="pill cob">중급</span>분당 · 4.5km</div>
-              <div class="foot"><span class="cap">3/6명</span><span class="price">회당 30,000원</span></div>
-            </div>
-            <div class="lcard" data-reveal>
-              <div class="row1"><span class="t">성인 입문클래스 4주 과정</span><span class="pill neutral">입문클래스</span></div>
-              <div class="host"><span class="ava">이</span>이코치</div>
-              <div class="lv"><span class="pill lav">입문</span>송파 · 3.1km</div>
-              <div class="foot"><span class="cap">5/8명</span><span class="price">회당 40,000원</span></div>
-            </div>
-          </div>
-          <div class="tabbar">
-            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
-            <span class="tab on"><svg><use href="#i-school"/></svg>레슨</span>
-            <span class="tab"><svg><use href="#i-ball"/></svg>게임</span>
-            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
-            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
 </div>
 
 <section class="band" id="crew" data-scene>
@@ -923,9 +848,9 @@
   </svg>
   <div class="band-in">
     <span class="kicker" data-reveal>동호회·크루 운영자님께</span>
-    <p class="free" data-reveal>플랫폼 수수료 <em data-pop>0원</em></p>
-    <p data-reveal>매주 게스트 몇 명 오는지, 누가 입금했는지 세고 계신가요? <b>정원·대기열·입금 확인</b>을 swish가 대신합니다. 참가비는 게스트가 <b>호스트 계좌로 직접</b> 보내고, swish는 대금을 보관하지도 수수료를 떼지도 않습니다. 쓰던 단톡방에서 옮겨오는 세팅도 저희가 직접 돕습니다.</p>
-    <p class="fine" data-reveal>현재 참가비는 호스트 계좌로 직접 송금하는 방식이며, swish가 받는 수수료는 없습니다. 앱 내 카드 결제는 준비 중이에요. 도입되면 게스트가 내는 참가비는 그대로이고, 카드 결제수수료 3.3%만 정산에서 차감됩니다.</p>
+    <p class="free" data-reveal>크루 운영을 <em data-pop>간편하게</em></p>
+    <p data-reveal>매주 함께 뛸 게스트를 모으고 계신가요? <b>정원·대기열·참가 신청</b>을 한곳에서 관리해요. 참가비 없는 게임은 사업자 승인 없이 열 수 있으며, <b>유료 게임 개설은 사업자 승인 후</b> 이용할 수 있어요.</p>
+    <p class="fine" data-reveal>결제 방식과 수수료·정산 조건은 확정되는 대로 안내해 드릴게요.</p>
     <div class="cta-row" data-reveal>
       <a class="btn btn-primary" href="mailto:tommytae9697@gmail.com?subject=swish%20%ED%81%AC%EB%A3%A8%20%EB%93%B1%EB%A1%9D%20%EB%AC%B8%EC%9D%98">크루 등록 문의하기</a>
     </div>
@@ -969,15 +894,17 @@
   </div>
 </section>
 
-<section class="tester" id="tester" data-scene>
+<section class="tester" id="release" data-scene>
+  <span id="tester" class="legacy-anchor" aria-hidden="true"></span>
   <div class="wrap tester-in">
     <i class="ball-anchor" data-floor style="left:66%;top:66%"></i>
     <div class="copy">
-      <span class="kicker" data-reveal>Android 사전 테스트</span>
-      <h2 style="margin-bottom:0" data-reveal>Android는 테스터로 먼저</h2>
-      <p data-reveal>정식 출시 전 마지막 테스트가 진행 중이에요. 구글 계정 이메일 하나만 보내주시면 바로 초대해 드려요. 설치하고 2주 — 여러분의 피드백이 정식 출시 버전이 됩니다.</p>
+      <span class="kicker" data-reveal>출시 안내</span>
+      <h2 style="margin-bottom:0" data-reveal>기록은 곧 만나요.</h2>
+      <p data-reveal>iOS 앱은 App Store에서 만나실 수 있어요. 현재 공개 버전에는 기록 기능이 없으며, 다음 업데이트로 선보일 예정이에요.</p>
+      <p data-reveal>Android는 정식 출시를 준비하고 있어요. 다운로드가 가능해지면 이곳에 안내할게요.</p>
     </div>
-    <a class="btn btn-primary" data-reveal href="mailto:tommytae9697@gmail.com?subject=swish%20%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%20%ED%85%8C%EC%8A%A4%ED%84%B0%20%EC%8B%A0%EC%B2%AD&body=%EA%B5%AC%EA%B8%80%20%EA%B3%84%EC%A0%95%20%EC%9D%B4%EB%A9%94%EC%9D%BC%3A%20">테스터 신청하기</a>
+    <a class="btn btn-primary" data-reveal href="https://apps.apple.com/kr/app/id6767571900">iOS App Store 보기</a>
   </div>
 </section>
 
@@ -1030,10 +957,11 @@
   </div>
   <div class="goal-copy">
     <p class="swish-word">SWISH!</p>
-    <p class="goal-sub">코트를 찾고, 사람을 모으고,<br>오늘 바로 뛴다.</p>
+    <p class="goal-sub">오늘의 농구를 즐기고,<br>다음의 나를 위해 남겨요.</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
-      <a class="btn btn-ghost" href="#tester">Android 테스터 신청</a>
+      <a class="btn btn-ghost" href="#release">출시 안내</a>
+      <p class="cta-note">기록 기능은 업데이트 예정 · Android 출시 준비 중</p>
     </div>
   </div>
 </section>
@@ -1043,7 +971,7 @@
     <div class="foot-grid">
       <div data-reveal>
         <p class="foot-mark">swish</p>
-        <p>농구할 코트를 찾고, 같이 뛸 사람을 구하고, 경기까지 굴러가게 하는 농구 앱.</p>
+        <p>코트를 찾고, 함께 뛰고, 나만의 기록을 준비하는 농구 앱.</p>
         <p class="legal" style="margin-top:10px">
           <a href="https://www.notion.so/SWISH-36970c5866eb812297abc686d0bed893">이용약관</a>
           <a href="https://www.notion.so/SWISH-36970c5866eb8121876cfbeaad08c6f4">개인정보처리방침</a>
@@ -1068,6 +996,7 @@
         </p>
       </div>
     </div>
+    <p style="margin-bottom:12px">기존 레슨의 신청 내역·문의·결제·취소·환불 안내는 앱의 마이 및 기존 알림 경로에서 확인해 주세요.</p>
     <p>© 2026 swish. swish는 통신판매중개자이며, 게임·레슨 거래의 당사자가 아닙니다. 거래에 관한 의무와 책임은 각 호스트·코치에게 있습니다.</p>
   </div>
 </footer>
@@ -1110,12 +1039,12 @@
   const stick = $(".story-stick");
   if (stick) {
     const screens = $$(".screen", stick);
-    const secs = ["#courts", "#games", "#lessons"].map((id) => $(id));
+    const secs = ["#courts", "#games", "#records"].map((id) => $(id));
     let pinsDone = false, raf = 0;
     const show = (i) => {
       if (stick.dataset.active === String(i)) return;
       stick.dataset.active = String(i);
-      const cards = $$(".gcard, .lcard", screens[i]);
+      const cards = $$(".gcard, .record-card", screens[i]);
       if (cards.length && !reduce) animate(cards, { opacity: [0, 1], y: [12, 0] }, { delay: stagger(0.07, { startDelay: 0.2 }), duration: 0.5, ease: EASE });
     };
     const pick = () => {
