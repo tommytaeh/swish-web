@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>swish — 나만의 농구 기록, 코트와 게임</title>
-<meta name="description" content="오늘 뛴 농구를 나만의 기록으로. 글과 사진 1장으로 남기는 개인 기록 업데이트를 준비하고 있어요. 코트맵·픽업게임·전광판을 만나는 농구 앱 swish(스위시).">
-<meta property="og:title" content="swish — 나만의 농구 기록, 코트와 게임">
-<meta property="og:description" content="글과 사진 1장으로 남기는 나만의 농구 기록, 업데이트 준비 중. 코트맵부터 픽업게임·전광판까지.">
+<title>swish — 코트에서 뛴 농구를 기록하고 나누는 앱</title>
+<meta name="description" content="오늘 뛴 농구를 글과 사진 1장으로 기록하고, 같은 코트·우리 동네 농구인들과 나누는 기록 피드 업데이트를 준비하고 있어요. 코트맵·픽업게임·전광판을 만나는 농구 앱 swish(스위시).">
+<meta property="og:title" content="swish — 오늘 뛴 농구, 코트의 기록이 되다">
+<meta property="og:description" content="글과 사진 1장으로 남기는 코트·동네 농구 기록 피드, 업데이트 준비 중. 코트맵부터 픽업게임·전광판까지.">
 <meta property="og:image" content="https://swish.co.kr/assets/records-og.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0A0B0F">
@@ -298,14 +298,16 @@
   .tag.gold{color:var(--gold);background:rgba(255,178,61,.12)}
 
   /* 출시 예정 개인 기록 예시 */
-  .record-stats{display:flex;gap:8px;margin:8px 14px 12px;padding:12px 6px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
-  .record-stats>div{flex:1;text-align:center}
-  .record-stats b{display:block;font-size:22px;line-height:1.2}
-  .record-stats span{font-size:9px;color:var(--dim)}
-  .record-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;font-size:12px}
-  .record-date{font-size:10px;color:var(--dim);margin-bottom:7px}
-  .record-photo{display:block;color:var(--dim);font-size:10px;margin-top:8px}
   .record-note{padding-top:8px;font-size:9px}
+  .feed-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:12px}
+  .feed-card>p{padding:8px 12px 0}
+  .fc-head{display:flex;align-items:center;gap:8px;padding:10px 12px 8px}
+  .fc-head .ava{width:22px;height:22px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-size:10px;font-weight:800}
+  .fc-head b{display:block;font-size:11px}
+  .fc-head span{font-size:9px;color:var(--dim)}
+  .fc-photo{aspect-ratio:12/5;background:#2A1512;display:grid;place-items:center;color:var(--scarlet)}
+  .fc-photo svg{width:30px;height:30px}
+  .fc-like{display:block;padding:6px 12px 10px;font-size:10px;color:var(--scarlet);font-weight:800}
   #records li small{color:var(--dim)}
   .legacy-anchor{position:absolute;top:0}
   section[id]{scroll-margin-top:64px;position:relative}
@@ -497,8 +499,8 @@
   <div class="wrap hero-in">
     <div>
       <p class="kicker" data-reveal>농구 앱 swish</p>
-      <h1><span class="line">오늘 뛴 농구,</span><span class="line g">나만의 기록으로.</span></h1>
-      <p class="sub" data-reveal>슛 감각이 좋았던 날도, 가볍게 몸을 푼 날도.<br><b>글이나 사진 한 장</b>으로 돌아보는 나만의 농구 기록을 준비하고 있어요.</p>
+      <h1><span class="line">오늘 뛴 농구,</span><span class="line g">코트의 기록이 되다.</span></h1>
+      <p class="sub" data-reveal>슛 감각이 좋았던 날도, 가볍게 몸을 푼 날도.<br><b>글이나 사진 한 장</b>으로 남기고, 같은 코트·우리 동네 농구인들의 기록을 구경하는 기록 피드를 준비하고 있어요.</p>
       <div class="cta-row" data-reveal>
         <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
         <a class="btn btn-ghost" href="#records">기록 미리 보기</a>
@@ -510,20 +512,17 @@
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="float">
       <!-- 출시 예정 기능의 정적 예시 -->
-      <div class="phone" role="img" aria-label="업데이트 예정인 개인 농구 기록 예시: 글, 선택 코트, 기록한 날 수와 사진 유무">
+      <div class="phone" role="img" aria-label="업데이트 예정인 농구 기록 피드 예시: 코트와 날짜, 사진, 글, 좋아요가 있는 기록 카드">
         <div class="screen"><div class="island"></div>
           <div class="app-head"><span class="mark">swish</span><span class="spacer"></span><span class="region">업데이트 예정</span></div>
           <div class="screen-title"><span class="t">농구 기록</span><span class="mini-cta">기록하기</span></div>
-          <p class="screen-sub">나만 볼 수 있는 농구 기록이에요</p>
-          <div class="record-stats"><div><b>3</b><span>기록</span></div><div><b>2</b><span>기록한 날</span></div><div><b>1</b><span>선택한 코트</span></div></div>
-          <p class="chip-label">코트</p>
-          <div class="chip-row"><span class="chip on">전체</span><span class="chip">반포한강공원</span></div>
+          <p class="screen-sub">코트와 동네에서 올라온 농구 기록이에요</p>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">팔로잉</span><span class="chip">내 동네</span></div>
           <div class="glist">
-            <div class="record-card"><p class="record-date">9월 22일 · 반포한강공원</p><p>오늘은 자유투 리듬을 찾았어요.<br>다음에도 천천히, 같은 자세로.</p><span class="record-photo">사진 1장 · 상세에서 보기</span></div>
-            <div class="record-card"><p class="record-date">9월 22일 · 코트 선택 안 함</p><p>마무리는 가벼운 드리블 연습.</p></div>
-            <div class="record-card"><p class="record-date">9월 20일 · 반포한강공원</p><p>오랜만에 뛰어서 더 즐거웠던 날.</p></div>
+            <div class="feed-card"><div class="fc-head"><span class="ava">민</span><div><b>민준</b><span>반포한강공원 · 9월 22일</span></div></div><div class="fc-photo" aria-hidden="true"><svg><use href="#i-ball"/></svg></div><p>자유투 리듬을 찾은 날.</p><span class="fc-like">♥ 12</span></div>
+            <div class="feed-card"><div class="fc-head"><span class="ava">서</span><div><b>서연</b><span>서울 서초구 · 9월 21일</span></div></div><p>퇴근하고 3대3 두 게임, 마지막 레이업 성공.</p><span class="fc-like">♥ 5</span></div>
           </div>
-          <p class="screen-sub record-note">[DEMO] 기록 예시 · 직접 입력한 활동일</p>
+          <p class="screen-sub record-note">[DEMO] 기록 피드 예시 · 직접 남긴 기록</p>
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span><span class="tab on"><svg><use href="#i-record"/></svg>기록</span><span class="tab"><svg><use href="#i-ball"/></svg>게임</span><span class="tab"><svg><use href="#i-map"/></svg>코트맵</span><span class="tab"><svg><use href="#i-person"/></svg>마이</span>
           </div></div>
@@ -548,14 +547,14 @@
     <span class="ti"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
     <span class="ti"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
     <span class="ti"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
-    <span class="ti"><b>SOON</b>나만 보는 농구 기록 — 업데이트 준비 중</span>
+    <span class="ti"><b>SOON</b>코트·동네 농구 기록 피드 — 업데이트 준비 중</span>
     <span class="ti"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트를 팔로우하면 새 게임 알림<span class="v">0.1.14</span></span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트 프로필에서 예정 게임·팔로워·리뷰를 한눈에</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 실명 인증 — 실명은 호스트에게만 보여요</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
-    <span class="ti dup" aria-hidden="true"><b>SOON</b>나만 보는 농구 기록 — 업데이트 준비 중</span>
+    <span class="ti dup" aria-hidden="true"><b>SOON</b>코트·동네 농구 기록 피드 — 업데이트 준비 중</span>
     <span class="ti dup" aria-hidden="true"><b>MAP</b>전국 농구 코트 1,220곳 — 제보로 매일 자라는 코트맵</span>
   </div></div>
 </div>
@@ -654,16 +653,13 @@
 <div class="screen" data-screen="2"><div class="island"></div>
           <div class="app-head"><span class="mark">swish</span><span class="spacer"></span><span class="region">업데이트 예정</span></div>
           <div class="screen-title"><span class="t">농구 기록</span><span class="mini-cta">기록하기</span></div>
-          <p class="screen-sub">나만 볼 수 있는 농구 기록이에요</p>
-          <div class="record-stats"><div><b>3</b><span>기록</span></div><div><b>2</b><span>기록한 날</span></div><div><b>1</b><span>선택한 코트</span></div></div>
-          <p class="chip-label">코트</p>
-          <div class="chip-row"><span class="chip on">전체</span><span class="chip">반포한강공원</span></div>
+          <p class="screen-sub">코트와 동네에서 올라온 농구 기록이에요</p>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">팔로잉</span><span class="chip">내 동네</span></div>
           <div class="glist">
-            <div class="record-card"><p class="record-date">9월 22일 · 반포한강공원</p><p>오늘은 자유투 리듬을 찾았어요.<br>다음에도 천천히, 같은 자세로.</p><span class="record-photo">사진 1장 · 상세에서 보기</span></div>
-            <div class="record-card"><p class="record-date">9월 22일 · 코트 선택 안 함</p><p>마무리는 가벼운 드리블 연습.</p></div>
-            <div class="record-card"><p class="record-date">9월 20일 · 반포한강공원</p><p>오랜만에 뛰어서 더 즐거웠던 날.</p></div>
+            <div class="feed-card"><div class="fc-head"><span class="ava">민</span><div><b>민준</b><span>반포한강공원 · 9월 22일</span></div></div><div class="fc-photo" aria-hidden="true"><svg><use href="#i-ball"/></svg></div><p>자유투 리듬을 찾은 날.</p><span class="fc-like">♥ 12</span></div>
+            <div class="feed-card"><div class="fc-head"><span class="ava">서</span><div><b>서연</b><span>서울 서초구 · 9월 21일</span></div></div><p>퇴근하고 3대3 두 게임, 마지막 레이업 성공.</p><span class="fc-like">♥ 5</span></div>
           </div>
-          <p class="screen-sub record-note">[DEMO] 기록 예시 · 직접 입력한 활동일</p>
+          <p class="screen-sub record-note">[DEMO] 기록 피드 예시 · 직접 남긴 기록</p>
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span><span class="tab on"><svg><use href="#i-record"/></svg>기록</span><span class="tab"><svg><use href="#i-ball"/></svg>게임</span><span class="tab"><svg><use href="#i-map"/></svg>코트맵</span><span class="tab"><svg><use href="#i-person"/></svg>마이</span>
           </div></div>
@@ -676,29 +672,26 @@
     <i class="ball-anchor" data-floor style="left:50%;top:66%"></i>
     <div class="copy">
       <span class="kicker" data-reveal>농구 기록 · 업데이트 예정</span>
-      <h2 data-reveal>한 줄도, 한 장도.<br>나만 보는 농구 이야기.</h2>
-      <p class="body" data-reveal>운동을 마친 뒤 기억하고 싶은 순간을 남겨 보세요. 날짜순으로 돌아보고, 직접 선택한 코트별로 내 기록을 모아볼 수 있어요.</p>
+      <h2 data-reveal>한 줄도, 한 장도.<br>코트에 남기는 농구 이야기.</h2>
+      <p class="body" data-reveal>운동을 마친 뒤 기억하고 싶은 순간을 올려 보세요. 코트를 태그하면 그 코트와 우리 동네 피드에 모이고, 팔로우한 사람들의 기록에 좋아요로 응원할 수 있어요.</p>
       <ul data-reveal>
         <li>글 최대 1,000자, 사진 최대 1장<small>글만 쓰거나 사진만 남겨도 괜찮아요.</small></li>
-        <li>코트는 이름으로 찾아 직접 선택<small>코트를 고르지 않아도, 위치 권한 없이도 기록해요.</small></li>
-        <li>기록과 사진은 나만 볼 수 있어요<small>그날의 감각과 기억을 내 공간에 차곡차곡 남겨요.</small></li>
-        <li>기록한 날을 한눈에<small>직접 남긴 활동일을 모아 내 농구 습관을 돌아봐요.</small></li>
+        <li>코트를 태그하면 코트·동네 피드에<small>코트는 이름으로 찾아 선택해요. 위치 권한 없이도 기록할 수 있어요.</small></li>
+        <li>공개 계정·비공개 계정은 내가 선택<small>비공개 계정이면 기록은 나만 봐요. 사진의 위치 정보는 지우고 올려요.</small></li>
+        <li>좋아요와 팔로잉 피드<small>함께 뛰는 사람들의 기록을 모아 보고, 내 기록한 날도 한눈에 돌아봐요.</small></li>
       </ul>
-      <p class="fine" data-reveal>화면은 출시 예정 기능의 예시예요. 같은 날 여러 번 남겨도 기록한 날은 하루로 세어요.</p>
+      <p class="fine" data-reveal>화면은 출시 예정 기능의 예시예요. 기록은 회원이 직접 남긴 것으로, 코트 방문을 인증하지 않아요.</p>
     </div>
-    <div class="fig" data-reveal><div class="phone" role="img" aria-label="출시 예정 농구 기록 목록 예시, 개인 기록 3개와 기록한 날 2일"><div class="screen"><div class="island"></div>
+    <div class="fig" data-reveal><div class="phone" role="img" aria-label="출시 예정 농구 기록 피드 예시, 코트와 동네에서 올라온 기록 2개"><div class="screen"><div class="island"></div>
           <div class="app-head"><span class="mark">swish</span><span class="spacer"></span><span class="region">업데이트 예정</span></div>
           <div class="screen-title"><span class="t">농구 기록</span><span class="mini-cta">기록하기</span></div>
-          <p class="screen-sub">나만 볼 수 있는 농구 기록이에요</p>
-          <div class="record-stats"><div><b>3</b><span>기록</span></div><div><b>2</b><span>기록한 날</span></div><div><b>1</b><span>선택한 코트</span></div></div>
-          <p class="chip-label">코트</p>
-          <div class="chip-row"><span class="chip on">전체</span><span class="chip">반포한강공원</span></div>
+          <p class="screen-sub">코트와 동네에서 올라온 농구 기록이에요</p>
+          <div class="chip-row"><span class="chip on">전체</span><span class="chip">팔로잉</span><span class="chip">내 동네</span></div>
           <div class="glist">
-            <div class="record-card"><p class="record-date">9월 22일 · 반포한강공원</p><p>오늘은 자유투 리듬을 찾았어요.<br>다음에도 천천히, 같은 자세로.</p><span class="record-photo">사진 1장 · 상세에서 보기</span></div>
-            <div class="record-card"><p class="record-date">9월 22일 · 코트 선택 안 함</p><p>마무리는 가벼운 드리블 연습.</p></div>
-            <div class="record-card"><p class="record-date">9월 20일 · 반포한강공원</p><p>오랜만에 뛰어서 더 즐거웠던 날.</p></div>
+            <div class="feed-card"><div class="fc-head"><span class="ava">민</span><div><b>민준</b><span>반포한강공원 · 9월 22일</span></div></div><div class="fc-photo" aria-hidden="true"><svg><use href="#i-ball"/></svg></div><p>자유투 리듬을 찾은 날.</p><span class="fc-like">♥ 12</span></div>
+            <div class="feed-card"><div class="fc-head"><span class="ava">서</span><div><b>서연</b><span>서울 서초구 · 9월 21일</span></div></div><p>퇴근하고 3대3 두 게임, 마지막 레이업 성공.</p><span class="fc-like">♥ 5</span></div>
           </div>
-          <p class="screen-sub record-note">[DEMO] 기록 예시 · 직접 입력한 활동일</p>
+          <p class="screen-sub record-note">[DEMO] 기록 피드 예시 · 직접 남긴 기록</p>
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span><span class="tab on"><svg><use href="#i-record"/></svg>기록</span><span class="tab"><svg><use href="#i-ball"/></svg>게임</span><span class="tab"><svg><use href="#i-map"/></svg>코트맵</span><span class="tab"><svg><use href="#i-person"/></svg>마이</span>
           </div></div></div></div>
@@ -971,7 +964,7 @@
     <div class="foot-grid">
       <div data-reveal>
         <p class="foot-mark">swish</p>
-        <p>코트를 찾고, 함께 뛰고, 나만의 기록을 준비하는 농구 앱.</p>
+        <p>코트를 찾고, 함께 뛰고, 뛴 농구를 기록하고 나누는 농구 앱.</p>
         <p class="legal" style="margin-top:10px">
           <a href="https://www.notion.so/SWISH-36970c5866eb812297abc686d0bed893">이용약관</a>
           <a href="https://www.notion.so/SWISH-36970c5866eb8121876cfbeaad08c6f4">개인정보처리방침</a>
@@ -1044,7 +1037,7 @@
     const show = (i) => {
       if (stick.dataset.active === String(i)) return;
       stick.dataset.active = String(i);
-      const cards = $$(".gcard, .record-card", screens[i]);
+      const cards = $$(".gcard, .feed-card", screens[i]);
       if (cards.length && !reduce) animate(cards, { opacity: [0, 1], y: [12, 0] }, { delay: stagger(0.07, { startDelay: 0.2 }), duration: 0.5, ease: EASE });
     };
     const pick = () => {
