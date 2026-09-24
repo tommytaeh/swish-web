@@ -389,6 +389,14 @@
   .tester-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
   .tester p{color:var(--dim);font-size:15px;max-width:33em;margin-top:8px}
 
+  /* ── 약관 개정 공지 ── */
+  .notice{padding:40px 0 8px}
+  .notice-box{border:1px solid var(--line);border-radius:16px;padding:22px 24px;background:var(--surface)}
+  .notice-box h2{font-size:18px;font-weight:800;margin-bottom:6px}
+  .notice-box .dates{color:var(--dim);font-size:13px;margin-bottom:14px}
+  .notice-box ul{margin:0 0 14px;padding-left:18px;color:var(--dim);font-size:13.5px;line-height:1.8}
+  .notice-box p{color:var(--dim);font-size:13px;line-height:1.8}
+  .notice-box a{text-decoration:underline;text-underline-offset:3px}
   /* ── footer ── */
   footer{padding:56px 0 70px;border-top:1px solid var(--line-soft);color:var(--faint);font-size:12.5px;line-height:1.9}
   .foot-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;margin-bottom:30px}
@@ -504,7 +512,7 @@
       <div class="cta-row" data-reveal>
         <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
         <a class="btn btn-ghost" href="#records">기록 미리 보기</a>
-        <p class="cta-note">Android는 출시 준비 중이에요.</p>
+        <p class="cta-note">Android는 출시 준비 중이에요. · <a href="#notice" style="text-decoration:underline;text-underline-offset:3px">개인정보처리방침·이용약관 개정 안내 (10월 1일 시행)</a></p>
       </div>
     </div>
 
@@ -956,6 +964,23 @@
   </div>
 </section>
 
+<section class="notice" id="notice" aria-labelledby="notice-title">
+  <div class="wrap">
+    <div class="notice-box">
+      <h2 id="notice-title">개인정보처리방침·이용약관 개정 안내</h2>
+      <p class="dates">공지일 2026년 9월 24일 · 시행일 2026년 10월 1일</p>
+      <ul>
+        <li>농구 기록 피드: 회원이 남긴 농구 기록(글·사진·코트·날짜)이 계정 공개 설정에 따라 다른 회원에게 보여요. 공개 계정이 기본이며, 마이 &gt; 계정 공개 범위에서 비공개로 바꿀 수 있어요. 이전 버전에서 "나만 볼 수 있어요"로 남긴 기록은 계속 본인만 봐요.</li>
+        <li>좋아요·신고·차단: 좋아요 알림에 닉네임이 표시되고, 신고가 누적된 기록은 운영자 검토 전까지 숨겨질 수 있어요.</li>
+        <li>사진: 올리기 전에 기기에서 촬영 위치 등 메타데이터를 지워요. 다른 사람의 얼굴이나 개인정보를 동의 없이 올리는 것은 금지돼요.</li>
+        <li>유료 게임: 참가비가 있는 게임은 사업자 승인을 받은 호스트만 등록할 수 있어요. 무료 게임은 누구나 열 수 있어요.</li>
+        <li>그 밖에 참가비 결제, 사업자 승인 신청, 이메일 로그인에 관한 개인정보 처리 사항을 추가·보완했어요.</li>
+      </ul>
+      <p>전문은 <a href="https://www.notion.so/SWISH-36970c5866eb8121876cfbeaad08c6f4">개인정보처리방침</a>과 <a href="https://www.notion.so/SWISH-36970c5866eb812297abc686d0bed893">이용약관</a>에서 확인할 수 있어요. 변경된 약관에 동의하지 않으면 시행일 전까지 <a href="mailto:tommytae9697@gmail.com">tommytae9697@gmail.com</a>으로 거부 의사를 알려 주시거나 회원 탈퇴를 할 수 있어요. 시행일까지 거부 의사를 밝히지 않으면 변경된 약관에 동의한 것으로 봐요.</p>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -967,6 +992,7 @@
           <a href="https://www.notion.so/SWISH-36970c5866eb8121876cfbeaad08c6f4">개인정보처리방침</a>
           <a href="https://www.notion.so/SWISH-36970c5866eb819c9863d427811420fb">위치기반서비스 약관</a>
           <a href="https://www.notion.so/SWISH-36970c5866eb81038dbcf0c47e58927c">환불 정책</a>
+          <a href="#notice">약관 개정 공지</a>
           <a href="/courts/">전국 농구장</a>
         </p>
       </div>
