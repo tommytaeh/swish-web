@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>swish 설치 · Android</title>
+<meta name="theme-color" content="#0A0B0F">
+<script>
+  // Android QR 전용. iPhone 으로 열면 App Store 로 보낸다.
+  // 정식 출시(프로덕션) 후에는 이 페이지를 Play 스토어 바로가기로 바꾸면 인쇄한 QR 을 그대로 쓴다.
+  if (/iPhone|iPad|iPod/.test(navigator.userAgent)) location.replace("https://apps.apple.com/kr/app/id6767571900");
+</script>
+<link rel="icon" href="../../assets/favicon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{--court:#0A0B0F;--surface:#14161C;--line:#232734;--ink:#F2F4F8;--dim:#8A90A2;--scarlet:#FF3D2E;--done:#3DDC84}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--court);color:var(--ink);font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  main{max-width:480px;margin:0 auto;padding:28px 16px 48px}
+  .wordmark{font-weight:900;font-size:24px;letter-spacing:-.055em;color:var(--scarlet);font-style:italic}
+  h1{font-size:26px;font-weight:900;letter-spacing:-.03em;line-height:1.3;margin:16px 0 4px}
+  .sub{color:var(--dim);font-size:15px}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}
+  .step.dim{opacity:.55}
+  .head{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+  .num{flex:0 0 26px;height:26px;border-radius:50%;background:var(--scarlet);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .step.done .num{background:var(--done);color:#0A0B0F}
+  .btn{display:flex;align-items:center;justify-content:center;min-height:52px;margin-top:12px;border-radius:14px;font-weight:800;font-size:16px;background:var(--scarlet);color:#fff}
+  .step.done .btn{background:transparent;border:1.5px solid var(--line);color:var(--dim)}
+  .hint{color:var(--dim);font-size:13.5px;margin-top:8px}
+  .note{color:var(--dim);font-size:13.5px;margin-top:20px}
+</style>
+</head>
+<body>
+<main>
+  <span class="wordmark">swish</span>
+  <h1>3번만 누르면 설치돼요</h1>
+  <p class="sub">위에서부터 차례로 눌러 주세요.</p>
+
+  <section class="step" data-step="1">
+    <div class="head"><span class="num">1</span>테스터 그룹 참여</div>
+    <a class="btn" href="https://groups.google.com/g/swish_demo" data-go="1">그룹 가입하러 가기</a>
+    <p class="hint">열린 화면에서 "그룹 가입"을 누르고, 이 페이지로 돌아와 주세요. Play 스토어와 같은 Google 계정이어야 해요.</p>
+  </section>
+
+  <section class="step" data-step="2">
+    <div class="head"><span class="num">2</span>테스터 되기</div>
+    <a class="btn" href="https://play.google.com/apps/testing/kr.swish.app" data-go="2">테스터 되기</a>
+    <p class="hint">"테스터 되기"를 누르면 준비 끝이에요.</p>
+  </section>
+
+  <section class="step" data-step="3">
+    <div class="head"><span class="num">3</span>설치</div>
+    <a class="btn" href="https://play.google.com/store/apps/details?id=kr.swish.app" data-go="3">Play 스토어에서 설치</a>
+    <p class="hint">앱이 안 보이면 몇 분 뒤 다시 눌러 주세요.</p>
+  </section>
+
+  <p class="note">정식 출시 후에도 다시 설치할 필요 없이 그대로 업데이트돼요.</p>
+</main>
+<script>
+  // 진행 단계 기억 — 그룹 가입 후 돌아오면 다음 단계가 강조된다. 저장이 막혀도 버튼은 그대로 동작.
+  var KEY = "swish:start-step";
+  function read(){ try { return Number(localStorage.getItem(KEY)) || 0; } catch (e) { return 0; } }
+  function paint(done){
+    document.querySelectorAll(".step").forEach(function(el){
+      var n = Number(el.dataset.step);
+      el.classList.toggle("done", n <= done);
+      el.classList.toggle("dim", n > done + 1);
+    });
+  }
+  paint(read());
+  document.querySelectorAll("[data-go]").forEach(function(a){
+    a.addEventListener("click", function(){
+      var n = Number(a.dataset.go);
+      if (n > read()) { try { localStorage.setItem(KEY, String(n)); } catch (e) {} }
+      paint(Math.max(read(), n));
+    });
+  });
+  // 다른 앱에서 돌아왔을 때(bfcache 포함) 다시 칠한다.
+  addEventListener("pageshow", function(){ paint(read()); });
+</script>
+</body>
+</html>
