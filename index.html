@@ -180,6 +180,7 @@
     .mcta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:38;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(10,11,15,.9);backdrop-filter:blur(14px);border-top:1px solid var(--line-soft);transform:translateY(110%);transition:transform .32s cubic-bezier(.2,.6,.2,1)}
     .mcta.show{transform:none}
     .mcta .btn{width:100%;padding:14px 20px;font-size:15.5px}
+    .mcta-in{display:flex;gap:8px}
   }
   /* ── 점 내비 (와이드 데스크톱) ── */
   .dots{display:none}
@@ -484,7 +485,7 @@
   <a href="#release" data-dot="release"><span>출시 안내</span></a>
   <a href="#goal" data-dot="goal"><span>받기</span></a>
 </nav>
-<div class="mcta"><a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">iOS 앱 받기</a></div>
+<div class="mcta"><div class="mcta-in"><a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">iOS 앱 받기</a><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=kr.swish.app">Android 앱 받기</a></div></div>
 <div class="ball" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#FF3D2E"/><path d="M20 1v38M1 20h38M6.5 6.5c8 8 8 19 0 27M33.5 6.5c-8 8-8 19 0 27" stroke="#0A0B0F" stroke-width="1.6" fill="none"/></svg></div>
 <div class="ball-shadow" aria-hidden="true"></div>
 <svg class="trail" aria-hidden="true"><defs><mask id="trail-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%"><path class="trail-reveal" d=""/></mask></defs><path class="trail-line" d="" mask="url(#trail-mask)"/></svg>
@@ -511,8 +512,9 @@
       <p class="sub" data-reveal>슛 감각이 좋았던 날도, 가볍게 몸을 푼 날도.<br><b>글이나 사진 한 장</b>으로 남기고, 같은 코트·우리 동네 농구인들의 기록을 구경하세요.</p>
       <div class="cta-row" data-reveal>
         <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=kr.swish.app">Google Play에서 받기</a>
         <a class="btn btn-ghost" href="#records">기록 미리 보기</a>
-        <p class="cta-note">Android는 출시 준비 중이에요. · <a href="#notice" style="text-decoration:underline;text-underline-offset:3px">개인정보처리방침·이용약관 개정 안내 (10월 1일 시행)</a></p>
+        <p class="cta-note"><a href="#notice" style="text-decoration:underline;text-underline-offset:3px">개인정보처리방침·이용약관 개정 안내 (10월 1일 시행)</a></p>
       </div>
     </div>
 
@@ -899,10 +901,12 @@
     <div class="copy">
       <span class="kicker" data-reveal>출시 안내</span>
       <h2 style="margin-bottom:0" data-reveal>지금 swish에서 기록해 보세요.</h2>
-      <p data-reveal>iOS 앱은 App Store에서 만나실 수 있어요.</p>
-      <p data-reveal>Android는 정식 출시를 준비하고 있어요. 다운로드가 가능해지면 이곳에 안내할게요.</p>
+      <p data-reveal>iPhone은 App Store에서, Android는 Google Play에서 받으실 수 있어요.</p>
     </div>
-    <a class="btn btn-primary" data-reveal href="https://apps.apple.com/kr/app/id6767571900">iOS App Store 보기</a>
+    <div class="cta-row" data-reveal>
+      <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=kr.swish.app">Google Play에서 받기</a>
+    </div>
   </div>
 </section>
 
@@ -958,8 +962,7 @@
     <p class="goal-sub">오늘의 농구를 즐기고,<br>다음의 나를 위해 남겨요.</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="https://apps.apple.com/kr/app/id6767571900">App Store에서 받기</a>
-      <a class="btn btn-ghost" href="#release">출시 안내</a>
-      <p class="cta-note">Android 출시 준비 중</p>
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=kr.swish.app">Google Play에서 받기</a>
     </div>
   </div>
 </section>
