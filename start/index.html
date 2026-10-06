@@ -9,6 +9,20 @@
 <meta property="og:description" content="1분이면 설치해요. 오늘 뛴 농구를 기록하고, 코트를 찾고, 같이 뛸 사람을 모아요.">
 <meta property="og:image" content="https://swish.co.kr/assets/feed-og.png">
 <meta name="theme-color" content="#0A0B0F">
+<!-- 휴대폰이면 안내를 건너뛰고 바로 스토어로 — QR 하나로 iPhone·Android 둘 다. PC·판별 불가는 아래 안내 그대로, ?stay 로 끌 수 있다.
+     영업 인쇄물 QR 은 ?from=sales → 캠페인 키 offline_sales (swish_app docs/ANALYTICS_TAXONOMY.md) -->
+<script>
+  (function () {
+    var q = location.search, ua = navigator.userAgent;
+    if (/[?&]stay\b/.test(q)) return;
+    var sales = /[?&]from=sales\b/.test(q);
+    var key = sales ? "offline_sales" : "web_start";
+    var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    if (ios) location.replace("https://apps.apple.com/kr/app/id6767571900?pt=128870676&ct=" + key + "&mt=8");
+    else if (/Android/i.test(ua)) location.replace("https://play.google.com/store/apps/details?id=kr.swish.app&referrer=" +
+      encodeURIComponent("utm_source=" + (sales ? "offline" : "swish_web") + "&utm_medium=" + (sales ? "print" : "start") + "&utm_campaign=" + key));
+  })();
+</script>
 <link rel="icon" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/icon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -47,7 +61,7 @@
 
   <div class="qr" aria-hidden="true">
     <img src="qr.svg" alt="">
-    <p>휴대폰 카메라로 찍으면 이 페이지가 열려요</p>
+    <p>휴대폰 카메라로 찍으면 바로 설치 화면이 열려요</p>
   </div>
 
   <div class="order" id="order">
