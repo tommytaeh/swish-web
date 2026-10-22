@@ -151,7 +151,7 @@
     .story-stick{position:sticky;top:max(72px,calc(50vh - 340px));height:680px;display:flex;align-items:center;justify-content:center;pointer-events:auto;perspective:1200px}
     .story-stick .phone{position:relative}
     .story-stick .screen{position:absolute;inset:11px;opacity:0;transform:translateY(14px) scale(.97);transition:opacity .45s cubic-bezier(.2,.65,.2,1),transform .45s cubic-bezier(.2,.65,.2,1)}
-    .story-stick[data-active="0"] .screen[data-screen="0"],.story-stick[data-active="1"] .screen[data-screen="1"],.story-stick[data-active="2"] .screen[data-screen="2"]{opacity:1;transform:none}
+    .story-stick[data-active="0"] .screen[data-screen="0"],.story-stick[data-active="1"] .screen[data-screen="1"],.story-stick[data-active="2"] .screen[data-screen="2"],.story-stick[data-active="3"] .screen[data-screen="3"]{opacity:1;transform:none}
     .story .fig{display:none}
     .story section.feat{min-height:100vh;display:flex;align-items:center}
     .story section.feat>.wrap{width:100%}
@@ -410,19 +410,15 @@
   .club-note{margin:9px 14px 0;font-size:9.5px;color:var(--faint);font-weight:600}
   .club-members{display:flex;justify-content:space-between;margin:9px 14px 0;padding:10px 0;border-top:1px solid var(--line-soft);font-size:11px;font-weight:800}
   .club-members span{color:var(--dim);font-weight:600}
-  section.clubs .screen>*{flex-shrink:0}
-  section.clubs .screen>.tabbar{margin-top:auto}
+  .club-screen>*{flex-shrink:0}
+  .club-screen>.tabbar{margin-top:auto}
   html.anim .club-seats i{opacity:0}
-  /* 데스크톱 컷 스크롤: 폰이 한 화면에 들어가게 패딩·폰 크기를 높이 구간별로 맞춘다 */
-  @media (min-width:920px) and (min-height:560px){
-    section.clubs{min-height:100vh;display:flex;align-items:center;padding:40px 0}
-    section.clubs>.wrap{width:100%}
-  }
-  @media (min-width:920px) and (min-height:700px) and (max-height:820px){ section.clubs .phone{width:262px} section.clubs .club-note{display:none} }
+  /* 데스크톱: 섹션은 #story 안이라 스티키 폰의 4번째 화면(data-screen=3)으로 보인다(폰은 고정, 화면만 바뀜).
+     폰이 작아지는 높이 구간에서는 화면 안 보조 줄을 줄인다 */
+  @media (min-width:920px) and (min-height:700px) and (max-height:820px){ .club-screen .club-note{display:none} }
   @media (min-width:920px) and (min-height:560px) and (max-height:699px){
-    section.clubs .phone{width:220px}
-    section.clubs .club-lbl,section.clubs .club-note,section.clubs .club-guest,section.clubs .club-members{display:none}
-    section.clubs .club-time{font-size:26px}
+    .club-screen .club-lbl,.club-screen .club-note,.club-screen .club-guest,.club-screen .club-members{display:none}
+    .club-screen .club-time{font-size:26px}
   }
 
   /* ── tester ── */
@@ -711,6 +707,40 @@
           <div class="tabbar">
             <span class="tab"><svg><use href="#i-home"/></svg>홈</span><span class="tab on"><svg><use href="#i-record"/></svg>기록</span><span class="tab"><svg><use href="#i-map"/></svg>코트맵</span><span class="tab"><svg><use href="#i-ball"/></svg>게임</span><span class="tab"><svg><use href="#i-person"/></svg>마이</span>
           </div></div>
+<div class="screen club-screen" data-screen="3">
+          <div class="island"></div>
+          <div class="app-head">
+            <span class="mark">swish</span>
+            <span class="spacer"></span>
+            <span class="region">서울 송파구 ▾</span>
+            <svg class="bell"><use href="#i-bell"/></svg>
+          </div>
+          <div class="chip-row"><span class="chip">픽업게임</span><span class="chip on">동호회</span></div>
+          <div class="club-hero">
+            <svg viewBox="0 0 132 96" fill="none" stroke="#1C202B" stroke-width="2" aria-hidden="true"><circle cx="86" cy="96" r="62"/><circle cx="86" cy="96" r="24"/><path d="M86 34V0"/></svg>
+            <span class="club-emb">목</span>
+            <div><p class="club-name">송파 목요 농구회</p><p class="club-meta">서울 송파 · 멤버 9</p></div>
+          </div>
+          <div class="club-lbl"><span>다음 운동</span><b>7일 뒤</b></div>
+          <div class="club-next">
+            <p class="club-day">10월 29일 목요일</p>
+            <p class="club-time">19:00<small>~21:00</small></p>
+            <p class="club-place">송파구민체육관 1코트</p>
+            <p class="club-count">참석 <span class="club-n">9</span>명</p>
+            <div class="club-seats" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="club-me"><span class="yes"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#A8FF35"/><path d="M4.6 8.3l2.3 2.3 4.5-4.9" stroke="#0A0B0F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>참석</span><span class="no">불참</span></div>
+            <p class="club-guest">+ 게스트 추가</p>
+          </div>
+          <p class="club-note">운동 2시간 전에 알림이 가요</p>
+          <div class="club-members">멤버 9<span>민준, 서연 외 7명</span></div>
+          <div class="tabbar">
+            <span class="tab"><svg><use href="#i-home"/></svg>홈</span>
+            <span class="tab"><svg><use href="#i-record"/></svg>기록</span>
+            <span class="tab"><svg><use href="#i-map"/></svg>코트맵</span>
+            <span class="tab on"><svg><use href="#i-ball"/></svg>게임</span>
+            <span class="tab"><svg><use href="#i-person"/></svg>마이</span>
+          </div>
+        </div>
     </div>
   </div>
 </div>
@@ -877,8 +907,6 @@
 </section>
 
 
-</div>
-
 <section class="feat clubs" id="clubs" data-scene>
   <div class="wrap feat-in">
     <i class="ball-anchor" data-floor style="left:50%;top:66%"></i>
@@ -897,7 +925,7 @@
     <div class="fig" data-reveal>
       <!-- 게임 탭의 동호회 방: 엠블럼·다음 운동·좌석 줄(연한 색에서 스위시 빨강으로 차오른다) -->
       <div class="phone" role="img" aria-label="swish 동호회 화면, 팀 엠블럼과 다음 운동 날짜·시간·장소, 참석 9명 좌석 줄">
-        <div class="screen">
+        <div class="screen club-screen">
           <div class="island"></div>
           <div class="app-head">
             <span class="mark">swish</span>
@@ -935,6 +963,10 @@
     </div>
   </div>
 </section>
+
+</div>
+
+
 
 <section class="board-sec" id="tools" data-scene>
   <div class="wrap">
@@ -1129,11 +1161,12 @@
   const stick = $(".story-stick");
   if (stick) {
     const screens = $$(".screen", stick);
-    const secs = ["#courts", "#games", "#records"].map((id) => $(id));
+    const secs = ["#courts", "#games", "#records", "#clubs"].map((id) => $(id));
     let pinsDone = false, raf = 0;
     const show = (i) => {
       if (stick.dataset.active === String(i)) return;
       stick.dataset.active = String(i);
+      document.dispatchEvent(new CustomEvent("story:show", { detail: i }));
       const cards = $$(".gcard, .feed-card", screens[i]);
       if (cards.length && !reduce) animate(cards, { opacity: [0, 1], y: [12, 0] }, { delay: stagger(0.07, { startDelay: 0.2 }), duration: 0.5, ease: EASE });
     };
@@ -1361,13 +1394,25 @@
     // 전광판: "폰을 눕히는 순간" — 스크롤할수록 눕는다
     scrub($(".sb-frame"), $("#tools"), { rotateX: [38, 0], scale: [0.9, 1] }, ["start end", "center center"]);
     // 동호회: 참석 좌석 줄이 연한 색에서 스위시 빨강으로 하나씩 차오르고 숫자가 따라 오른다
-    const clubSeats = $$(".club-seats i"), clubN = $(".club-n");
-    if (enter && clubSeats.length) {
-      const stopSeats = inView($(".club-seats"), () => {
-        if (clubN) { clubN.textContent = "0"; animate(0, clubSeats.length, { delay: 0.55, duration: 0.95, ease: "linear", onUpdate: (v) => { clubN.textContent = String(Math.ceil(v - 0.001)); } }); }
-        animate(clubSeats, { opacity: [0, 1], scale: [0.4, 1] }, { delay: stagger(0.1, { startDelay: 0.55 }), duration: 0.45, ease: EASE });
-        stopSeats();
-      }, { amount: 0.4 });
+    // 데스크톱은 스티키 폰의 동호회 화면, 모바일은 섹션 안 폰 — 각자 보일 때 한 번 채운다.
+    const fillSeats = (root) => {
+      const seats = $$(".club-seats i", root), n = $(".club-n", root);
+      if (!seats.length) return;
+      if (n) { n.textContent = "0"; animate(0, seats.length, { delay: 0.55, duration: 0.95, ease: "linear", onUpdate: (v) => { n.textContent = String(Math.ceil(v - 0.001)); } }); }
+      animate(seats, { opacity: [0, 1], scale: [0.4, 1] }, { delay: stagger(0.1, { startDelay: 0.55 }), duration: 0.45, ease: EASE });
+    };
+    const clubsSec = $("#clubs");
+    if (enter && clubsSec) {
+      const stickClub = $('.story-stick .screen[data-screen="3"]');
+      const figClub = $(".fig .club-screen", clubsSec);
+      // 데스크톱: 스티키 폰 화면이 동호회(3)로 바뀌는 순간 한 번 채운다(이미 3이면 바로).
+      if (stickClub) {
+        let stickDone = false;
+        const fillStick = () => { if (!stickDone) { stickDone = true; fillSeats(stickClub); } };
+        if ($(".story-stick").dataset.active === "3") fillStick();
+        else document.addEventListener("story:show", (e) => { if (e.detail === 3) fillStick(); });
+      }
+      if (figClub) { const stopFig = inView($(".club-seats", figClub), () => { fillSeats(figClub); stopFig(); }, { amount: 0.4 }); }
     }
 
     // ── 섹션을 넘나드는 공: 드리블 — 스크롤이 시간이다 ──
