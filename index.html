@@ -394,6 +394,7 @@
   .stat{padding:34px 12px;text-align:center;border-left:1px solid var(--line-soft)}
   .stat:first-child{border-left:none}
   .stat .n{font-family:var(--mono);font-size:clamp(26px,4.4vw,42px);font-weight:800;letter-spacing:-.02em;color:var(--scarlet);text-shadow:0 0 18px rgba(255,61,46,.3)}
+  .stat .n.n-word{font-family:inherit;letter-spacing:-.03em}   /* 숫자 대신 한글 단어를 쓰는 칸: 고정폭 글꼴엔 한글이 없어 본문 글꼴로 */
   .stat .l{font-size:13px;color:var(--dim);margin-top:6px}
 
   /* ── feature sections ── */
@@ -603,7 +604,7 @@
   </div>
 <div class="strip">
   <div class="wrap strip-in">
-    <div class="stat" data-reveal><i class="ball-anchor" style="left:50%;top:-6px"></i><div class="n" data-count="1152">1,152</div><div class="l">지도에 등록된 전국 농구 코트</div></div>
+    <div class="stat" data-reveal><i class="ball-anchor" style="left:50%;top:-6px"></i><div class="n n-word">전국</div><div class="l">농구장 지도와 리뷰</div></div>
     <div class="stat" data-reveal><div class="n" data-count="30" data-fmt="clock">0:30</div><div class="l">게임 등록에 걸리는 시간</div></div>
     <div class="stat" data-reveal><div class="n" data-count="24">24</div><div class="l">샷클락까지 NBA 룰 그대로인 전광판</div></div>
   </div>
@@ -617,14 +618,14 @@
     <span class="ti"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
     <span class="ti"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
     <span class="ti"><b>NEW</b>코트·동네 농구 기록 피드: 오늘 뛴 농구를 올리고 좋아요로 응원</span>
-    <span class="ti"><b>MAP</b>전국 농구 코트 1,152곳, 제보로 매일 자라는 코트맵</span>
+    <span class="ti"><b>MAP</b>전국 농구장 지도와 코트 리뷰, 없는 코트는 제보로 등록</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트를 팔로우하면 새 게임 알림<span class="v">0.1.14</span></span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>호스트 프로필에서 예정 게임·팔로워·리뷰를 한눈에</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 실명 인증, 실명은 호스트에게만 보여요</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>채팅 속 연락처·계좌번호는 자동으로 가려요</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>유료 게임 신청 전 환불 규정을 표로 확인</span>
     <span class="ti dup" aria-hidden="true"><b>NEW</b>코트·동네 농구 기록 피드: 오늘 뛴 농구를 올리고 좋아요로 응원</span>
-    <span class="ti dup" aria-hidden="true"><b>MAP</b>전국 농구 코트 1,152곳, 제보로 매일 자라는 코트맵</span>
+    <span class="ti dup" aria-hidden="true"><b>MAP</b>전국 농구장 지도와 코트 리뷰, 없는 코트는 제보로 등록</span>
   </div></div>
 </div>
 </header>
@@ -807,7 +808,7 @@
     <div class="copy">
       <span class="kicker" data-reveal>코트맵</span>
       <h2 data-reveal>"여기 농구장 어디지?"<br>30초 안에 끝나요</h2>
-      <p class="body" data-reveal>전국 실외 농구장과 실내 코트 <b>1,152곳</b>. 처음 가는 동네에서도 지도 한 번이면 뛸 곳부터 찾아요.</p>
+      <p class="body" data-reveal>가까운 농구장을 지도에서 찾고 <b>코트 리뷰</b>를 먼저 봐요. 처음 가는 동네에서도 뛸 곳이 바로 보여요.</p>
       <ul data-reveal>
         <li>실내·실외, 무료 여부, 야간 조명 필터</li>
         <li>바닥 상태, 골대 개수, 주차 정보와 다녀온 사람들의 리뷰<small>카카오맵 길찾기로 바로 연결</small></li>
